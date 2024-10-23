@@ -1,0 +1,73 @@
+.blog-details-container {
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.blog-meta {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #666; /* Soft text color */
+}
+
+.blog-content {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center items horizontally */
+    margin-top: 1rem;
+}
+
+.blog-thumbnail {
+    width: 100%; /* Full width for the thumbnail */
+    margin-bottom: 20px; /* Space below thumbnail */
+    max-width: 600px; /* Optional: Max width for larger screens */
+}
+
+.thumbnail-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
+}
+
+.blog-body {
+    width: 100%; /* Full width for the blog body */
+    max-width: 800px; 
+}
+
+.body-text {
+    font-size: 16px; /* Text size */
+    line-height: 1.6; /* Line height for readability */
+    color: #333; /* Darker text color */
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #c0392b;
+    border: 2px solid #c0392b;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #c0392b;
+    color: white;
+    text-decoration: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .blog-thumbnail {
+        flex: 0 0 100%; /* Full width on small screens */
+        margin-right: 0; /* Remove margin */
+        margin-bottom: 20px; /* Space below thumbnail */
+    }
+
+    .blog-body {
+        flex: 1 0 100%; /* Full width on small screens */
+    }
+}
