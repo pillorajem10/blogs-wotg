@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to Word On The Go, your online destination for uplifting church blogs. Discover inspiring articles, spiritual insights, and community stories that enrich your faith and connect you with our church family. Join us as we explore faith, hope, and love together!">
+    <meta name="keywords" content="church blogs, faith, spirituality, community stories, religious articles, inspiration, hope, love, god, jesus, motivation">
     <title>@yield('title') || Word On The Go</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -20,69 +22,43 @@
 
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full height */
         }
 
         .navbar {
             background-color: #c0392b;
             color: white;
-            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed; /* Change to fixed */
-            top: 0; /* Stick to the top */
-            left: 0; /* Align to the left */
-            width: 100%; /* Full width */
-            z-index: 1000; /* Ensure it stays above other content */
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-
-        .hamburger {
-            cursor: pointer;
-            margin-left: 20px;
-        }
-
-        .sidebar {
-            background-color: #e74c3c;
-            color: white;
-            padding: 20px;
-            width: 250px;
-            height: 100vh;
+            height: 3.8rem;
             position: fixed;
-            left: -250px; /* Initially hidden */
-            transition: left 0.3s ease;
-        }
-
-        .sidebar.active {
-            left: 0; /* Show when active */
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-        }
-
-        .sidebar ul li {
-            margin: 15px 0;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .main-content {
+            flex: 1;
             padding: 20px;
-            margin-left: 0; /* Adjust for sidebar */
-            margin-top: 6.3rem;
-            transition: margin-left 0.3s ease;
+            margin-top: 4rem; 
         }
 
-        .sidebar.active + .main-content {
-            margin-left: 250px; /* Shift right when sidebar is active */
+        footer {
+            background-color: #c0392b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 0;
+            width: 100%;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
         }
 
         header {
@@ -114,24 +90,6 @@
             color: #c0392b;
         }
 
-        .logout-button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            text-align: left; /* Optional for alignment */
-            padding: 0; /* Remove padding */
-            margin: 0; /* Remove margin */
-        }
-
-        .logout-button:hover {
-            text-decoration: none; /* Optional hover effect */
-        }
-
-        .header-title {
-            font-size: 1.5rem;
-        }
-
         @media (max-width: 600px) {
             .sidebar {
                 width: 200px; /* Adjust width for smaller screens */
@@ -149,41 +107,34 @@
             .sidebar.active + .main-content {
                 margin-left: 0; /* No shift when sidebar is active on mobile */
             }
-        }
 
+            footer {
+                font-size: .8rem;
+
+            }
+        }
     </style>
     @yield('styles')
 </head>
 <body>
-    <div>
-        <nav class="navbar">
-            <div class="navbar-brand">
-                <a href="/">
-                    <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3.8rem;">
-                </a>
-            </div>            
-            {{--<div class="hamburger" onclick="toggleDrawer()">
-                <i class="fas fa-bars"></i>
-            </div>--}}
-        </nav>               
+    <nav class="navbar">
+        <a href="/">
+            <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3.8rem;">
+        </a>
+    </nav>
 
-        {{--<aside class="sidebar" id="sidebar">
-            <ul>
-                <li><a href="/seekers">Seekers</a></li>
-                <li><a href="/users">Users/Missionaries</a></li>
-                <li><a href="/blogs">Blogs</a></li>
-            </ul>
-        </aside>               
-        --}}
-        <div class="main-content">
-            <header>
-                <h1 class="header-title">@yield('title', 'Dashboard')</h1>
-            </header>
-            <div class="cards">
-                @yield('content')
-            </div>
+    <div class="main-content">
+        <header>
+            <h1 class="header-title">@yield('title', 'Dashboard')</h1>
+        </header>
+        <div class="cards">
+            @yield('content')
         </div>
     </div>
+
+    <footer>
+        <p>&copy; {{ date('Y') }} Word On The Go. All rights reserved.</p>
+    </footer>
 
     <script>
         function toggleDrawer() {
