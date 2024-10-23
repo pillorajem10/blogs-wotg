@@ -27,7 +27,7 @@
                             <img src="data:image/jpeg;base64,{{ base64_encode($blog->blog_thumbnail) }}" alt="{{ $blog->blog_title }}" class="blog-thumbnail">
                         @endif
                         <p class="blog-body">
-                            {{ Str::limit(html_entity_decode(strip_tags($blog->blog_body)), 100) }}
+                            {{ Str::limit(html_entity_decode(strip_tags($blog->blog_body)), 300) }}
                         </p>                        
                     </div>
                     <div class="blog-card-footer">
