@@ -1,94 +1,76 @@
-.blog-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.page-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.table-container {
-    overflow-x: auto; /* Enable horizontal scrolling */
-}
-
-.blog-table {
-    width: 100%;
-    border-collapse: collapse; /* Merge borders */
-    margin: 20px 0;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.blog-table-header {
-    background-color: #c0392b;
-    color: #fff;
-}
-
-.blog-table-header-cell, .blog-table-cell {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd; /* Add border to cells */
-}
-
-.action-container {
+.card-container {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Center the cards */
+    align-items: stretch; /* Ensure all cards stretch to the same height */
+    padding: 20px; /* Add padding around the container */
 }
 
-.blog-table-row:nth-child(even) {
-    background-color: #f2f2f2;
+.blog-card {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: space-between; /* Space between header, body, and footer */
+    background-color: #ececec;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px; /* Fixed width for consistent sizing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    transition: transform 0.2s; /* Smooth transition for hover effect */
 }
 
-.blog-table-row:hover {
-    background-color: #f1f1f1;
+.blog-card-body {
+    flex-grow: 1; /* Allow body to grow and take available space */
 }
 
-.blog-table-empty {
-    text-align: center;
+.blog-card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-.btn-create {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: white;
-    border: 2px solid #c0392b; /* Border color */
-    color: #c0392b; /* Font color */
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+.blog-card-header {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
 }
 
-.btn-create:hover {
-    background-color: #c0392b; /* Background on hover */
-    color: white; /* Font color on hover */
-    text-decoration: none;
+.blog-title {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.blog-body {
+    font-size: 0.9em;
+    margin: 0;
 }
 
 .btn-view {
-    background-color: transparent; /* Transparent background */
-    color: #c0392b; /* Set font color */
-    text-decoration: none; /* Remove text decoration */
+    display: inline-block;
+    margin-top: 10px;
     padding: 8px 12px;
-    border: none; /* Remove border */
-    border-radius: 5px;
-    transition: color 0.3s; /* Smooth color transition */
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #c0392b; /* Bootstrap primary color */
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn-view:hover {
-    color: #a93226; /* Darken color on hover */
+    background-color: darkred; /* Darker shade on hover */
+    text-decoration: none;
+    color: #fff;
+    transform: scale(1.05);
 }
 
+.blog-thumbnail {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
 
-@media (max-width: 800px) {
-    .blog-table-header-cell, .blog-table-cell {
-        font-size: 0.7rem; /* Lower font size */
-        padding: 8px 10px; /* Decrease padding */
-    }
-    
-    .page-title {
-        font-size: 1rem; /* Optional: Adjust title font size as well */
+/* Media Query for screens below 600px */
+@media (max-width: 600px) {
+    .blog-title {
+        font-size: 1.2rem; /* Lower font size for smaller screens */
     }
 }

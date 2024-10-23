@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>@yield('title') || Word On The Go</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script>
@@ -162,27 +162,19 @@
                     <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3.8rem;">
                 </a>
             </div>            
-            <div class="hamburger" onclick="toggleDrawer()">
+            {{--<div class="hamburger" onclick="toggleDrawer()">
                 <i class="fas fa-bars"></i>
-            </div>
+            </div>--}}
         </nav>               
 
-        <aside class="sidebar" id="sidebar">
+        {{--<aside class="sidebar" id="sidebar">
             <ul>
                 <li><a href="/seekers">Seekers</a></li>
                 <li><a href="/users">Users/Missionaries</a></li>
                 <li><a href="/blogs">Blogs</a></li>
-                <li>
-                    <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="logout-button">
-                            Logout
-                        </button>
-                    </form>
-                </li>
             </ul>
         </aside>               
-
+        --}}
         <div class="main-content">
             <header>
                 <h1 class="header-title">@yield('title', 'Dashboard')</h1>
