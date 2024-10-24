@@ -28,9 +28,15 @@ class BlogController extends Controller
     // Show the details of a specific blog
     public function show($id)
     {
-        $blog = Blog::findOrFail($id); // Fetch the specific blog or fail if not found
+        $blog = Blog::find($id); // Use find instead of findOrFail to allow custom handling
+    
+        if (!$blog || !$blog->blog_approved) { // Check if blog exists and is approved
+            return redirect()->route('blogs.index')->with('error', 'No blog found');
+        }
+    
         return view('pages.blogDetails', compact('blog'));
     }
+    
 
     // Show the form for creating a new blog
     public function create()
