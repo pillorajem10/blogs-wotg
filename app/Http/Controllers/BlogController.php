@@ -34,7 +34,7 @@ class BlogController extends Controller
         $today = Carbon::now('Asia/Manila');
     
         // Check if the blog exists, is approved, and has a valid release date
-        if (!$blog || !$blog->blog_approved || $blog->blog_release_date_and_time > $today) {
+        if (!$blog || !$blog->blog_approved) {
             return redirect()->route('blogs.index')->with('error', 'No blog found');
         }
     
