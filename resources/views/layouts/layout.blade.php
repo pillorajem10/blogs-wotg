@@ -8,6 +8,9 @@
     <title>@yield('title') || Word On The Go</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <script>
         window.Laravel = {
             csrfToken: '{{ csrf_token() }}'
@@ -33,7 +36,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 3.8rem;
+            height: 3rem;
             position: fixed;
             top: 0;
             left: 0;
@@ -43,8 +46,11 @@
 
         .main-content {
             flex: 1;
+
+            /*
             padding: 20px;
             margin-top: 4rem; 
+            */
         }
 
         footer {
@@ -91,26 +97,8 @@
         }
 
         @media (max-width: 600px) {
-            .sidebar {
-                width: 200px; /* Adjust width for smaller screens */
-            }
-
-            .sidebar.active {
-                left: 0; /* Keep it at 0 when active */
-                width: 100%; /* Full width on mobile */
-            }
-
-            .main-content {
-                margin-left: 0; /* Reset margin for mobile */
-            }
-
-            .sidebar.active + .main-content {
-                margin-left: 0; /* No shift when sidebar is active on mobile */
-            }
-
             footer {
                 font-size: .8rem;
-
             }
         }
     </style>
@@ -119,14 +107,11 @@
 <body>
     <nav class="navbar">
         <a href="/">
-            <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3.8rem;">
+            <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3rem;">
         </a>
     </nav>
 
     <div class="main-content">
-        <header>
-            <h1 class="header-title">@yield('title', 'Dashboard')</h1>
-        </header>
         <div class="cards">
             @yield('content')
         </div>

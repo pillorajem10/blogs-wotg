@@ -3,7 +3,7 @@
 @section('title', 'Blogs')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.2') }}">
 @endsection
 
 @section('content')
@@ -16,13 +16,14 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        @include('components.loading')
-
+        <div class="header-container">
+            Trust in the Lord with all your heart; lean not on your own understanding. In all your ways, acknowledge Him, and He will direct your path
+        </div>        
         <div class="card-container">
             @forelse ($blogs as $blog)
                 <div class="blog-card">
                     <div class="blog-card-header">
-                        <h4 class="blog-title">{{ $blog->blog_title }}</h4>
+                        <h3 class="blog-title">{{ $blog->blog_title }}</h3>
                     </div>
                     <div class="blog-card-body">
                         @if($blog->blog_thumbnail)
@@ -40,5 +41,7 @@
                 <div class="text-center">No blogs found.</div>
             @endforelse
         </div>
+
+        <script src="{{ asset('js/blogs.js?v=1.2') }}"></script>
     </div>
 @endsection

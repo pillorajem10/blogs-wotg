@@ -7,9 +7,6 @@
 @endsection
 
 @section('content')
-
-    @include('components.loading')
-    
     <div class="blog-details-container">
         <div class="blog-meta d-flex justify-content-between align-items-center flex-wrap">
             <div>
