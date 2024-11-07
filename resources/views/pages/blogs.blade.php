@@ -7,6 +7,11 @@
 @endsection
 
 @section('content')
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -19,6 +24,7 @@
         <div class="header-container">
             Trust in the Lord with all your heart; lean not on your own understanding. In all your ways, acknowledge Him, and He will direct your path
         </div>        
+
         <div class="card-container">
             @forelse ($blogs as $blog)
                 <div class="blog-card">
@@ -42,6 +48,8 @@
             @endforelse
         </div>
 
-        <script src="{{ asset('js/blogs.js?v=1.2') }}"></script>
     </div>
+
+    <!-- Include JS file -->
+    <script src="{{ asset('js/blogs.js?v=1.2') }}"></script>
 @endsection
