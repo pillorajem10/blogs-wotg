@@ -3,7 +3,7 @@
 @section('title', 'Blogs')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.4') }}">
 @endsection
 
 @section('content')
@@ -22,7 +22,10 @@
         @endif
 
         <div class="header-container">
-            Trust in the Lord with all your heart; lean not on your own understanding. In all your ways, acknowledge Him, and He will direct your path
+            <div>
+                Romans 1:16<br>
+                “For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes…”
+            </div>
         </div>        
 
         <div class="card-container">
@@ -51,5 +54,5 @@
     </div>
 
     <!-- Include JS file -->
-    <script src="{{ asset('js/blogs.js?v=1.2') }}"></script>
+    <script src="{{ asset('js/blogs.js?v=1.4') }}"></script>
 @endsection
