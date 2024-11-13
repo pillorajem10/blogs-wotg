@@ -3,7 +3,7 @@
 @section('title', 'Blogs')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.5') }}">
 @endsection
 
 @section('content')
@@ -26,7 +26,11 @@
                 Romans 1:16<br>
                 “For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes…”
             </div>
-        </div>        
+        </div>
+        
+        <div class="text-center mb-4 mt-4">
+            <a href="{{ route('subscribers.signup') }}" class="custom-signup-btn">Join our community</a>
+        </div>
 
         <div class="card-container">
             @forelse ($blogs as $blog)
@@ -51,8 +55,13 @@
             @endforelse
         </div>
 
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {{ $blogs->appends(['search' => session('search'), 'page' => session('page')])->links('vendor.pagination.bootstrap-4') }}
+            </ul>
+        </nav> 
     </div>
 
     <!-- Include JS file -->
-    <script src="{{ asset('js/blogs.js?v=1.4') }}"></script>
+    <script src="{{ asset('js/blogs.js?v=1.5') }}"></script>
 @endsection

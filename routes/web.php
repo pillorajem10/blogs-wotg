@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SeekerController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
@@ -20,7 +21,9 @@ use App\Http\Controllers\BlogController;
 Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}', [BlogController::class, 'show'])->name('blogs.show');
 
-// SEEKER CONTROLLER 
+// SUBSCRIBER CONTROLLER 
+Route::get('/subscriber/signup', [SubscriberController::class, 'showSignupForm'])->name('subscribers.signup');
+Route::post('/subscriber/signup', [SubscriberController::class, 'signup'])->name('subscribers.signup.submit');
 
 /*
 Route::get('/seekers', [SeekerController::class, 'index'])->name('seekers.index');

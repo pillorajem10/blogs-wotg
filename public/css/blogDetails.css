@@ -41,7 +41,8 @@
     color: #333; /* Darker text color */
 }
 
-.btn-back {
+/* Normal action button style */
+.action-btn {
     display: inline-block;
     padding: 10px 20px;
     background-color: #fff;
@@ -52,11 +53,36 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.btn-back:hover {
+/* Hover effect */
+.action-btn:hover {
     background-color: #c0392b;
     color: white;
     text-decoration: none;
 }
+
+/* Disabled action button */
+.action-btn.disabled {
+    background-color: #f0f0f0;   /* Light gray background */
+    color: #aaa;                  /* Light gray text */
+    border-color: #ddd;           /* Lighter border */
+    cursor: not-allowed;          /* Change cursor to indicate it's not clickable */
+}
+
+/* Make sure disabled button doesn't respond to hover */
+.action-btn.disabled:hover {
+    background-color: #f0f0f0; /* Disable hover effect */
+    color: #aaa;                /* Maintain disabled text color */
+    cursor: not-allowed;        /* Keep cursor as "not-allowed" */
+}
+
+/* Button container */
+.action-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {

@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=1.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=1.5') }}">
 @endsection
 
 @section('content')
@@ -30,8 +30,24 @@
             </div>
         </div>
 
-        <div class="text-center">
-            <a href="{{ route('blogs.index') }}" class="btn-back">Back to Blogs</a>
-        </div>
+        <!-- Navigation Buttons -->
+        <div class="action-btns">
+            <!-- Prev Button -->
+            @if($prevBlog)
+                <a href="{{ route('blogs.show', $prevBlog->id) }}" class="action-btn">&lt; Prev</a>
+            @else
+                <span class="action-btn disabled">&lt; Prev</span>
+            @endif
+        
+            <!-- Back to Blogs Button -->
+            <a href="{{ route('blogs.index') }}" class="action-btn">Back to Blogs</a>
+        
+            <!-- Next Button -->
+            @if($nextBlog)
+                <a href="{{ route('blogs.show', $nextBlog->id) }}" class="action-btn">Next &gt;</a>
+            @else
+                <span class="action-btn disabled">Next &gt;</span>
+            @endif
+        </div>        
     </div>
 @endsection

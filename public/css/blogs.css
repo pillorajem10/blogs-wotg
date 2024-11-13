@@ -7,6 +7,36 @@
     padding: 20px; /* Add padding around the container */
 }
 
+/* Custom Signup Button */
+.custom-signup-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #c0392b;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.custom-signup-btn:hover {
+    background-color: darkred;
+    transform: scale(1.05);
+    text-decoration: none;
+    color: #fff;
+}
+
+.custom-signup-btn:active {
+    transform: scale(1);
+}
+
+/* For the text centering and spacing around the button */
+.text-center.mb-4 {
+    margin-bottom: 30px;
+}
+
+
 .blog-card {
     display: flex;
     flex-direction: column; /* Stack children vertically */
@@ -76,7 +106,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 20%; /* Add padding to give some space around the content */
+    padding: 10%; /* Add padding to give some space around the content */
     color: white; /* Text color to make it stand out against the background */
     font-size: 4rem; /* Larger font size for the quote */
     font-family: "Playfair Display", serif;
