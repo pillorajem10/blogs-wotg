@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function showSignupForm()
     {
         if (Auth::check()) {
-            return redirect()->route('seekers.index'); // Redirect to seekers index if logged in
+            return redirect()->route('blogs.index'); // Redirect to seekers index if logged in
         }
         
         return view('pages.signup');
@@ -44,7 +44,7 @@ class AuthController extends Controller
             'user_lname' => $request->user_lname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_role' => 'missionary', // Set default role
+            'user_role' => 'user', // Set default role
         ]);
 
         // Redirect or return response
@@ -56,7 +56,7 @@ class AuthController extends Controller
     {
         // Check if the user is authenticated
         if (Auth::check()) {
-            return redirect()->route('seekers.index'); // Redirect to seekers index if logged in
+            return redirect()->route('blogs.index'); // Redirect to seekers index if logged in
         }
 
         return view('pages.login'); // Ensure this view exists

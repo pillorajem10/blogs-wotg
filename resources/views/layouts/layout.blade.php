@@ -37,7 +37,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 3rem;
+            /*height: 3rem;*/
             position: fixed;
             top: 0;
             left: 0;
@@ -97,6 +97,75 @@
             color: #c0392b;
         }
 
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            top: 1rem;
+            left: -250px; /* Initially hidden */
+            width: 150px;
+            height: 100%;
+            background-color: darkred;
+            color: white;
+            padding-top: 60px; /* To accommodate for navbar */
+            transition: left 0.3s ease;
+            z-index: 999;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 18px;
+        }
+
+        .sidebar ul li a:hover {
+            color: gray;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001; /* Ensure it's above the navbar */
+        }
+
+        .hamburger-menu .bar {
+            background-color: white;
+            height: 4px;
+            width: 100%;
+            border-radius: 2px;
+        }
+
+        /* Mobile view adjustments */
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+
         @media (max-width: 600px) {
             footer {
                 font-size: .8rem;
@@ -107,10 +176,36 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="/">
+        <a href="/" class="logo-link">
             <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3rem;">
         </a>
+    
+        <!-- Hamburger Menu -->
+        <button id="hamburger" class="hamburger-menu" onclick="toggleDrawer()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
     </nav>
+    
+    <aside id="sidebar" class="sidebar">
+        <ul>
+            @if(auth()->check()) <!-- If user is authenticated -->
+                <li><a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+            @else <!-- If user is not authenticated -->
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Register</a></li>
+            @endif
+        </ul>
+    </aside>
+    
+    <!-- Logout form (hidden) -->
+    <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+    
+    
+    
 
     <div class="main-content">
         <div class="cards">
@@ -126,6 +221,13 @@
         function toggleDrawer() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
+
+            // Toggle the sidebar by adjusting its left position
+            if (sidebar.classList.contains('active')) {
+                sidebar.style.left = '0';
+            } else {
+                sidebar.style.left = '-250px';
+            }
         }
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

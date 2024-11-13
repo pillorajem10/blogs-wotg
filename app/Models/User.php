@@ -31,5 +31,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Seeker::class, 'seeker_missionary', 'id'); // Adjust the foreign key if necessary
     }
-}
 
+    // Define the relationship to Comments (a user can have many comments)
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'comment_userid');
+    }
+}

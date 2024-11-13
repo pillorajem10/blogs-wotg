@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Comment;
 use Illuminate\Http\Request;
-use Carbon\Carbon; 
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log; 
 
 class BlogController extends Controller
@@ -58,5 +60,30 @@ class BlogController extends Controller
         
         // Return the view with blog, previous, and next blog data
         return view('pages.blogDetails', compact('blog', 'prevBlog', 'nextBlog'));
-    }         
+    }  
+    
+    public function writeComment(Request $request, $blogId)
+    {
+        // Ensure the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('auth.login')->with('error', 'You must be logged in to comment.');
+        }
+
+        // Validate the comment input
+        $validatedData = $request->validate([
+            'comment_body' => 'required|string|max:1000',
+        ]);
+
+        // Create a new comment
+        $comment = new Comment();
+        $comment->comment_blogid = $blogId; // The blog being commented on
+        $comment->comment_userid = Auth::id(); // The user posting the comment
+        $comment->comment_body = $validatedData['comment_body'];
+
+        // Save the comment to the database
+        $comment->save();
+
+        // Redirect back to the blog page with a success message
+        return redirect()->route('blogs.show', $blogId)->with('success', 'Your comment has been posted.');
+    }
 }

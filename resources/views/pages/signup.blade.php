@@ -49,5 +49,8 @@
         <div style="margin-top: 20px; text-align: center;">
             <p>Already got an account? <a href="{{ route('auth.login') }}">Login here</a>.</p>
         </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
+        </div>
     </div>
 @endsection

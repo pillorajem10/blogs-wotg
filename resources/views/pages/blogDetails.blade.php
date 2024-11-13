@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=1.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=1.6') }}">
 @endsection
 
 @section('content')
@@ -49,5 +49,42 @@
                 <span class="action-btn disabled">Next &gt;</span>
             @endif
         </div>        
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <h3 class="comments-title">Comments</h3>
+        
+            <!-- Check if the user is authenticated to comment -->
+            @if(Auth::check())
+                <!-- Comment Form -->
+                <form action="{{ route('blogs.writeComment', $blog->id) }}" method="POST" class="comment-form">
+                    @csrf
+                    <textarea name="comment_body" placeholder="Write your comment..." rows="4" class="comment-textarea" required></textarea>
+                    <button type="submit" class="btn btn-primary comment-btn">Post Comment</button>
+                </form>
+            @else
+                <p class="login-prompt">Please <a href="{{ route('auth.login') }}" class="login-link">log in</a> to post a comment.</p>
+            @endif
+        
+            <!-- Display Comments -->
+            <div class="comment-list">
+                @foreach($blog->comments as $comment)
+                    <div class="comment">
+                        <div class="comment-author">
+                            <strong class="comment-author-name">
+                                {{ $comment->user->user_fname }} {{ $comment->user->user_lname }}
+        
+                                <!-- Show "(Me)" if the comment is by the authenticated user -->
+                                @if(Auth::check() && Auth::user()->id == $comment->comment_userid)
+                                    <span class="me-label">(Me)</span>
+                                @endif
+                            </strong>
+                            <span class="comment-date">Posted on {{ \Carbon\Carbon::parse($comment->created_at)->format('F j, Y') }}</span>
+                        </div>
+                        <p class="comment-body">{{ $comment->comment_body }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>               
     </div>
 @endsection

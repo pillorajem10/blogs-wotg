@@ -38,5 +38,8 @@
         <div style="margin-top: 20px; text-align: center;">
             <p>Don't have an account? <a href="{{ route('signup') }}">Sign Up here</a>.</p>
         </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
+        </div>
     </div>
 @endsection

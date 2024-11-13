@@ -3,7 +3,7 @@
 @section('title', 'Blogs')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.6') }}">
 @endsection
 
 @section('content')
@@ -29,7 +29,7 @@
         </div>
         
         <div class="text-center mb-4 mt-4">
-            <a href="{{ route('subscribers.signup') }}" class="custom-signup-btn">Join our community</a>
+            <a href="{{ route('subscribers.signup') }}" class="custom-signup-btn">Subscribe To Be Notified</a>
         </div>
 
         <div class="card-container">
@@ -63,5 +63,5 @@
     </div>
 
     <!-- Include JS file -->
-    <script src="{{ asset('js/blogs.js?v=1.5') }}"></script>
+    <script src="{{ asset('js/blogs.js?v=1.6') }}"></script>
 @endsection

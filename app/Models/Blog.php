@@ -29,9 +29,15 @@ class Blog extends Model
         'blog_release_date_and_time' => 'datetime', 
     ];
 
-    // Define the relationship to User
+    // Define the relationship to User (creator)
     public function creator()
     {
         return $this->belongsTo(User::class, 'blog_creator', 'id');
+    }
+
+    // Define the relationship to Comment (a blog has many comments)
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'comment_blogid');
     }
 }

@@ -83,6 +83,125 @@
     gap: 10px;
 }
 
+/* Comments Section */
+.comments-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comments-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Comment Form */
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.comment-textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.comment-btn {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.comment-btn:hover {
+    background-color: #e74c3c;
+}
+
+/* Login Prompt */
+.login-prompt {
+    font-size: 1rem;
+    color: #555;
+}
+
+.login-link {
+    color: #c0392b;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* Comment List */
+.comment-list {
+    margin-top: 20px;
+}
+
+.comment {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.comment-author {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Styling for the "(Me)" label next to the comment author's name */
+.me-label {
+    font-size: 0.9rem;
+    color: #c0392b; /* Red color for emphasis */
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+
+.comment-author-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-date {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.comment-body {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .comment-form {
+        width: 100%;
+    }
+
+    .comment-btn {
+        width: 100%;
+    }
+}
+
+
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {

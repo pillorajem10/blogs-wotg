@@ -20,6 +20,7 @@ use App\Http\Controllers\BlogController;
 
 Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}', [BlogController::class, 'show'])->name('blogs.show');
+Route::post('/blogs/{blogId}/comment', [BlogController::class, 'writeComment'])->name('blogs.writeComment');
 
 // SUBSCRIBER CONTROLLER 
 Route::get('/subscriber/signup', [SubscriberController::class, 'showSignupForm'])->name('subscribers.signup');
@@ -36,13 +37,14 @@ Route::post('/seekers/{id}/update-missionary', [SeekerController::class, 'update
 
 
 // AUTH CONTOLLER 
-/*
+
 Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup');
 Route::post('/signup', [AuthController::class, 'signup'])->name('register');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
-*/
+
+
 
 // USER CONTROLLERS
 // Route::get('/users', [UserController::class, 'index'])->name('users.index');
