@@ -47,15 +47,15 @@ class BlogController extends Controller
         // Get the previous blog by ID (find the blog with an ID smaller than the current one)
         $prevBlog = Blog::where('blog_approved', true)
                         ->where('blog_release_date_and_time', '<=', $today)
-                        ->where('id', '>', $blog->id)  // Get blogs with smaller IDs
-                        ->orderBy('id', 'asc')        // Order by ID descending (so the latest previous blog is picked)
+                        ->where('id', '<', $blog->id)  // Get blogs with smaller IDs
+                        ->orderBy('id', 'desc')        // Order by ID descending (so the latest previous blog is picked)
                         ->first();
     
         // Get the next blog by ID (find the blog with an ID greater than the current one)
         $nextBlog = Blog::where('blog_approved', true)
                         ->where('blog_release_date_and_time', '<=', $today)
-                        ->where('id', '<', $blog->id)  // Get blogs with greater IDs
-                        ->orderBy('id', 'desc')         // Order by ID ascending (so the earliest next blog is picked)
+                        ->where('id', '>', $blog->id)  // Get blogs with greater IDs
+                        ->orderBy('id', 'asc')         // Order by ID ascending (so the earliest next blog is picked)
                         ->first();
         
         // Return the view with blog, previous, and next blog data

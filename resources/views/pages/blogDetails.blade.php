@@ -11,7 +11,7 @@
         <div class="blog-meta d-flex justify-content-between align-items-center flex-wrap">
             <div>
                 <span class="blog-date">
-                    Date Added: {{ \Carbon\Carbon::parse($blog->created_at)->format('F j, Y') }}
+                    Date Added: {{ \Carbon\Carbon::parse($blog->blog_release_date_and_time)->format('F j, Y') }}
                 </span>
             </div>
         </div>     
