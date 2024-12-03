@@ -6,7 +6,10 @@ use App\Http\Controllers\SeekerController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DgroupController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +46,12 @@ Route::post('/signup', [AuthController::class, 'signup'])->name('register');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+// DASHBOARD
+Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// DGROUP
+Route::get('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgroup.approve');
 
 
 

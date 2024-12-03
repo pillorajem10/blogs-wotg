@@ -1,0 +1,103 @@
+/* General Styling */
+.dashboard-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 7rem;
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* User Info */
+.user-info {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.user-info-item {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.user-info-item strong {
+    color: #333;
+}
+
+/* Additional Info */
+.additional-info {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.additional-info-item {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.additional-info-item strong {
+    color: #333;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.logout-form {
+    display: flex;
+    justify-content: center;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .user-info-item,
+    .additional-info-item {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

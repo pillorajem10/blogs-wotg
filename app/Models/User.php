@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $primaryKey = 'id';
-    public $timestamps = false; // Disable timestamps
+    public $timestamps = false;
 
     protected $fillable = [
         'user_fname',
@@ -20,19 +20,27 @@ class User extends Authenticatable
         'user_gender',
         'email',
         'password',
+        'user_mobile_number',
+        'user_church_name',
+        'user_birthday',
+        'user_country',
+        'user_city',
+        'user_dgroup_leader',
+        'user_ministry',
+        'user_already_a_dgroup_leader',
+        'user_already_a_dgroup_member',
+        'approval_token',  // Add approval_token here
     ];
 
     protected $hidden = [
         'password',
     ];
 
-    // Define the relationship to Seekers
     public function seekers()
     {
-        return $this->hasMany(Seeker::class, 'seeker_missionary', 'id'); // Adjust the foreign key if necessary
+        return $this->hasMany(Seeker::class, 'seeker_missionary', 'id');
     }
 
-    // Define the relationship to Comments (a user can have many comments)
     public function comments()
     {
         return $this->hasMany(Comment::class, 'comment_userid');

@@ -191,6 +191,7 @@
     <aside id="sidebar" class="sidebar">
         <ul>
             @if(auth()->check()) <!-- If user is authenticated -->
+                <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
             @else <!-- If user is not authenticated -->
                 <li><a href="/login">Login</a></li>

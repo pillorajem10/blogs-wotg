@@ -30,9 +30,13 @@ body {
 }
 
 .signup-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 20px; /* Space between columns */
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.signup-form div {
+    width: 17rem;
 }
 
 .form-group {
@@ -61,3 +65,28 @@ body {
     background-color: #e74c3c;
 }
 
+#dgroup-leader-note {
+    display: none;
+    margin-top: 10px;
+    font-style: italic;
+    color: #ff0000;
+    font-size: 9px;
+}
+
+#dgroup-member-note {
+    display: none;
+    margin-top: 10px;
+    font-style: italic;
+    color: #ff0000;
+    font-size: 9px;
+}
+
+@media (max-width: 649px) {
+    .signup-form div {
+        width: 100%;
+    }
+
+    body {
+        height: 100%;
+    }
+}
