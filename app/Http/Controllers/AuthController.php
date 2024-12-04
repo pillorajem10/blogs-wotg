@@ -88,8 +88,7 @@ class AuthController extends Controller
             ]);
     
             // Send the approval email to the D-Group leader with the approval token
-            \Mail::to($dgroupLeader->email)->send(new \App\Mail\DgroupMemberApprovalRequest($dgroupLeader, $request->email, $approvalToken));
-    
+            \Mail::to($dgroupLeader->email)->send(new \App\Mail\DgroupMemberApprovalRequest($dgroupLeader, $request->email, $approvalToken, $dgroupLeader->id));    
         } else {
             // If no D-Group leader is provided, create the user without an approval token
             $user = User::create([
@@ -104,7 +103,7 @@ class AuthController extends Controller
                 'user_birthday' => $request->user_birthday,
                 'user_country' => $request->user_country,
                 'user_city' => $request->user_city,
-                'user_dgroup_leader' => null, // No D-Group leader yet
+                'user_dgroup_leader' => null,
                 'user_ministry' => $request->user_ministry,
                 'user_already_a_dgroup_leader' => $request->user_already_a_dgroup_leader == '1',
                 'user_already_a_dgroup_member' => $request->user_already_a_dgroup_member == '1',

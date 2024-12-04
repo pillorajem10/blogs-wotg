@@ -72,9 +72,9 @@
 
         <p>One of your members, <strong>{{ $memberEmail }}</strong>, has requested to join your D-Group. Please review their registration and approve them to finalize the process.</p>
 
-        <a href="{{ route('dgroup.approve', ['email' => $memberEmail, 'token' => $approvalToken]) }}" class="btn-approve">
+        <a href="{{ route('dgroup.approve', ['email' => $memberEmail, 'token' => $approvalToken, 'dgroupLeaderId' => $dgroupLeaderId]) }}" class="btn-approve">
             Approve Member
-        </a>
+        </a>        
 
         <div class="note">
             <p><strong>Note:</strong> If you have any questions, feel free to reach out to the admin or contact support.</p>

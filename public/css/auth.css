@@ -2,7 +2,7 @@ body {
     background-image: url('../images/wotg-background.jpg'); /* Adjust the path if necessary */
     background-size: cover; /* Cover the entire viewport */
     background-position: center; /* Center the background image */
-    height: 100vh; /* Ensure the body takes the full height of the viewport */
+    height: 100%; /* Ensure the body takes the full height of the viewport */
     margin: 0; /* Remove default margin */
     display: flex; /* Enable flexbox to center the auth container */
     justify-content: center; /* Center horizontally */

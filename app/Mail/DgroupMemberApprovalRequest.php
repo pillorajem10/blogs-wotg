@@ -13,6 +13,7 @@ class DgroupMemberApprovalRequest extends Mailable
     public $dgroupLeader;
     public $memberEmail;
     public $approvalToken;
+    public $dgroupLeaderId;
 
     /**
      * Create a new message instance.
@@ -21,12 +22,14 @@ class DgroupMemberApprovalRequest extends Mailable
      * @param string $memberEmail
      * @param string $approvalToken
      */
-    public function __construct($dgroupLeader, $memberEmail, $approvalToken)
+    public function __construct($dgroupLeader, $memberEmail, $approvalToken, $dgroupLeaderId)
     {
         $this->dgroupLeader = $dgroupLeader;
         $this->memberEmail = $memberEmail;
         $this->approvalToken = $approvalToken;
+        $this->dgroupLeaderId = $dgroupLeaderId;  // Store the D-Group leader's ID
     }
+    
 
     /**
      * Build the message.
@@ -41,8 +44,9 @@ class DgroupMemberApprovalRequest extends Mailable
                         'dgroupLeader' => $this->dgroupLeader,
                         'memberEmail' => $this->memberEmail,
                         'approvalToken' => $this->approvalToken,
+                        'dgroupLeaderId' => $this->dgroupLeaderId,
                     ]);
-    }
+    }    
 }
 
 
