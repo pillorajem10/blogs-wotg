@@ -79,6 +79,35 @@
     border: 2px solid #c0392b;
 }
 
+/* Profile Picture Styles */
+.profile-picture {
+    display: flex;
+    margin-top: 10px;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #c0392b;
+}
+
+/* Profile Circle for No Picture */
+.profile-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #c0392b;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
 .custom-btn:hover {
     background-color: #a93226;
     border-color: #a93226;

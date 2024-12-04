@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DgroupController;
+use App\Http\Controllers\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,14 +51,16 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 // USER CONTROLLER
 Route::get('/profile/edit', [UserController::class, 'edit'])->name('profile.edit');
 Route::post('/profile/update', [UserController::class, 'update'])->name('profile.update');
+Route::post('/profile/update-picture', [UserController::class, 'updateProfilePicture'])->name('profile.updatePicture');
 
 // DASHBOARD
-Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth'])->get('/d-group', [DashboardController::class, 'index'])->name('dashboard');
 
 // DGROUP
 Route::get('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgroup.approve');
 
-
+// FAQ
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // USER CONTROLLERS
 // Route::get('/users', [UserController::class, 'index'])->name('users.index');

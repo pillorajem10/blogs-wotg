@@ -101,12 +101,12 @@
         .sidebar {
             position: fixed;
             top: 1rem;
-            left: -250px; /* Initially hidden */
-            width: 150px;
+            left: -100%; /* Initially hidden */
+            width: 250px;
             height: 100%;
             background-color: darkred;
             color: white;
-            padding-top: 60px; /* To accommodate for navbar */
+            padding-top: 70px; /* To accommodate for navbar */
             transition: left 0.3s ease;
             z-index: 999;
         }
@@ -125,7 +125,7 @@
             color: white;
             text-decoration: none;
             display: block;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .sidebar ul li a:hover {
@@ -171,6 +171,14 @@
                 font-size: .8rem;
             }
         }
+
+        /* For screens with max-width of 500px */
+        @media (max-width: 500px) {
+            .sidebar {
+                left: -100%; /* Make the sidebar visible */
+                width: 100%; /* Set the sidebar to 100% width */
+            }
+        }
     </style>
     @yield('styles')
 </head>
@@ -191,7 +199,12 @@
     <aside id="sidebar" class="sidebar">
         <ul>
             @if(auth()->check()) <!-- If user is authenticated -->
-                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="#">Watch Messages (Coming soon)</a></li>
+                <li><a href="#">Community (Coming soon)</a></li>
+                <li><a href="#">Video Meeting (Coming soon)</a></li>
+                <li><a href="#">Messages (Coming soon)</a></li>
+                <li><a href="/d-group">D-Group</a></li>
+                <li><a href="/faq">FAQs</a></li>
                 <li><a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
             @else <!-- If user is not authenticated -->
                 <li><a href="/login">Login</a></li>
@@ -223,11 +236,23 @@
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
 
-            // Toggle the sidebar by adjusting its left position
-            if (sidebar.classList.contains('active')) {
-                sidebar.style.left = '0';
+            // Get the current screen width
+            const screenWidth = window.innerWidth;
+
+            // Adjust the sidebar position based on screen width
+            if (screenWidth <= 500) {
+                if (sidebar.classList.contains('active')) {
+                    sidebar.style.left = '0'; // Sidebar takes full width on smaller screens
+                } else {
+                    sidebar.style.left = '-100%'; // Sidebar moves off-screen
+                }
             } else {
-                sidebar.style.left = '-250px';
+                // For larger screens, the sidebar behaves as before
+                if (sidebar.classList.contains('active')) {
+                    sidebar.style.left = '0'; // Sidebar stays visible
+                } else {
+                    sidebar.style.left = '-250px'; // Sidebar is hidden off-screen
+                }
             }
         }
     </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -82,7 +83,7 @@ class UserController extends Controller
             $dgroupLeader = User::where('email', $new_dgroup_leader_email)->first();
     
             if (!$dgroupLeader) {
-                return redirect()->back()->with('error', 'This D-Group leader does not exist, kindly try again.')->withInput();
+                return redirect()->route('profile.edit')->with('error', 'This D-Group leader does not exist, kindly try again.')->withInput();
             }
     
             // Generate a new approval token (for the approval request)
@@ -102,4 +103,50 @@ class UserController extends Controller
         // Redirect with success message for other profile updates
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully!');
     }
+
+
+
+
+    public function updateProfilePicture(Request $request)
+    {
+        // Log the incoming request for debugging
+        Log::info('Profile picture upload request:', [
+            'user_id' => auth()->id(),
+            'input_data' => $request->all(),
+        ]);
+    
+        // Get the currently authenticated user
+        $user = auth()->user();
+    
+        // Validate the uploaded file
+        $request->validate([
+            'user_profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:5048' // Only allow images (max 5MB)
+        ]);
+    
+        // Get the uploaded file
+        $file = $request->file('user_profile_picture');
+    
+        // Log file info for debugging
+        Log::info('Uploaded file details:', [
+            'file_name' => $file->getClientOriginalName(),
+            'file_size' => $file->getSize(),
+            'file_mime_type' => $file->getMimeType()
+        ]);
+    
+        // Convert the file to binary
+        $binaryData = file_get_contents($file);
+    
+        // Save the binary data in the database
+        $user->user_profile_picture = $binaryData;
+        $user->save();
+    
+        // Log the database update success
+        Log::info('Profile picture saved for user:', [
+            'user_id' => $user->id,
+            'profile_picture_size' => strlen($binaryData)
+        ]);
+    
+        // Redirect to the profile page with success message
+        return redirect()->route('dashboard')->with('success', 'Profile picture updated successfully!');
+    }    
 }

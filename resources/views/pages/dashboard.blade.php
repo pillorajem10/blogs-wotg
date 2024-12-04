@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=1.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=1.9') }}">
 @endsection
 
 @section('content')
@@ -28,10 +28,34 @@
             </div>
             <div class="card-body">
                 <div class="user-info-item">
+                    <div class="profile-picture">
+                        @if ($user->user_profile_picture)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($user->user_profile_picture) }}" alt="Profile Picture" class="profile-img">
+                        @else
+                            <div class="profile-circle">
+                                <span>{{ strtoupper(substr($user->user_fname, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="user-info-item">
                     <strong>Email:</strong> <span>{{ $user->email }}</span>
                 </div>
                 <div class="user-info-item">
                     <strong>Ministry:</strong> <span>{{ $user->user_ministry }}</span>
+                </div>
+
+                {{-- Profile Picture Upload Form --}}
+                <div class="user-info-item mt-4">
+                    <form action="{{ route('profile.updatePicture') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="user_profile_picture">Upload Profile Picture:</label>
+                            <input type="file" name="user_profile_picture" id="user_profile_picture" class="form-control" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -96,10 +120,6 @@
         {{-- Actions --}}
         <div class="actions">
             <a href="{{ route('profile.edit') }}" class="btn custom-btn">Edit Profile</a>
-            {{--<form action="{{ route('auth.logout') }}" method="POST" class="logout-form">
-                @csrf
-                <button type="submit" class="btn btn-danger">Logout</button>
-            </form>--}}
         </div>
     </div>
 @endsection

@@ -3,7 +3,7 @@
 @section('title', 'Blogs')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=1.9') }}">
 @endsection
 
 @section('content')
@@ -28,9 +28,9 @@
             </div>
         </div>
         
-        <div class="text-center mb-4 mt-4">
+        {{--<div class="text-center mb-4 mt-4">
             <a href="{{ route('subscribers.signup') }}" class="custom-signup-btn">Subscribe To Be Notified</a>
-        </div>
+        </div>--}}
 
         <div class="card-container">
             @forelse ($blogs as $blog)
@@ -63,5 +63,5 @@
     </div>
 
     <!-- Include JS file -->
-    <script src="{{ asset('js/blogs.js?v=1.8') }}"></script>
+    <script src="{{ asset('js/blogs.js?v=1.9') }}"></script>
 @endsection
