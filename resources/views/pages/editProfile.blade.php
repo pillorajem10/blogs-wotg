@@ -168,6 +168,7 @@
                             <option value="Creatives and Communication" {{ old('user_ministry', $user->user_ministry) == 'Creatives and Communication' ? 'selected' : '' }}>Creatives and Communication</option>
                             <option value="Admin" {{ old('user_ministry', $user->user_ministry) == 'Admin' ? 'selected' : '' }}>Admin</option>
                             <option value="D-Group Management" {{ old('user_ministry', $user->user_ministry) == 'D-Group Management' ? 'selected' : '' }}>D-Group Management</option>
+                            <option value="None" {{ old('user_ministry') == 'None' ? 'selected' : '' }}>None</option>
                         </select>
                         @if ($errors->has('user_ministry'))
                             <span class="error">{{ $errors->first('user_ministry') }}</span>
