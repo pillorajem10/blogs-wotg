@@ -36,7 +36,7 @@
                             <span class="error">{{ $errors->first('user_fname') }}</span>
                         @endif
                     </div>
-
+            
                     <div class="form-group">
                         <label for="user_lname">Last Name</label>
                         <input type="text" name="user_lname" id="user_lname" class="form-input" value="{{ old('user_lname') }}" required>
@@ -52,12 +52,51 @@
                             <span class="error">{{ $errors->first('user_nickname') }}</span>
                         @endif
                     </div>
-
+            
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-input" value="{{ old('email') }}" required>
+                        @if ($errors->has('email'))
+                            <span class="error">{{ $errors->first('email') }}</span>
+                        @endif
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="user_gender">Gender</label>
+                        <select name="user_gender" id="user_gender" class="form-input" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="male" {{ old('user_gender') == 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('user_gender') == 'female' ? 'selected' : '' }}>Female</option>
+                        </select>
+                        @if ($errors->has('user_gender'))
+                            <span class="error">{{ $errors->first('user_gender') }}</span>
+                        @endif
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="user_mobile_number">Mobile Number</label>
+                        <input type="text" name="user_mobile_number" id="user_mobile_number" class="form-input" value="{{ old('user_mobile_number') }}">
+                        @if ($errors->has('user_mobile_number'))
+                            <span class="error">{{ $errors->first('user_mobile_number') }}</span>
+                        @endif
+                    </div>
+            
                     <div class="form-group">
                         <label for="user_birthday">Birthday</label>
                         <input type="date" name="user_birthday" id="user_birthday" class="form-input" value="{{ old('user_birthday') }}" required>
                         @if ($errors->has('user_birthday'))
                             <span class="error">{{ $errors->first('user_birthday') }}</span>
+                        @endif
+                    </div>
+                </div>
+                
+                <div>
+                    <!-- Second Column -->
+                    <div class="form-group">
+                        <label for="user_country">Country</label>
+                        <input type="text" name="user_country" id="user_country" class="form-input" value="{{ old('user_country') }}" required>
+                        @if ($errors->has('user_country'))
+                            <span class="error">{{ $errors->first('user_country') }}</span>
                         @endif
                     </div>
             
@@ -66,6 +105,14 @@
                         <input type="text" name="user_city" id="user_city" class="form-input" value="{{ old('user_city') }}" required>
                         @if ($errors->has('user_city'))
                             <span class="error">{{ $errors->first('user_city') }}</span>
+                        @endif
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="user_church_name">Church Name</label>
+                        <input type="text" name="user_church_name" id="user_church_name" class="form-input" value="{{ old('user_church_name') }}" required>
+                        @if ($errors->has('user_church_name'))
+                            <span class="error">{{ $errors->first('user_church_name') }}</span>
                         @endif
                     </div>
             
@@ -82,61 +129,6 @@
                     </div>
             
                     <div class="form-group">
-                        <label for="user_dgroup_leader">D-Group Leader's Email</label>
-                        <input type="text" name="user_dgroup_leader" id="user_dgroup_leader" class="form-input" value="{{ old('user_dgroup_leader') }}">
-                        @if ($errors->has('user_dgroup_leader'))
-                            <span class="error">{{ $errors->first('user_dgroup_leader') }}</span>
-                        @endif
-                    </div>
-                </div>
-                
-                <div>
-                    <!-- Second Column -->
-                    <div class="form-group">
-                        <label for="user_gender">Gender</label>
-                        <select name="user_gender" id="user_gender" class="form-input" required>
-                            <option value="" disabled selected>Select Gender</option>
-                            <option value="male" {{ old('user_gender') == 'male' ? 'selected' : '' }}>Male</option>
-                            <option value="female" {{ old('user_gender') == 'female' ? 'selected' : '' }}>Female</option>
-                        </select>
-                        @if ($errors->has('user_gender'))
-                            <span class="error">{{ $errors->first('user_gender') }}</span>
-                        @endif
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-input" value="{{ old('email') }}" required>
-                        @if ($errors->has('email'))
-                            <span class="error">{{ $errors->first('email') }}</span>
-                        @endif
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="user_mobile_number">Mobile Number</label>
-                        <input type="text" name="user_mobile_number" id="user_mobile_number" class="form-input" value="{{ old('user_mobile_number') }}">
-                        @if ($errors->has('user_mobile_number'))
-                            <span class="error">{{ $errors->first('user_mobile_number') }}</span>
-                        @endif
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="user_country">Country</label>
-                        <input type="text" name="user_country" id="user_country" class="form-input" value="{{ old('user_country') }}" required>
-                        @if ($errors->has('user_country'))
-                            <span class="error">{{ $errors->first('user_country') }}</span>
-                        @endif
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="user_church_name">Church Name</label>
-                        <input type="text" name="user_church_name" id="user_church_name" class="form-input" value="{{ old('user_church_name') }}" required>
-                        @if ($errors->has('user_church_name'))
-                            <span class="error">{{ $errors->first('user_church_name') }}</span>
-                        @endif
-                    </div>
-                
-                    <div class="form-group">
                         <label for="user_already_a_dgroup_leader">Are you a D-Group Leader?</label>
                         <select name="user_already_a_dgroup_leader" id="user_already_a_dgroup_leader" class="form-input" required>
                             <option value="" disabled selected>Select Yes or No</option>
@@ -147,7 +139,15 @@
                             <span class="error">{{ $errors->first('user_already_a_dgroup_leader') }}</span>
                         @endif
                     </div>
-                
+            
+                    <div class="form-group">
+                        <label for="user_dgroup_leader">D-Group Leader's Email</label>
+                        <input type="text" name="user_dgroup_leader" id="user_dgroup_leader" class="form-input" value="{{ old('user_dgroup_leader') }}">
+                        @if ($errors->has('user_dgroup_leader'))
+                            <span class="error">{{ $errors->first('user_dgroup_leader') }}</span>
+                        @endif
+                    </div>
+            
                     <div class="form-group">
                         <label for="user_ministry">What ministry are you part of?</label>
                         <select name="user_ministry" id="user_ministry" class="form-input" required>
@@ -165,8 +165,9 @@
                             <span class="error">{{ $errors->first('user_ministry') }}</span>
                         @endif
                     </div>
-                </div>                
+                </div>
             </div>
+            
 
             <div class="form-group">
                 <button type="submit" class="auth-button">Create Account</button>

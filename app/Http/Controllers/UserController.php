@@ -61,8 +61,15 @@ class UserController extends Controller
         // Check if the D-Group Leader email has changed
         $dgroup_leader_email_changed = false;
         $new_dgroup_leader_email = $request->user_dgroup_leader;
+        $new_dgroup_leader = User::where('email', $new_dgroup_leader_email)->first();
+
+        if ($new_dgroup_leader) {
+            $new_dgroup_leader_id = $new_dgroup_leader->id;
+        } else {
+            $new_dgroup_leader_id = null;
+        }
     
-        if ($user->user_dgroup_leader != $new_dgroup_leader_email) {
+        if ($user->user_dgroup_leader != $new_dgroup_leader_id) {
             $dgroup_leader_email_changed = true;
         }
     
