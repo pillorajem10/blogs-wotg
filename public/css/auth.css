@@ -1,14 +1,25 @@
+/* Default body styles */
 body {
-    background-image: url('../images/wotg-background.jpg'); /* Adjust the path if necessary */
-    background-size: cover; /* Cover the entire viewport */
-    background-position: center; /* Center the background image */
-    height: 100%; /* Ensure the body takes the full height of the viewport */
-    margin: 0; /* Remove default margin */
-    display: flex; /* Enable flexbox to center the auth container */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    background-image: url('../images/wotg-background.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: Arial, sans-serif;
 }
+
+/* For the profile edit or signup pages */
+body.full-height {
+    height: 100%;
+}
+
+/* For all other routes */
+body.full-viewport {
+    height: 100vh;
+}
+
 
 .auth-container {
     background-color: rgba(255, 255, 255, 0.7);

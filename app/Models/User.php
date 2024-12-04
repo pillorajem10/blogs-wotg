@@ -16,6 +16,7 @@ class User extends Authenticatable
     protected $fillable = [
         'user_fname',
         'user_lname',
+        'user_nickname',
         'user_role',
         'user_gender',
         'email',
@@ -29,7 +30,8 @@ class User extends Authenticatable
         'user_ministry',
         'user_already_a_dgroup_leader',
         'user_already_a_dgroup_member',
-        'approval_token',  // Add approval_token here
+        'approval_token', 
+        'user_profile_picture',
     ];
 
     protected $hidden = [

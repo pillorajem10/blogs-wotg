@@ -30,6 +30,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'user_fname' => 'required|string|max:255',
             'user_lname' => 'required|string|max:255',
+            'user_nickname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'user_mobile_number' => 'nullable|string|max:15',
@@ -71,6 +72,7 @@ class AuthController extends Controller
             $user = User::create([
                 'user_fname' => $request->user_fname,
                 'user_lname' => $request->user_lname,
+                'user_nickname' => $request->user_nickname,
                 'email' => $request->email,
                 'user_gender' => $request->user_gender,
                 'password' => Hash::make($request->password),
@@ -94,6 +96,7 @@ class AuthController extends Controller
             $user = User::create([
                 'user_fname' => $request->user_fname,
                 'user_lname' => $request->user_lname,
+                'user_nickname' => $request->user_nickname,
                 'email' => $request->email,
                 'user_gender' => $request->user_gender,
                 'password' => Hash::make($request->password),
