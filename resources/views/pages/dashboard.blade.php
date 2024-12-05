@@ -3,10 +3,15 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.8') }}">
 @endsection
 
 @section('content')
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div class="dashboard-container">
         
         {{-- Success Message --}}
@@ -187,5 +192,5 @@
     </div>
 
     {{-- Dashboard JavaScript --}}
-    <script src="{{ asset('js/dashboard.js?v=2.6') }}"></script>
+    <script src="{{ asset('js/dashboard.js?v=2.8') }}"></script>
 @endsection

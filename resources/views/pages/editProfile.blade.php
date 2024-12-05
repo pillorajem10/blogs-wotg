@@ -3,6 +3,9 @@
 @section('title', 'Edit Profile')
 
 @section('content')
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div> <!-- Your spinner element -->
+    </div>
     <div>
         <h2 class="auth-title">Edit Profile</h2>
 
@@ -34,7 +37,7 @@
             <a href="{{ route('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
         </div>
 
-        <form action="{{ route('profile.update') }}" method="POST">
+        <form action="{{ route('profile.update') }}" method="POST" id="profile-auth-form">
             @csrf
             @method('POST') <!-- Update method for RESTful routes -->
 
@@ -186,6 +189,6 @@
             <p><a href="{{ route('profile.show') }}">Cancel</a></p>
         </div>--}}
 
-        <script src="{{ asset('js/auth.js?v=2.6') }}"></script>
+        <script src="{{ asset('js/auth.js?v=2.8') }}"></script>
     </div>
 @endsection

@@ -4,12 +4,12 @@
 @section('title', 'FAQ')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/faq.css?v=2.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/faq.css?v=2.8') }}">
 @endsection
 
 @section('content')
     <div class="faq-container">
-        <h1 class="faq-title">Frequently Asked Questions</h1>
+{{--        <h1 class="faq-title">Frequently Asked Questions</h1>
         
         <div class="faq-item">
             <h3 class="faq-question">What is Word On The Go?</h3>
@@ -25,6 +25,7 @@
             <h3 class="faq-question">Is there an online service available?</h3>
             <p class="faq-answer">Yes, we offer online services through our website and social media platforms. You can watch messages anytime!</p>
         </div>
+--}}
         
         <!-- Add more FAQ items here -->
     </div>

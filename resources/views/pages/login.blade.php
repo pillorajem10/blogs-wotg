@@ -3,6 +3,10 @@
 @section('title', 'Login')
 
 @section('content')
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    
     <div>
         <h2 class="auth-title">Login</h2>
 
@@ -18,7 +22,7 @@
             </div>
         @endif
     
-        <form action="{{ route('auth.login.submit') }}" method="POST">
+        <form action="{{ route('auth.login.submit') }}" method="POST" id="profile-auth-form">
             @csrf
             <div class="form-group">
                 <label for="email">Email</label>
@@ -41,5 +45,7 @@
         <div style="margin-top: 20px; text-align: center;">
             <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
         </div>
+
+        <script src="{{ asset('js/auth.js?v=2.8') }}"></script>
     </div>
 @endsection

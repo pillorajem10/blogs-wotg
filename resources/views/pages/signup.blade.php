@@ -3,6 +3,9 @@
 @section('title', 'Sign Up')
 
 @section('content')
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
     <div>
         <h2 class="auth-title">Sign Up</h2>
 
@@ -24,7 +27,7 @@
             </div>
         @endif
 
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('register') }}" method="POST" id="profile-auth-form">
             @csrf
             <div class="signup-form">
                 <div>
@@ -198,6 +201,6 @@
             <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=2.6') }}"></script>
+        <script src="{{ asset('js/auth.js?v=2.8') }}"></script>
     </div>
 @endsection
