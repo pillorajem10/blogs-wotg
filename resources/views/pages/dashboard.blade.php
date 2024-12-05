@@ -23,7 +23,7 @@
             <div class="content-column">
                 <div class="card user-info-card">
                     <div class="card-header-dashboard">
-                        Your Information
+                        Profile
                     </div>
                     <div class="card-body">
                         <div class="user-info-item">
