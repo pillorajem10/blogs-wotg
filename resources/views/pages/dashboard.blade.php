@@ -78,7 +78,7 @@
                                     </div>
                                 @endif
                                 <span>-</span>
-                                <span>{{ $dgroupLeader->user_fname }} {{ $dgroupLeader->user_lname }}</span>
+                                <span>{{ $dgroupLeader->user_fname }} {{ $dgroupLeader->user_lname }} ({{ $dgroupLeader->email }})</span>
                             </div>
                         </div>
                     @else
