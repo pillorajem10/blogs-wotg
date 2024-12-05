@@ -59,7 +59,7 @@ class AuthController extends Controller
             $dgroupLeader = User::where('email', $request->user_dgroup_leader)->first();
     
             if (!$dgroupLeader) {
-                return redirect()->back()->with('error', 'This D-Group leader does not exist, kindly try again.')->withInput();
+                return redirect()->back()->with('error', 'This email is not yet registered. Please ask your D-Group leader to register first so they can accept your request.')->withInput();
             }
     
             // Set D-Group leader ID

@@ -88,6 +88,14 @@
                             <span class="error">{{ $errors->first('user_birthday') }}</span>
                         @endif
                     </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-input" required>
+                        @if ($errors->has('password'))
+                            <span class="error">{{ $errors->first('password') }}</span>
+                        @endif
+                    </div>                    
                 </div>
                 
                 <div>
@@ -181,6 +189,6 @@
             <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=2.2') }}"></script>
+        <script src="{{ asset('js/auth.js?v=2.1') }}"></script>
     </div>
 @endsection

@@ -83,7 +83,7 @@ class UserController extends Controller
             $dgroupLeader = User::where('email', $new_dgroup_leader_email)->first();
     
             if (!$dgroupLeader) {
-                return redirect()->route('profile.edit')->with('error', 'This D-Group leader does not exist, kindly try again.')->withInput();
+                return redirect()->route('profile.edit')->with('error', 'This email is not yet registered. Please ask your D-Group leader to register first so they can accept your request.')->withInput();
             }
     
             // Generate a new approval token (for the approval request)

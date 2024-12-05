@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.1') }}">
 @endsection
 
 @section('content')
@@ -104,13 +104,25 @@
                 <div class="card-body">
                     <ul class="member-list">
                         @foreach ($dgroupMembers as $member)
-                            <li>{{ $member->user_fname }} {{ $member->user_lname }} ({{ $member->email }})</li>
+                            <li>
+                                <!-- Check if the member has a profile picture -->
+                                @if ($member->user_profile_picture)
+                                    <!-- Display Profile Picture -->
+                                    <img src="data:image/jpeg;base64,{{ base64_encode($member->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
+                                @else
+                                    <!-- Display Circle with First Letter of First Name -->
+                                    <div class="members-profile-circle">
+                                        <span>{{ strtoupper(substr($member->user_fname, 0, 1)) }}</span>
+                                    </div>
+                                @endif
+                                - {{ $member->user_fname }} {{ $member->user_lname }} ({{ $member->email }})
+                            </li>
                         @endforeach
                     </ul>
                 </div>
             </div>
         @endif
-
-        <script src="{{ asset('js/dashboard.js?v=2.2') }}"></script>
+    
+        <script src="{{ asset('js/dashboard.js?v=2.1') }}"></script>
     </div>
 @endsection

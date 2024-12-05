@@ -57,6 +57,12 @@
     font-size: 1rem;
 }
 
+.member-list li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .dgroup-members-card .alert-info {
     margin-top: 20px;
 }
@@ -107,6 +113,18 @@
     font-weight: bold;
 }
 
+.members-profile-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #c0392b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
 
 .custom-btn:hover {
     background-color: #a93226;
