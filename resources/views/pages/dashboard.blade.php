@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=1.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.1') }}">
 @endsection
 
 @section('content')
@@ -112,6 +112,6 @@
             <a href="{{ route('profile.edit') }}" class="btn custom-btn">Edit Profile</a>
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=1.9') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.1') }}"></script>
     </div>
 @endsection
