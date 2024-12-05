@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.6') }}">
 @endsection
 
 @section('content')
@@ -94,6 +94,7 @@
                                                 <input type="hidden" name="email" value="{{ $pendingMember->email }}">
                                                 <input type="hidden" name="token" value="{{ $request->approval_token }}">
                                                 <input type="hidden" name="dgroupLeaderId" value="{{ Auth::user()->id }}">
+                                                <input type="hidden" name="id" value="{{ $request->id }}"> <!-- Hidden form field for the id -->
                                                 <button type="submit" class="btn custom-btn-dashboard">Approve</button>
                                             </form> 
                                         </div>
@@ -186,5 +187,5 @@
     </div>
 
     {{-- Dashboard JavaScript --}}
-    <script src="{{ asset('js/dashboard.js?v=2.5') }}"></script>
+    <script src="{{ asset('js/dashboard.js?v=2.6') }}"></script>
 @endsection

@@ -92,7 +92,7 @@
     margin-top: 15px;
 }
 
-/* D-Group Members */
+/* D-Group Members 
 .dgroup-members-card .member-list {
     list-style: none;
     padding-left: 0;
@@ -102,9 +102,11 @@
     margin-bottom: 8px;
     font-size: 1rem;
 }
+*/
 
 .member-list li {
     display: flex;
+    margin-bottom: 8px;
     align-items: center;
     flex-wrap: wrap;
     gap: 5px;

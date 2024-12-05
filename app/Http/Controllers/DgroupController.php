@@ -56,8 +56,10 @@ class DgroupController extends Controller
 
         // Optionally, update the status of the member request to 'approved'
         $memberRequest = MemberRequest::where('user_id', $member->id)
-                                      ->where('dgroup_leader_id', $validated['dgroupLeaderId'])
-                                      ->first();
+            ->where('dgroup_leader_id', $validated['dgroupLeaderId'])
+            ->where('id', $request->id) // Using the 'id' from the form submission
+            ->first();
+
 
         if ($memberRequest) {
             $memberRequest->status = 'approved';
