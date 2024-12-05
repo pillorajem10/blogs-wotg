@@ -26,6 +26,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.leader-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .card-header {
     background-color: #c0392b;
     color: white;

@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.4') }}">
 @endsection
 
 @section('content')
@@ -67,7 +67,19 @@
                     @endphp
                     @if ($dgroupLeader)
                         <div class="user-info-item">
-                            <strong>Name:</strong> <span>{{ $dgroupLeader->user_fname }} {{ $dgroupLeader->user_lname }}</span>
+                            <div class="leader-info">
+                                @if ($dgroupLeader->user_profile_picture)
+                                    <!-- Display Profile Picture -->
+                                    <img src="data:image/jpeg;base64,{{ base64_encode($dgroupLeader->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
+                                @else
+                                    <!-- Display Circle with First Letter of First Name -->
+                                    <div class="members-profile-circle">
+                                        <span>{{ strtoupper(substr($dgroupLeader->user_fname, 0, 1)) }}</span>
+                                    </div>
+                                @endif
+                                <span>-</span>
+                                <span>{{ $dgroupLeader->user_fname }} {{ $dgroupLeader->user_lname }}</span>
+                            </div>
                         </div>
                     @else
                         <div class="alert alert-warning">
@@ -123,6 +135,6 @@
             </div>
         @endif
     
-        <script src="{{ asset('js/dashboard.js?v=2.3') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.4') }}"></script>
     </div>
 @endsection
