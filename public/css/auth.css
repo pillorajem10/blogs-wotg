@@ -81,7 +81,7 @@ body.full-viewport {
     margin-top: 10px;
     font-style: italic;
     color: #ff0000;
-    font-size: 9px;
+    font-size: 12px;
 }
 
 #dgroup-member-note {
@@ -89,7 +89,7 @@ body.full-viewport {
     margin-top: 10px;
     font-style: italic;
     color: #ff0000;
-    font-size: 9px;
+    font-size: 12px;
 }
 
 @media (max-width: 649px) {

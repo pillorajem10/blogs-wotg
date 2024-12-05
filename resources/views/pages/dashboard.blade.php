@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.3') }}">
 @endsection
 
 @section('content')
@@ -123,6 +123,6 @@
             </div>
         @endif
     
-        <script src="{{ asset('js/dashboard.js?v=2.1') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.3') }}"></script>
     </div>
 @endsection

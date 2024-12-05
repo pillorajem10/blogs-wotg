@@ -134,7 +134,11 @@
                         @if ($errors->has('user_already_a_dgroup_member'))
                             <span class="error">{{ $errors->first('user_already_a_dgroup_member') }}</span>
                         @endif
-                    </div>
+                        <!-- D-Group Member Note -->
+                        <div id="dgroup-member-note">
+                            <p>If you are a dgroup member, please provide your dgroup leader’s email to complete your registration.</p>
+                        </div>
+                    </div>                    
             
                     <div class="form-group">
                         <label for="user_already_a_dgroup_leader">Are you a D-Group Leader?</label>
@@ -146,7 +150,12 @@
                         @if ($errors->has('user_already_a_dgroup_leader'))
                             <span class="error">{{ $errors->first('user_already_a_dgroup_leader') }}</span>
                         @endif
+                        <!-- D-Group Leader Note -->
+                        <div id="dgroup-leader-note">
+                            <p>To verify your account, give your email address to your dgroup members and ask them to register on our WOTG app. They should enter your email in the dgroup leader’s email field. Once they register, check your email for their request and approve it to complete the verification process.</p>
+                        </div>
                     </div>
+                    
             
                     <div class="form-group">
                         <label for="user_dgroup_leader">D-Group Leader's Email</label>
@@ -189,6 +198,6 @@
             <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=2.1') }}"></script>
+        <script src="{{ asset('js/auth.js?v=2.3') }}"></script>
     </div>
 @endsection
