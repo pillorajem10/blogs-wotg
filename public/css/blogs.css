@@ -42,13 +42,13 @@
     flex-direction: column; /* Stack children vertically */
     justify-content: space-between; /* Space between header, body, and footer */
     background-color: #ececec;
-    border: 1px solid #ddd;
+    border: 1px solid #d3d3d3; /* Light gray border */
     border-radius: 8px;
     padding: 15px;
     width: 300px; /* Fixed width for consistent sizing */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s; /* Smooth transition for hover effect */
 }
+
 
 .blog-card-body {
     flex-grow: 1; /* Allow body to grow and take available space */

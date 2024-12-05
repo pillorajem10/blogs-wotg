@@ -28,34 +28,24 @@
             </div>
             <div class="card-body">
                 <div class="user-info-item">
-                    <div class="profile-picture">
+                    <div id="profile-picture-container" data-url="{{ route('profile.updatePicture') }}">
                         @if ($user->user_profile_picture)
-                            <img src="data:image/jpeg;base64,{{ base64_encode($user->user_profile_picture) }}" alt="Profile Picture" class="profile-img">
+                            <img src="data:image/jpeg;base64,{{ base64_encode($user->user_profile_picture) }}" alt="Profile Picture" class="profile-img" id="profile-img">
                         @else
-                            <div class="profile-circle">
+                            <div class="profile-circle" id="profile-circle">
                                 <span>{{ strtoupper(substr($user->user_fname, 0, 1)) }}</span>
                             </div>
                         @endif
+                        <!-- Hidden File Input -->
+                        <input type="file" name="user_profile_picture" id="user_profile_picture" class="d-none" accept="image/*">
                     </div>
                 </div>
-
+        
                 <div class="user-info-item">
                     <strong>Email:</strong> <span>{{ $user->email }}</span>
                 </div>
                 <div class="user-info-item">
                     <strong>Ministry:</strong> <span>{{ $user->user_ministry }}</span>
-                </div>
-
-                {{-- Profile Picture Upload Form --}}
-                <div class="user-info-item mt-4">
-                    <form action="{{ route('profile.updatePicture') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <label for="user_profile_picture">Upload Profile Picture:</label>
-                            <input type="file" name="user_profile_picture" id="user_profile_picture" class="form-control" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Upload</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -121,5 +111,7 @@
         <div class="actions">
             <a href="{{ route('profile.edit') }}" class="btn custom-btn">Edit Profile</a>
         </div>
+
+        <script src="{{ asset('js/dashboard.js?v=1.9') }}"></script>
     </div>
 @endsection

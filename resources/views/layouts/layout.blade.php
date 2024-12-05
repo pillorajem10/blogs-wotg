@@ -152,6 +152,40 @@
             border-radius: 2px;
         }
 
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-img-nav {
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-circle-nav {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            color: #c0392b;
+            font-size: 1.2rem; /* Adjust font size as needed */
+            font-weight: bold;
+        }
+
+        .right-side-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+
         /* Mobile view adjustments */
         @media (max-width: 768px) {
             .hamburger-menu {
@@ -188,13 +222,32 @@
             <img src="{{ asset('images/wotg-logo.png') }}" alt="WOTG Logo" style="width: 3rem;">
         </a>
     
-        <!-- Hamburger Menu -->
-        <button id="hamburger" class="hamburger-menu" onclick="toggleDrawer()">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
+        <!-- User Profile Section (Conditional) -->
+        <div class="right-side-nav">
+            <div class="user-profile">
+                @auth
+                    <!-- Check if authenticated user has a profile picture -->
+                    @if (Auth::user()->user_profile_picture)
+                        <!-- Display Profile Picture -->
+                        <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
+                    @else
+                        <!-- Display Circle with First Letter of First Name -->
+                        <div class="profile-circle-nav">
+                            <span>{{ strtoupper(substr(Auth::user()->user_fname, 0, 1)) }}</span>
+                        </div>
+                    @endif
+                @endauth
+            </div>
+        
+            <!-- Hamburger Menu -->
+            <button id="hamburger" class="hamburger-menu" onclick="toggleDrawer()">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>              
     </nav>
+    
     
     <aside id="sidebar" class="sidebar">
         <ul>
@@ -203,7 +256,7 @@
                 <li><a href="#">Community (Coming soon)</a></li>
                 <li><a href="#">Video Meeting (Coming soon)</a></li>
                 <li><a href="#">Messages (Coming soon)</a></li>
-                <li><a href="/d-group">D-Group</a></li>
+                <li><a href="/d-group">My D-Group</a></li>
                 <li><a href="/faq">FAQs</a></li>
                 <li><a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
             @else <!-- If user is not authenticated -->
