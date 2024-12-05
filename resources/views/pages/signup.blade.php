@@ -181,6 +181,6 @@
             <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=2.0') }}"></script>
+        <script src="{{ asset('js/auth.js?v=2.1') }}"></script>
     </div>
 @endsection
