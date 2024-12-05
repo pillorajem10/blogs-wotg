@@ -2,13 +2,24 @@
 
 /* Dashboard Container */
 .dashboard-container {
-    max-width: 1200px;
     margin: 30px auto;
     padding: 20px;
     margin-top: 5rem;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.content-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.content-column {
+    width: 100%;
+    max-width: 40%;
 }
 
 /* Header */
@@ -32,7 +43,7 @@
     gap: 5px;
 }
 
-.card-header {
+.card-header-dashboard {
     background-color: #c0392b;
     color: white;
     padding: 15px;
@@ -41,7 +52,36 @@
 }
 
 .card-body {
-    padding: 20px;
+    padding: 10px;
+}
+
+.approval-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-btn-dashboard {
+    background-color: #c0392b; /* Green background (you can change this to any color you prefer) */
+    color: white; /* White text */
+    border: none;
+    padding: 15px; /* Padding for spacing */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 12px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background change on hover */
+}
+
+.custom-btn-dashboard:hover {
+    background-color: darkred; /* Darker green on hover */
+    color: white; /* White text */
+}
+
+.approval-list-member-info {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .card-body .user-info-item {
@@ -66,6 +106,7 @@
 .member-list li {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 5px;
 }
 
@@ -190,3 +231,17 @@
     }
 }
 
+@media (max-width: 1100px) {
+    .content-column {
+        max-width: 100%;
+    }
+
+    .member-list li {
+        font-size: .7rem;
+    }
+
+    .card-header-dashboard {
+        font-size: 1rem;
+    }
+}
+ 

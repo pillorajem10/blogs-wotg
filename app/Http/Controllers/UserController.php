@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\MemberRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -63,7 +65,7 @@ class UserController extends Controller
         $dgroup_leader_email_changed = false;
         $new_dgroup_leader_email = $request->user_dgroup_leader;
         $new_dgroup_leader = User::where('email', $new_dgroup_leader_email)->first();
-
+    
         if ($new_dgroup_leader) {
             $new_dgroup_leader_id = $new_dgroup_leader->id;
         } else {
@@ -96,6 +98,13 @@ class UserController extends Controller
             // Send the approval email to the new D-Group leader
             \Mail::to($dgroupLeader->email)->send(new \App\Mail\DgroupMemberApprovalRequest($dgroupLeader, $request->email, $approvalToken, $dgroupLeader->id));
     
+            // Save the MemberRequest record for the D-Group leader change request
+            MemberRequest::create([
+                'user_id' => $user->id,
+                'dgroup_leader_id' => $dgroupLeader->id,
+                'status' => 'pending', // Initially set the status to 'pending'
+            ]);
+    
             // Return with a success message (indicating that the approval request is sent)
             return redirect()->route('profile.edit')->with('success', 'Your request to change the D-Group leader has been sent for approval!');
         }
@@ -103,6 +112,7 @@ class UserController extends Controller
         // Redirect with success message for other profile updates
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully!');
     }
+    
 
 
 

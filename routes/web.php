@@ -57,7 +57,7 @@ Route::post('/profile/update-picture', [UserController::class, 'updateProfilePic
 Route::middleware(['auth'])->get('/d-group', [DashboardController::class, 'index'])->name('dashboard');
 
 // DGROUP
-Route::get('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgroup.approve');
+Route::post('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgroup.approve');
 
 // FAQ
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');

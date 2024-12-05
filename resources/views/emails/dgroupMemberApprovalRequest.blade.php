@@ -30,7 +30,7 @@
         }
         .btn-approve {
             display: inline-block;
-            background-color: #28a745;
+            background-color: #c0392b;
             color: #ffffff;
             padding: 12px 25px;
             font-size: 16px;
@@ -41,7 +41,8 @@
             margin-top: 20px;
         }
         .btn-approve:hover {
-            background-color: #218838;
+            background-color: #c0392b;
+            color: #ffffff;
         }
         .footer {
             margin-top: 20px;
@@ -50,7 +51,7 @@
             color: #888888;
         }
         .footer a {
-            color: #4CAF50;
+            color: #c0392b;
             text-decoration: none;
         }
         .footer a:hover {
@@ -59,21 +60,19 @@
         .note {
             background-color: #f7f7f7;
             padding: 15px;
-            border-left: 5px solid #4CAF50;
+            border-left: 5px solid #c0392b;
             margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="email-container">
-        <h2>D-Group Member Approval Request</h2>
-        
         <p>Dear {{ $dgroupLeader->user_fname }},</p>
 
         <p>One of your members, <strong>{{ $memberEmail }}</strong>, has requested to join your D-Group. Please review their registration and approve them to finalize the process.</p>
 
-        <a href="{{ route('dgroup.approve', ['email' => $memberEmail, 'token' => $approvalToken, 'dgroupLeaderId' => $dgroupLeaderId]) }}" class="btn-approve">
-            Approve Member
+        <a href="{{ route('dashboard')}}" class="btn-approve">
+            See Member Request
         </a>        
 
         <div class="note">
