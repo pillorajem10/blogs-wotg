@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.2') }}">
 @endsection
 
 @section('content')
@@ -46,6 +46,10 @@
                 </div>
                 <div class="user-info-item">
                     <strong>Ministry:</strong> <span>{{ $user->user_ministry }}</span>
+                </div>
+
+                <div>
+                    <a href="{{ route('profile.edit') }}" class="btn custom-btn">Edit Profile</a>
                 </div>
             </div>
         </div>
@@ -107,11 +111,6 @@
             </div>
         @endif
 
-        {{-- Actions --}}
-        <div class="actions">
-            <a href="{{ route('profile.edit') }}" class="btn custom-btn">Edit Profile</a>
-        </div>
-
-        <script src="{{ asset('js/dashboard.js?v=2.1') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.2') }}"></script>
     </div>
 @endsection

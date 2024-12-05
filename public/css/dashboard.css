@@ -111,6 +111,7 @@
 .custom-btn:hover {
     background-color: #a93226;
     border-color: #a93226;
+    color: white;
 }
 
 .alert {
