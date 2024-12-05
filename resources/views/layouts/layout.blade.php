@@ -226,16 +226,18 @@
         <div class="right-side-nav">
             <div class="user-profile">
                 @auth
-                    <!-- Check if authenticated user has a profile picture -->
-                    @if (Auth::user()->user_profile_picture)
-                        <!-- Display Profile Picture -->
-                        <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
-                    @else
-                        <!-- Display Circle with First Letter of First Name -->
-                        <div class="profile-circle-nav">
-                            <span>{{ strtoupper(substr(Auth::user()->user_fname, 0, 1)) }}</span>
-                        </div>
-                    @endif
+                    <!-- Profile Picture or Circle (Wrapped in a div for easy JS navigation) -->
+                    <div class="profile-clickable" onclick="navigateToDGroup()">
+                        @if (Auth::user()->user_profile_picture)
+                            <!-- Display Profile Picture -->
+                            <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
+                        @else
+                            <!-- Display Circle with First Letter of First Name -->
+                            <div class="profile-circle-nav">
+                                <span>{{ strtoupper(substr(Auth::user()->user_fname, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                    </div>
                 @endauth
             </div>
         
@@ -247,7 +249,6 @@
             </button>
         </div>              
     </nav>
-    
     
     <aside id="sidebar" class="sidebar">
         <ul>
@@ -270,9 +271,6 @@
     <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
-    
-    
-    
 
     <div class="main-content">
         <div class="cards">
@@ -307,6 +305,10 @@
                     sidebar.style.left = '-250px'; // Sidebar is hidden off-screen
                 }
             }
+        }
+
+        function navigateToDGroup() {
+            window.location.href = '/d-group';  // Redirects the user to the "/d-group" page
         }
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
