@@ -63,6 +63,7 @@ class PostController extends Controller
     
         // Validate the input with custom error messages
         $validated = $request->validate([
+            'post_caption' => 'required|string',
             'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8048',
         ], $messages);
     
