@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DgroupController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,10 @@ Route::post('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgro
 
 // FAQ
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+// POSTS
+Route::get('/community', [PostController::class, 'index'])->name('posts.index'); // Display posts
+Route::post('/community', [PostController::class, 'store'])->name('posts.store'); // Store a new post
 
 // USER CONTROLLERS
 // Route::get('/users', [UserController::class, 'index'])->name('users.index');

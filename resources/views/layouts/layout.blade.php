@@ -265,7 +265,7 @@
         <ul>
             @if(auth()->check()) <!-- If user is authenticated -->
                 <li><a href="#">Watch Messages (Coming soon)</a></li>
-                <li><a href="#">Community (Coming soon)</a></li>
+                <li><a href="/community">Community (Coming soon)</a></li>
                 <li><a href="#">Video Meeting (Coming soon)</a></li>
                 <li><a href="#">Messages (Coming soon)</a></li>
                 <li><a href="/d-group">My D-Group</a></li>
