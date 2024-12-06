@@ -104,6 +104,7 @@ class PostController extends Controller
             // If the post is already liked, unlike it
             $existingLike->delete();
             $post->post_likes = $post->post_likes - 1; // Decrease the like count
+            $likedByUser = false; // User has unliked the post
             $message = 'You unliked this post.';
         } else {
             // If the post is not liked, like it
@@ -112,16 +113,18 @@ class PostController extends Controller
                 'post_id' => $postId,
             ]);
             $post->post_likes = $post->post_likes + 1; // Increase the like count
+            $likedByUser = true; // User has liked the post
             $message = 'You liked this post.';
         }
     
         // Save the updated like count on the Post model
         $post->save();
     
-        // Return the updated like count in JSON format
+        // Return the updated like count and likedByUser status in JSON format
         return response()->json([
             'message' => $message,
             'likesCount' => $post->post_likes,
+            'likedByUser' => $likedByUser,
         ]);
-    }    
+    }       
 }

@@ -52,9 +52,20 @@ function likePost(postId) {
             _token: window.Laravel.csrfToken // Use the csrfToken from the window object
         },
         success: function(response) {
-            // Update the like button text (toggle between Like and Unlike)
+            // Update the like button text and icon based on whether the user liked the post
             var button = $("#post-" + postId).find(".like-btn");
-            button.text(response.likesCount > 0 ? "Liked" : "Like");
+            var icon = button.find("i");
+
+            if (response.likedByUser) {
+                icon.removeClass("fa-heart-o").addClass("fa-heart");
+                button.text(" Liked"); // Update the button text to "Liked"
+            } else {
+                icon.removeClass("fa-heart-o").addClass("fa-heart");
+                button.text(" Like"); // Update the button text to "Like"
+            }
+
+            // Prepend the updated icon to the button text
+            button.prepend(icon);
 
             // Update the like count
             $("#likes-count-" + postId).text(response.likesCount);
@@ -64,3 +75,4 @@ function likePost(postId) {
         }
     });
 }
+

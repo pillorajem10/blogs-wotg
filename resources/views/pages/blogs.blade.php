@@ -3,7 +3,7 @@
 @section('title', 'Blogs')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=3.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=3.2') }}">
 @endsection
 
 @section('content')
@@ -63,5 +63,5 @@
     </div>
 
     <!-- Include JS file -->
-    <script src="{{ asset('js/blogs.js?v=3.1') }}"></script>
+    <script src="{{ asset('js/blogs.js?v=3.2') }}"></script>
 @endsection
