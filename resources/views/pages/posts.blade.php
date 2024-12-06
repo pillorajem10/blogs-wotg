@@ -3,7 +3,8 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.1') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
 @section('content')
@@ -67,7 +68,7 @@
         <div class="posts-feed">
             <div>
                 @forelse ($posts as $post)
-                    <div class="post-card">
+                    <div class="post-card" id="post-{{ $post->id }}">
                         <div class="post-header">
                             <div class="post-user">
                                 <div class="user-avatar">
@@ -85,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-
+        
                         <div class="post-content">
                             <h2 class="post-caption">{{ $post->post_caption }}</h2>
                             @if ($post->post_image)
@@ -94,17 +95,21 @@
                                 </div>
                             @endif
                         </div>
-
-                        {{--<div class="post-footer">
+        
+                        <div class="post-footer">
                             <div class="post-actions">
-                                <button class="like-btn">Like (Coming Soon)</button>
-                                <button class="comment-btn">Comment (Coming Soon)</button>
+                                <!-- Check if the user has liked the post -->
+                                <button class="like-btn" data-post-id="{{ $post->id }}">
+                                    <!-- Heart icon, toggles between filled and empty depending on if the post is liked -->
+                                    <i class="fa fa-heart"></i>
+                                    <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
+                                </button>
+                                <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span>
                             </div>
-                            <div class="post-stats">
-                                <span class="likes-count">{{ $post->post_likes }} Likes</span>
-                                <span class="comments-count">{{ is_array($post->post_comments) ? count($post->post_comments) : 0 }} Comments</span>
-                            </div>
-                        </div>--}}
+                            {{--<div class="post-stats">
+                                <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }} Likes</span>
+                            </div>--}}
+                        </div>                        
                     </div>
                 @empty
                     <div class="no-posts">
@@ -113,7 +118,8 @@
                 @endforelse
             </div>
         </div>
+            
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.0') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.1') }}"></script>
 @endsection

@@ -66,6 +66,7 @@ Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 // POSTS
 Route::get('/community', [PostController::class, 'index'])->name('posts.index'); // Display posts
 Route::post('/community', [PostController::class, 'store'])->name('posts.store'); // Store a new post
+Route::post('/community/{postId}/like', [PostController::class, 'likePost'])->name('posts.like');
 
 // USER CONTROLLERS
 // Route::get('/users', [UserController::class, 'index'])->name('users.index');

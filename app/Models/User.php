@@ -47,4 +47,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'comment_userid');
     }
+
+    public function hasLiked($postId)
+    {
+        return PostLike::where('user_id', $this->id)
+                        ->where('post_id', $postId)
+                        ->exists();
+    }
 }

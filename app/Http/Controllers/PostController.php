@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -21,10 +22,17 @@ class PostController extends Controller
     public function index()
     {
         // Retrieve all posts from the database
-        $posts = Post::all(); // Retrieve all posts
-    
+        $posts = Post::with('likes') // Eager load the likes relationship
+                     ->get(); // Get all posts
+        
         // Shuffle the posts to randomize the order
         $posts = $posts->shuffle(); // Shuffle the collection of posts
+        
+        // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
+        $posts->map(function ($post) {
+            $post->likedByUser = $post->likes()->where('user_id', auth()->id())->exists();
+            return $post;
+        });
     
         // Retrieve the authenticated user's details
         $user = auth()->user();
@@ -32,6 +40,7 @@ class PostController extends Controller
         // Pass the posts and user details to the Blade view
         return view('pages.posts', compact('posts', 'user'));
     }
+    
     
     
 
@@ -79,5 +88,40 @@ class PostController extends Controller
     
         // Redirect back with success message
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+    }   
+    
+    public function likePost(Request $request, $postId)
+    {
+        $userId = Auth::id();
+        $post = Post::findOrFail($postId);
+    
+        // Check if the user has already liked the post
+        $existingLike = PostLike::where('user_id', $userId)
+                                ->where('post_id', $postId)
+                                ->first();
+    
+        if ($existingLike) {
+            // If the post is already liked, unlike it
+            $existingLike->delete();
+            $post->post_likes = $post->post_likes - 1; // Decrease the like count
+            $message = 'You unliked this post.';
+        } else {
+            // If the post is not liked, like it
+            PostLike::create([
+                'user_id' => $userId,
+                'post_id' => $postId,
+            ]);
+            $post->post_likes = $post->post_likes + 1; // Increase the like count
+            $message = 'You liked this post.';
+        }
+    
+        // Save the updated like count on the Post model
+        $post->save();
+    
+        // Return the updated like count in JSON format
+        return response()->json([
+            'message' => $message,
+            'likesCount' => $post->post_likes,
+        ]);
     }    
 }

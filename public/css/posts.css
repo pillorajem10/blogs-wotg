@@ -100,11 +100,12 @@
 
 .post-actions {
     display: flex;
-    gap: 15px;
+    gap: 5px;
+    align-items: center;
 }
 
 .like-btn, .comment-btn {
-    background-color: #4267B2;
+    background-color: #c0392b;
     color: #fff;
     padding: 8px 15px;
     border-radius: 20px;
@@ -114,7 +115,7 @@
 }
 
 .like-btn:hover, .comment-btn:hover {
-    background-color: #365899;
+    background-color: #a72c1f;
 }
 
 /* Post Stats */

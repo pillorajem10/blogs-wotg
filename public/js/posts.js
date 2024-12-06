@@ -35,4 +35,32 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = "none";
         }
     }
+
+    // Attach likePost event to all like buttons
+    $(".like-btn").on("click", function () {
+        var postId = $(this).data("post-id");
+        likePost(postId);
+    });
 });
+
+// AJAX function to handle Like/Unlike
+function likePost(postId) {
+    $.ajax({
+        url: '/community/' + postId + '/like',
+        type: 'POST',
+        data: {
+            _token: window.Laravel.csrfToken // Use the csrfToken from the window object
+        },
+        success: function(response) {
+            // Update the like button text (toggle between Like and Unlike)
+            var button = $("#post-" + postId).find(".like-btn");
+            button.text(response.likesCount > 0 ? "Liked" : "Like");
+
+            // Update the like count
+            $("#likes-count-" + postId).text(response.likesCount);
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+    });
+}
