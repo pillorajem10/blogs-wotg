@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.5') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -48,18 +48,17 @@
 
                     <!-- Error messages for the form -->
 
-
                     <div class="form-group">
                         <label for="post_caption">Caption</label>
-                        <input type="text" id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" required>
-                    </div>
+                        <textarea id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" rows="5" required></textarea>
+                    </div>                    
 
                     <div class="form-group">
                         <label for="post_image">Image (optional)</label>
                         <input type="file" id="post_image" name="post_image" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn-submit">Post</button>
+                    <button type="submit" class="btn-submit-post">Post</button>
                 </form>
             </div>
         </div>
@@ -125,5 +124,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.4') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.5') }}"></script>
 @endsection
