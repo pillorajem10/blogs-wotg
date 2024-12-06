@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=2.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.0') }}">
 @endsection
 
 @section('content')
@@ -115,5 +115,5 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/posts.js?v=2.9') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.0') }}"></script>
 @endsection

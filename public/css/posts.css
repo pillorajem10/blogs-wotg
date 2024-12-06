@@ -86,7 +86,8 @@
 }
 
 .post-image img {
-    width: 100%;
+    max-width: 5rem;
+    width: 30rem;
     border-radius: 8px;
 }
 
@@ -172,7 +173,7 @@
 }
 
 .post-content img {
-    max-width: 800px;
+    max-width: 100%;
 }
 
 .add-post-container {
