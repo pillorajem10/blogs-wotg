@@ -115,7 +115,7 @@
         .sidebar {
             position: fixed;
             top: 1rem;
-            left: -100%; /* Initially hidden */
+            /*left: -100%;  Initially hidden */
             width: 250px;
             height: 100%;
             background-color: darkred;
@@ -148,7 +148,7 @@
 
         /* Hamburger menu styles */
         .hamburger-menu {
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: space-between;
             width: 30px;
@@ -202,10 +202,6 @@
 
         /* Mobile view adjustments */
         @media (max-width: 768px) {
-            .hamburger-menu {
-                display: flex;
-            }
-
             .navbar {
                 display: flex;
                 justify-content: space-between;
@@ -219,6 +215,13 @@
                 font-size: .8rem;
             }
         }
+
+        @media (max-width: 500px) {
+            .hamburger-menu {
+                display: flex;
+            }
+        }
+
 
         /* For screens with max-width of 500px */
         @media (max-width: 500px) {
@@ -252,7 +255,7 @@
                             <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
                         @else
                             <!-- Display Circle with First Letter of First Name -->
-                            <div class="profile-circle-nav">
+                            <div class="profile-circle-nav" onclick="navigateToDGroup()">
                                 <span>{{ strtoupper(substr(Auth::user()->user_fname, 0, 1)) }}</span>
                             </div>
                         @endif
@@ -295,34 +298,53 @@
     </footer>
 
     <script>
-        function toggleDrawer() {
+        function adjustSidebarAndContent() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
-
-            // Get the current screen width
+            const mainContent = document.querySelector('.main-content');
             const screenWidth = window.innerWidth;
-
-            // Adjust the sidebar position based on screen width
-            if (screenWidth <= 500) {
-                if (sidebar.classList.contains('active')) {
-                    sidebar.style.left = '0'; // Sidebar takes full width on smaller screens
-                } else {
-                    sidebar.style.left = '-100%'; // Sidebar moves off-screen
-                }
+    
+            if (screenWidth > 500) {
+                // Always keep the sidebar visible and content squeezed
+                sidebar.classList.add('active');
+                sidebar.style.left = '0';
+                mainContent.style.marginLeft = '250px'; // Squeeze content
             } else {
-                // For larger screens, the sidebar behaves as before
-                if (sidebar.classList.contains('active')) {
-                    sidebar.style.left = '0'; // Sidebar stays visible
-                } else {
-                    sidebar.style.left = '-250px'; // Sidebar is hidden off-screen
-                }
+                // For smaller screens, hide the sidebar by default
+                sidebar.classList.remove('active');
+                sidebar.style.left = '-100%'; // Sidebar off-screen
+                mainContent.style.marginLeft = '0'; // Reset content margin
             }
         }
+    
+        function toggleDrawer() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const screenWidth = window.innerWidth;
+    
+            if (screenWidth > 500) {
+                // Do nothing since the sidebar is always active on larger screens
+                return;
+            }
+    
+            // Toggle the sidebar for smaller screens
+            sidebar.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                sidebar.style.left = '0'; // Sidebar visible
+            } else {
+                sidebar.style.left = '-100%'; // Sidebar hidden
+            }
+        }
+    
+        // Ensure the sidebar and content are adjusted on window resize
+        window.addEventListener('resize', adjustSidebarAndContent);
+    
+        // Adjust the sidebar and content on page load
+        document.addEventListener('DOMContentLoaded', adjustSidebarAndContent);
 
         function navigateToDGroup() {
             window.location.href = '/d-group';  // Redirects the user to the "/d-group" page
         }
-    </script>
+    </script>    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
