@@ -106,19 +106,31 @@
 }
 
 .like-btn, .comment-btn {
-    background-color: #c0392b;
-    color: #fff;
+    background-color: white; /* Set background color to white */
+    color: #c0392b; /* Set font color to #c0392b */
     padding: 8px 15px;
     border-radius: 20px;
-    border: none;
+    border: 2px solid #c0392b; /* Set border color to #c0392b */
     cursor: pointer;
     font-size: 0.9em;
 }
 
+/*
+.liked-btn {
+    background-color: white; 
+    color: #c0392b; 
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #c0392b; 
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+
 .like-btn:hover, .comment-btn:hover {
     background-color: #a72c1f;
 }
-
+*/
 /* Post Stats */
 .post-stats {
     margin-top: 10px;
@@ -128,6 +140,7 @@
 
 .likes-count, .comments-count {
     margin-right: 20px;
+    color: #c0392b;
 }
 
 /* Post Status */

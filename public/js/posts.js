@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // AJAX function to handle Like/Unlike
 function likePost(postId) {
-    $.ajax({
+    $.ajax({    
         url: '/community/' + postId + '/like',
         type: 'POST',
         data: {
@@ -57,10 +57,10 @@ function likePost(postId) {
             var icon = button.find("i");
 
             if (response.likedByUser) {
-                icon.removeClass("fa-heart-o").addClass("fa-heart");
+                icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
                 button.text(" Liked"); // Update the button text to "Liked"
             } else {
-                icon.removeClass("fa-heart-o").addClass("fa-heart");
+                icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
                 button.text(" Like"); // Update the button text to "Like"
             }
 

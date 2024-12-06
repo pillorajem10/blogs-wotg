@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.4') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -84,6 +84,8 @@
                                 
                                 <div class="user-info">
                                     <span class="user-name">{{ $post->user->user_fname }} {{ $post->user->user_lname }}</span>
+                                    <span>-</span>
+                                    <span class="post-time">{{ \Carbon\Carbon::parse($post->created_at)->format('F j, Y g:i A') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +104,7 @@
                                 <!-- Check if the user has liked the post -->
                                 <button class="like-btn" data-post-id="{{ $post->id }}">
                                     <!-- Heart icon, toggles between filled and empty depending on if the post is liked -->
-                                    <i class="fa fa-heart"></i>
+                                    <i class="fa fa-heart fa-lg"></i>
                                     <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
                                 </button>
                                 <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span>
@@ -123,5 +125,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.3') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.4') }}"></script>
 @endsection
