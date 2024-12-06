@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.3') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -69,6 +69,7 @@
             <div>
                 @forelse ($posts as $post)
                     <div class="post-card" id="post-{{ $post->id }}">
+                        <hr>
                         <div class="post-header">
                             <div class="post-user">
                                 <div class="user-avatar">
@@ -109,7 +110,8 @@
                             {{--<div class="post-stats">
                                 <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }} Likes</span>
                             </div>--}}
-                        </div>                        
+                        </div> 
+                        <hr>                       
                     </div>
                 @empty
                     <div class="no-posts">
@@ -121,5 +123,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.2') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.3') }}"></script>
 @endsection
