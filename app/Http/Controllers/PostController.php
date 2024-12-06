@@ -56,7 +56,6 @@ class PostController extends Controller
         $messages = [
             'post_caption.required' => 'Please provide a caption for your post.',
             'post_caption.string' => 'The caption must be a valid string.',
-            'post_caption.max' => 'The caption cannot be longer than 255 characters.',
             'post_image.image' => 'Please upload a valid image file (jpeg, png, jpg, gif, svg).',
             'post_image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg.',
             'post_image.max' => 'The image size cannot exceed 8MB.',
@@ -64,7 +63,6 @@ class PostController extends Controller
     
         // Validate the input with custom error messages
         $validated = $request->validate([
-            'post_caption' => 'required|string|max:255',
             'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8048',
         ], $messages);
     
