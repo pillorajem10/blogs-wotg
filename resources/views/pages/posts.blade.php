@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.7') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -45,19 +45,24 @@
                 <!-- Form with error messages -->
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
+                
                     <!-- Error messages for the form -->
-
+                
                     <div class="form-group">
                         <label for="post_caption">Caption</label>
                         <textarea id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" rows="5" required></textarea>
                     </div>                    
-
+                
                     <div class="form-group">
                         <label for="post_image">Image (optional)</label>
-                        <input type="file" id="post_image" name="post_image" class="form-control">
+                        <input type="file" id="post_image" name="post_image" class="form-control" onchange="previewImage()">
+                        
+                        <!-- Image preview -->
+                        <div id="image_preview" style="margin-top: 10px;">
+                            <img id="preview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;">
+                        </div>
                     </div>
-
+                
                     <button type="submit" class="btn-submit-post">Post</button>
                 </form>
             </div>
@@ -136,5 +141,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.6') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.7') }}"></script>
 @endsection

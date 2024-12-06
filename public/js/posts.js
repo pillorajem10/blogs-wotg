@@ -91,3 +91,22 @@ function toggleSeeMore(postId) {
         seeMoreLink.textContent = '... See More';
     }
 }
+
+function previewImage() {
+    const file = document.getElementById('post_image').files[0];
+    const preview = document.getElementById('preview');
+    const imagePreviewContainer = document.getElementById('image_preview');
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block'; // Show the image
+        };
+
+        reader.readAsDataURL(file); // Read the file as a Data URL
+    } else {
+        preview.style.display = 'none'; // Hide the preview if no file is selected
+    }
+}
