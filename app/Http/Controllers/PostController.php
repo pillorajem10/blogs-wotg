@@ -21,12 +21,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        // Retrieve all posts from the database
+        // Retrieve all posts from the database, eager load the likes relationship, and order by created_at
         $posts = Post::with('likes') // Eager load the likes relationship
+                     ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
                      ->get(); // Get all posts
-        
-        // Shuffle the posts to randomize the order
-        $posts = $posts->shuffle(); // Shuffle the collection of posts
         
         // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
         $posts->map(function ($post) {
@@ -40,6 +38,7 @@ class PostController extends Controller
         // Pass the posts and user details to the Blade view
         return view('pages.posts', compact('posts', 'user'));
     }
+    
     
     
     
