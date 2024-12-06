@@ -12,7 +12,6 @@
     </div>
 
     <div class="container">
-        <!-- Button to open modal -->
         <div class="add-post-container">
             <div class="user-avatar">
                 @if ($user->user_profile_picture) 
@@ -26,26 +25,43 @@
             <button id="addPostBtn" class="add-post-btn">What's on your mind?</button>
         </div>
 
+        @if ($errors->any())
+            <div class="alert alert-danger mt-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- Modal structure -->
         <div id="addPostModal" class="modal">
             <div class="modal-content">
                 <span id="closeModalBtn" class="close">&times;</span>
                 <h3>Create Post</h3>
+
+                <!-- Form with error messages -->
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
+                    <!-- Error messages for the form -->
+
+
                     <div class="form-group">
                         <label for="post_caption">Caption</label>
                         <input type="text" id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" required>
                     </div>
+
                     <div class="form-group">
                         <label for="post_image">Image (optional)</label>
                         <input type="file" id="post_image" name="post_image" class="form-control">
                     </div>
+
                     <button type="submit" class="btn-submit">Post</button>
                 </form>
             </div>
         </div>
-
 
         <!-- Posts Feed -->
         <div class="posts-feed">
