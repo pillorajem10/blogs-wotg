@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.6') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -90,13 +90,25 @@
                         </div>
         
                         <div class="post-content">
-                            <h2 class="post-caption">{{ $post->post_caption }}</h2>
+                            <h2 class="post-caption" id="caption-{{ $post->id }}">
+                                <span class="caption-short">
+                                    {{ \Str::limit($post->post_caption, 500) }}
+                                </span>
+                                <span class="caption-full" style="display: none;">
+                                    {{ $post->post_caption }}
+                                </span>
+                                @if (strlen($post->post_caption) > 500)
+                                    <a href="javascript:void(0);" class="see-more" onclick="toggleSeeMore({{ $post->id }})">... See More</a>
+                                @endif
+                            </h2>
+                        
                             @if ($post->post_image)
                                 <div class="post-image">
                                     <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid">
                                 </div>
                             @endif
                         </div>
+                        
         
                         <div class="post-footer">
                             <div class="post-actions">
@@ -124,5 +136,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.5') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.6') }}"></script>
 @endsection

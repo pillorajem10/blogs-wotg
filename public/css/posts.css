@@ -48,8 +48,8 @@
 
 /* User Info */
 .user-avatar img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -58,8 +58,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: #c0392b;
     color: white;
@@ -297,6 +297,16 @@
 
 .btn-submit-post:hover {
     background-color: #9e2b1f;
+}
+
+.see-more {
+    color: rgb(151, 151, 151);
+    text-decoration: none; /* Remove underline */
+}
+
+.see-more:hover {
+    color: rgb(58, 58, 58); /* Change to a darker gray when hovered */
+    text-decoration: none; /* Remove underline */
 }
 
 

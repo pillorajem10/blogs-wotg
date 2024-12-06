@@ -76,3 +76,18 @@ function likePost(postId) {
     });
 }
 
+function toggleSeeMore(postId) {
+    const shortText = document.querySelector(`#caption-${postId} .caption-short`);
+    const fullText = document.querySelector(`#caption-${postId} .caption-full`);
+    const seeMoreLink = document.querySelector(`#caption-${postId} .see-more`);
+
+    if (fullText.style.display === 'none') {
+        fullText.style.display = 'inline';
+        shortText.style.display = 'none';
+        seeMoreLink.textContent = '... See Less';
+    } else {
+        fullText.style.display = 'none';
+        shortText.style.display = 'inline';
+        seeMoreLink.textContent = '... See More';
+    }
+}
