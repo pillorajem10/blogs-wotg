@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.9') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -133,16 +133,17 @@
                         <!-- Modal Structure -->
                         <div id="commentModal-{{ $post->id }}" class="modal">
                             <div class="modal-content">
-                                <span class="close" data-post-id="{{ $post->id }}">&times;</span>        
-                                <!-- Existing Comments -->
-                                <div class="comments-list">
+                                <span class="close" data-post-id="{{ $post->id }}">&times;</span>
+                                
+                                <!-- Existing Comments Section -->
+                                <div class="comments-list" id="comments-list-{{ $post->id }}">
                                     @foreach ($post->comments as $comment)
                                         <div class="comment">
                                             <div class="comment-avatar">
                                                 @if ($comment->user->user_profile_picture)
                                                     <img src="data:image/jpeg;base64,{{ base64_encode($comment->user->user_profile_picture) }}" alt="User Avatar">
                                                 @else
-                                                    <div class="profile-circle-comment" id="profile-circle">
+                                                    <div class="profile-circle-comment">
                                                         <span>{{ strtoupper(substr($comment->user->user_fname, 0, 1)) }}</span>
                                                     </div>
                                                 @endif
@@ -156,19 +157,16 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                </div>                                
+                                </div>
+                                
                                 <hr>
-        
-                                <!-- Add Comment Form -->
-                                <form action="{{ route('post.comment.store', ['postId' => $post->id]) }}" method="POST">
-                                    @csrf
-                                    <textarea name="comment_text" class="form-control" placeholder="Add a comment..." required rows="5"></textarea>
-                                    <button type="submit" class="btn-submit-post mt-4">Comment</button>
-                                </form>
+                                
+                                <!-- Comment Input -->
+                                <textarea id="comment-text-{{ $post->id }}" class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+                                <button class="btn-submit-post mt-2" onclick="addComment({{ $post->id }})">Submit</button>
                             </div>
-                        </div>
+                        </div>                                                        
                         <!-- End Modal Structure -->
-        
                     </div>
                 @empty
                     <div class="no-posts">
@@ -180,5 +178,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.8') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.9') }}"></script>
 @endsection

@@ -113,6 +113,53 @@ function likePost(postId) {
     });
 }
 
+function addComment(postId) {
+    $.ajax({
+        url: `/community/${postId}/comment`, // Use the route defined in your `web.php`
+        type: 'POST',
+        data: {
+            _token: window.Laravel.csrfToken, // CSRF token for security
+            comment_text: $(`#comment-text-${postId}`).val(), // Capture the comment text
+        },
+        success: function(response) {
+            if (response.success) {
+                const commentHTML = `
+                    <div class="comment">
+                        <div class="comment-avatar">
+                            ${response.comment.user_profile_picture
+                                ? `<img src="data:image/jpeg;base64,${response.comment.user_profile_picture}" alt="User Avatar">`
+                                : `<div class="profile-circle-comment">
+                                    <span>${response.comment.user_initial}</span>
+                                  </div>`
+                            }
+                        </div>
+                        <div class="comment-body">
+                            <div class="comment-author">
+                                <strong>${response.comment.user_fname} ${response.comment.user_lname}</strong>
+                                <span class="comment-time">Just now</span>
+                            </div>
+                            <p class="comment-text">${response.comment.comment_text}</p>
+                        </div>
+                    </div>
+                `;
+
+                const commentsList = $(`#comments-list-${postId}`);
+                commentsList.append(commentHTML);
+
+                // Clear the input field after submission
+                $(`#comment-text-${postId}`).val('');
+            } else {
+                alert('Failed to submit the comment');
+            }
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
+
+
 function toggleSeeMore(postId) {
     const shortText = document.querySelector(`#caption-${postId} .caption-short`);
     const fullText = document.querySelector(`#caption-${postId} .caption-full`);

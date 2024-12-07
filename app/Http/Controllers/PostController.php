@@ -130,15 +130,26 @@ class PostController extends Controller
     public function storeComment(Request $request, $postId)
     {
         $validated = $request->validate([
-            'comment_text' => 'required|string|max:500',
+            'comment_text' => 'required|string|max:5000',
         ]);
-
-        PostComment::create([
+    
+        $comment = PostComment::create([
             'post_id' => $postId,
             'user_id' => Auth::id(),
             'comment_text' => $validated['comment_text'],
         ]);
-
-        return redirect()->back()->with('success', 'Comment added successfully!');
-    }
+    
+        return response()->json([
+            'success' => true,
+            'comment' => [
+                'user_profile_picture' => $comment->user->user_profile_picture 
+                    ? base64_encode($comment->user->user_profile_picture)
+                    : null,
+                'user_fname' => $comment->user->user_fname,
+                'user_lname' => $comment->user->user_lname,
+                'user_initial' => strtoupper(substr($comment->user->user_fname, 0, 1)),
+                'comment_text' => $comment->comment_text,
+            ],
+        ]);
+    }    
 }
