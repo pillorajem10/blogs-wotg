@@ -3,7 +3,7 @@
 @section('title', 'Sign Up Seeker')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/signUpSeeker.css?v=3.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/signUpSeeker.css?v=4.0') }}">
     <div class="signup-container">
         <h2 class="signup-title">Become part of our community.</h2>
 
@@ -73,9 +73,9 @@
 
         <!-- Back to Blogs Button -->
         <div class="text-center">
-            <a href="{{ route('blogs.index') }}" class="back-to-blogs-btn">Back to Blogs</a>
+            <a href="{{ route('posts.index') }}" class="back-to-blogs-btn">Back to Blogs</a>
         </div>
 
-        <script src="{{ asset('js/signupSeeker.js?v=3.9') }}"></script>
+        <script src="{{ asset('js/signupSeeker.js?v=4.0') }}"></script>
     </div>
 @endsection

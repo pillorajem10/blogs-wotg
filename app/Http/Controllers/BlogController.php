@@ -41,7 +41,7 @@ class BlogController extends Controller
         
         // Check if the blog exists and is approved
         if (!$blog || !$blog->blog_approved) {
-            return redirect()->route('blogs.index')->with('error', 'No blog found');
+            return redirect()->route('posts.index')->with('error', 'No blog found');
         }
     
         // Get the previous blog by ID (find the blog with an ID smaller than the current one)

@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=3.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=4.0') }}">
 @endsection
 
 @section('content')
@@ -40,7 +40,7 @@
             @endif
         
             <!-- Back to Blogs Button -->
-            <a href="{{ route('blogs.index') }}" class="action-btn">Back to Blogs</a>
+            <a href="{{ route('posts.index') }}" class="action-btn">Back to Blogs</a>
         
             <!-- Next Button -->
             @if($nextBlog)

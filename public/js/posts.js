@@ -80,6 +80,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+$(document).ready(function() {
+    // Initialize Slick Carousel
+    $('.carousel .card-container').slick({
+        infinite: true,            // Enable infinite looping
+        slidesToShow: 3,           // Number of cards to show at once
+        slidesToScroll: 1,         // Number of cards to scroll at a time
+        autoplay: true,            // Enable autoplay
+        autoplaySpeed: 3000,       // Speed of autoplay (2 seconds)
+        arrows: false,              // Show next/prev arrows
+        dots: true,                // Show pagination dots
+        responsive: [
+            {
+                breakpoint: 1024, // For medium screens (like tablets)
+                settings: {
+                    slidesToShow: 2, // Show 2 cards
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768,  // For small screens (like phones)
+                settings: {
+                    slidesToShow: 2, // Show 1 card
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+    // Any other custom JavaScript code related to posts can go here.
+});
+
+
 // AJAX function to handle Like/Unlike
 function likePost(postId) {
     $.ajax({    

@@ -44,9 +44,9 @@
     background-color: #ececec;
     border: 1px solid #d3d3d3; /* Light gray border */
     border-radius: 8px;
-    padding: 15px;
     width: 300px; /* Fixed width for consistent sizing */
     transition: transform 0.2s; /* Smooth transition for hover effect */
+    margin-right: .5rem;
 }
 
 
@@ -54,10 +54,12 @@
     flex-grow: 1; /* Allow body to grow and take available space */
 }
 
+/*
 .blog-card:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 }
+*/
 
 .blog-card-header {
     border-bottom: 1px solid #ddd;
@@ -65,8 +67,9 @@
 }
 
 .blog-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0;
+    font-weight: bold;
 }
 
 .blog-body {
@@ -77,11 +80,13 @@
 
 .btn-view {
     display: inline-block;
-    margin-top: 10px;
-    padding: 4px 8px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 4px 5px;
     border: 2px solid #c0392b; /* Added border color */
     border-radius: 4px;
-    font-size: .8rem;
+    font-size: .6rem;
     color: #c0392b; /* Font color changed */
     text-decoration: none;
     background-color: transparent; /* Changed background to white */

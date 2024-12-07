@@ -9,12 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
+use Carbon\Carbon;
+use App\Models\Blog;
+
 class PostController extends Controller
 {
+    /*
     public function __construct()
     {
         $this->middleware('auth'); // Ensure the user is authenticated
     }
+    */
     /**
      * Display a listing of the posts.
      *
@@ -22,10 +27,17 @@ class PostController extends Controller
      */
     public function index()
     {
+        $today = Carbon::now('Asia/Manila');
         // Retrieve all posts from the database, eager load the likes relationship, and order by created_at
         $posts = Post::with('likes') // Eager load the likes relationship
                      ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
                      ->get(); // Get all posts
+
+        $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
+                    ->where('blog_approved', true)
+                    ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
+                    ->get(); // Get all results as a collection
+
         
         // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
         $posts->map(function ($post) {
@@ -37,7 +49,7 @@ class PostController extends Controller
         $user = auth()->user();
     
         // Pass the posts and user details to the Blade view
-        return view('pages.posts', compact('posts', 'user'));
+        return view('pages.posts', compact('posts', 'user', 'blogs'));
     }
     
     
@@ -57,15 +69,15 @@ class PostController extends Controller
             'post_caption.required' => 'Please provide a caption for your post.',
             'post_caption.string' => 'The caption must be a valid string.',
             'post_image.image' => 'Please upload a valid image file (jpeg, png, jpg, gif, svg).',
-            'post_image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg.',
-            'post_image.max' => 'The image size cannot exceed 8MB.',
+            'post_image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic.',
+            'post_image.max' => 'The image size cannot exceed 12MB.',
         ];
     
         // Validate the input with custom error messages
         $validated = $request->validate([
             'post_caption' => 'required|string',
-            'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8048',
-        ], $messages);
+            'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288', 
+        ], $messages);                      
     
         // Store the post
         $post = new Post();
@@ -88,6 +100,29 @@ class PostController extends Controller
         // Redirect back with success message
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
     }   
+
+    public function deletePost($postId)
+    {
+        // Retrieve the post by its ID
+        $post = Post::findOrFail($postId);
+        
+        // Check if the authenticated user is the owner of the post
+        if ($post->post_user_id !== Auth::id()) {
+            // If the user is not the owner, return an error
+            return redirect()->route('posts.index')->with('error', 'You are not authorized to delete this post.');
+        }
+
+        // If the user is the owner, delete the post
+        $post->delete();
+
+        // Optionally, delete any associated likes or comments
+        PostLike::where('post_id', $postId)->delete();  // Delete all likes related to the post
+        PostComment::where('post_id', $postId)->delete();  // Delete all comments related to the post
+
+        // Redirect with success message
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+    }
+
     
     public function likePost(Request $request, $postId)
     {

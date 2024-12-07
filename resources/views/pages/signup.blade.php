@@ -198,9 +198,9 @@
             <p>Already got an account? <a href="{{ route('auth.login') }}">Login here</a>.</p>
         </div>
         <div style="margin-top: 20px; text-align: center;">
-            <p><a href="{{ route('blogs.index') }}">Go Back to blogs</a></p>
+            <p><a href="{{ route('posts.index') }}">Go back to home</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=3.9') }}"></script>
+        <script src="{{ asset('js/auth.js?v=4.0') }}"></script>
     </div>
 @endsection

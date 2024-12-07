@@ -112,7 +112,7 @@
     border-radius: 20px;
     border: 2px solid #c0392b; /* Set border color to #c0392b */
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.6em;
 }
 
 .comment-btn {
@@ -122,7 +122,17 @@
     border-radius: 20px;
     border: 2px solid #007997; /* Set border color to #c0392b */
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.6em;
+}
+
+.delete-btn {
+    background-color: white; /* Set background color to white */
+    color: #f78686; /* Set font color to #c0392b */
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #f78686; /* Set border color to #c0392b */
+    cursor: pointer;
+    font-size: 0.6em;
 }
 
 /*
@@ -220,6 +230,10 @@
 .comment-time {
     font-size: 0.8em;
     color: #999;
+}
+
+.carousel {
+    width: 100%;
 }
 
 .comment-text {

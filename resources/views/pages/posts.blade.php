@@ -3,7 +3,8 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.0') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -13,18 +14,21 @@
     </div>
 
     <div class="container">
-        <div class="add-post-container">
-            <div class="user-avatar">
-                @if ($user->user_profile_picture) 
-                    <img src="data:image/jpeg;base64,{{ base64_encode($user->user_profile_picture) }}" alt="User Avatar">
-                @else
-                    <div class="members-profile-circle-feed" id="profile-circle">
-                        <span>{{ strtoupper(substr($user->user_fname, 0, 1)) }}</span>
-                    </div>
-                @endif
+        @auth
+            <div class="add-post-container">
+                <div class="user-avatar">
+                    @if ($user->user_profile_picture) 
+                        <img src="data:image/jpeg;base64,{{ base64_encode($user->user_profile_picture) }}" alt="User Avatar">
+                    @else
+                        <div class="members-profile-circle-feed" id="profile-circle">
+                            <span>{{ strtoupper(substr($user->user_fname, 0, 1)) }}</span>
+                        </div>
+                    @endif
+                </div>
+                <button id="addPostBtn" class="add-post-btn">What's on your mind?</button>
             </div>
-            <button id="addPostBtn" class="add-post-btn">What's on your mind?</button>
-        </div>
+        @endauth
+    
 
         @if ($errors->any())
             <div class="alert alert-danger mt-4">
@@ -67,6 +71,25 @@
                 </form>
             </div>
         </div>
+
+        <div class="carousel">
+            <div class="card-container">
+                @forelse ($blogs as $blog)
+                    <div class="blog-card">
+                        <div class="blog-card-body">
+                            @if($blog->blog_thumbnail)
+                                <img src="data:image/jpeg;base64,{{ base64_encode($blog->blog_thumbnail) }}" alt="{{ $blog->blog_title }}" class="blog-thumbnail">
+                            @endif
+                        </div>
+                        <div class="blog-card-footer">
+                            <a href="{{ route('blogs.show', $blog->id) }}" class="btn-view">See More</a>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center">No blogs found.</div>
+                @endforelse
+            </div>
+        </div>        
 
         <!-- Posts Feed -->
         <div class="posts-feed">
@@ -114,20 +137,34 @@
                             @endif
                         </div>
         
-                        <div class="post-footer">
-                            <div class="post-actions">
-                                <button class="like-btn" data-post-id="{{ $post->id }}">
-                                    <i class="fa fa-heart fa-lg"></i>
-                                    <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
-                                </button>
-                                <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span>
-                                <button class="comment-btn" data-post-id="{{ $post->id }}">
-                                    <i class="fa fa-comment fa-lg"></i>
-                                    <span>Comments</span>
-                                </button>
-                                <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
+                        @auth
+                            <div class="post-footer">
+                                <div class="post-actions">
+                                    <button class="like-btn" data-post-id="{{ $post->id }}">
+                                        <i class="fa fa-heart fa-lg"></i>
+                                        <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
+                                    </button>
+                                    <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span>
+                                    <button class="comment-btn" data-post-id="{{ $post->id }}">
+                                        <i class="fa fa-comment fa-lg"></i>
+                                        <span>Comments</span>
+                                    </button>
+                                    <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
+
+
+                                    @if ($post->post_user_id == auth()->id())
+                                        <form action="{{ route('post.delete', $post->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button onclick="return confirm('Are you sure you want to delete this post?')" type="submit" class="delete-btn">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                <span>Delete</span>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endauth
                         <hr>
         
                         <!-- Modal Structure -->
@@ -178,5 +215,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.9') }}"></script>
+    <script src="{{ asset('js/posts.js?v=4.0') }}"></script>
 @endsection

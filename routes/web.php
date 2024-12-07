@@ -23,7 +23,7 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
+// Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}', [BlogController::class, 'show'])->name('blogs.show');
 Route::post('/blogs/{blogId}/comment', [BlogController::class, 'writeComment'])->name('blogs.writeComment');
 
@@ -64,10 +64,12 @@ Route::post('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgro
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // POSTS
-Route::get('/community', [PostController::class, 'index'])->name('posts.index'); // Display posts
+Route::get('/', [PostController::class, 'index'])->name('posts.index'); // Display posts
 Route::post('/community', [PostController::class, 'store'])->name('posts.store'); // Store a new post
 Route::post('/community/{postId}/like', [PostController::class, 'likePost'])->name('posts.like');
 Route::post('/community/{postId}/comment', [PostController::class, 'storeComment'])->name('post.comment.store');
+Route::delete('/community/{postId}', [PostController::class, 'deletePost'])->name('post.delete');
+
 
 
 // USER CONTROLLERS
