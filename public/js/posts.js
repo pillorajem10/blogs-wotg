@@ -129,7 +129,7 @@ function likePost(postId) {
                 icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
                 button.text(" Liked"); // Update the button text to "Liked"
             } else {
-                icon.removeClass("fa-heart fa-lg").addClass("fa-heart-o");
+                icon.removeClass("fa-heart fa-lg").addClass("fa-heart fa-lg");
                 button.text(" Like"); // Update the button text to "Like"
             }
 
@@ -151,29 +151,21 @@ function likePost(postId) {
 // Function to update the list of users who liked the post in real-time
 function updateLikersList(postId) {
     $.ajax({
-        url: '/community/' + postId + '/likers', // Make sure to create this route
+        url: '/community/' + postId + '/likers', // Ensure this route exists
         type: 'GET',
         success: function(response) {
             var likersList = $("#likers-list-" + postId);
             likersList.empty(); // Clear existing list
             
-            // Append the updated list of likers
+            // If there are no likers, show a message
+            if (response.likers.length === 0) {
+                likersList.append('<p>No one has liked this post yet.</p>');
+                return;
+            }
+
+            // Loop through each liker and append to the list
             response.likers.forEach(function(liker) {
-                var likerHtml = `
-                    <div class="user-info-liker">
-                        <div class="comment-avatar">
-                            ${liker.user_profile_picture ? 
-                                `<img src="data:image/jpeg;base64,${liker.user_profile_picture}" alt="User Avatar">` : 
-                                `<div class="profile-circle-comment">
-                                    <span>${liker.user_initial}</span>
-                                </div>`}
-                        </div>
-                        <span>${liker.user_fname} ${liker.user_lname}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-heart fa-lg"></i>
-                    </div>
-                `;
+                var likerHtml = getLikerHtml(liker);
                 likersList.append(likerHtml);
             });
         },
@@ -182,6 +174,29 @@ function updateLikersList(postId) {
         }
     });
 }
+
+// Helper function to generate HTML for each liker
+function getLikerHtml(liker) {
+    return `
+        <div class="liker">
+            <div class="user-info-liker">
+                <div class="comment-avatar">
+                    ${liker.user_profile_picture ? 
+                        `<img src="data:image/jpeg;base64,${liker.user_profile_picture}" alt="User Avatar">` : 
+                        `<div class="profile-circle-comment">
+                            <span>${liker.user_initial}</span>
+                        </div>`
+                    }
+                </div>
+                <span>${liker.user_fname} ${liker.user_lname}</span>
+            </div>
+            <div class="liker-icon">
+                <i class="fa fa-heart fa-lg"></i>
+            </div>
+        </div>
+    `;
+}
+
 
 
 function addComment(postId) {
