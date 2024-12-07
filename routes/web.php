@@ -69,6 +69,8 @@ Route::post('/community', [PostController::class, 'store'])->name('posts.store')
 Route::post('/community/{postId}/like', [PostController::class, 'likePost'])->name('posts.like');
 Route::post('/community/{postId}/comment', [PostController::class, 'storeComment'])->name('post.comment.store');
 Route::delete('/community/{postId}', [PostController::class, 'deletePost'])->name('post.delete');
+Route::get('/community/{postId}/likers', [PostController::class, 'getLikers'])->name('post.likers');
+
 
 
 

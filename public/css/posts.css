@@ -161,6 +161,20 @@
 .likes-count {
     margin-right: 20px;
     color: #c0392b;
+    cursor: pointer;
+}
+
+.likers-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #c0392b;
+}
+
+.user-info-liker {
+    display: flex;
+    align-items: center;
+    color: #7e7e7e;
 }
 
 .comments-count {

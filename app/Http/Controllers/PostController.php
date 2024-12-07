@@ -28,29 +28,29 @@ class PostController extends Controller
     public function index()
     {
         $today = Carbon::now('Asia/Manila');
+        
         // Retrieve all posts from the database, eager load the likes relationship, and order by created_at
-        $posts = Post::with('likes') // Eager load the likes relationship
+        $posts = Post::with('likes.user') // Eager load the likes and the user who liked it
                      ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
                      ->get(); // Get all posts
-
+    
         $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
                     ->where('blog_approved', true)
                     ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
                     ->get(); // Get all results as a collection
-
-        
+    
         // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
         $posts->map(function ($post) {
             $post->likedByUser = $post->likes()->where('user_id', auth()->id())->exists();
             return $post;
         });
-    
+        
         // Retrieve the authenticated user's details
         $user = auth()->user();
-    
-        // Pass the posts and user details to the Blade view
+        
+        // Pass the posts, user details, and the likers to the Blade view
         return view('pages.posts', compact('posts', 'user', 'blogs'));
-    }
+    }    
     
     
     
@@ -186,5 +186,25 @@ class PostController extends Controller
                 'comment_text' => $comment->comment_text,
             ],
         ]);
-    }    
+    } 
+    
+    public function getLikers($postId)
+    {
+        $post = Post::findOrFail($postId);
+        
+        // Get the list of users who liked this post
+        $likers = $post->likes()->with('user')->get()->map(function($like) {
+            return [
+                'user_id' => $like->user->id,
+                'user_fname' => $like->user->user_fname,
+                'user_lname' => $like->user->user_lname,
+                'user_profile_picture' => base64_encode($like->user->user_profile_picture) ?? null,
+                'user_initial' => strtoupper(substr($like->user->user_fname, 0, 1)), // Initials for profile picture
+            ];
+        });
+
+        return response()->json([
+            'likers' => $likers,
+        ]);
+    }
 }

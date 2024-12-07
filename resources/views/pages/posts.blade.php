@@ -3,8 +3,8 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.0') }}">
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.1') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -140,18 +140,25 @@
                         @auth
                             <div class="post-footer">
                                 <div class="post-actions">
+                                    <!-- Like button -->
                                     <button class="like-btn" data-post-id="{{ $post->id }}">
                                         <i class="fa fa-heart fa-lg"></i>
                                         <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
                                     </button>
-                                    <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span>
+            
+                                    <!-- Likes Count -->
+                                    <span class="likes-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }})">
+                                        {{ $post->likes->count() }}
+                                    </span>
+            
                                     <button class="comment-btn" data-post-id="{{ $post->id }}">
                                         <i class="fa fa-comment fa-lg"></i>
                                         <span>Comments</span>
                                     </button>
+                                    <!-- Comments count -->
                                     <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
-
-
+            
+                                    <!-- Delete Post -->
                                     @if ($post->post_user_id == auth()->id())
                                         <form action="{{ route('post.delete', $post->id) }}" method="POST" style="display:inline;">
                                             @csrf
@@ -166,6 +173,34 @@
                             </div>
                         @endauth
                         <hr>
+
+                        <div id="modal-likers-{{ $post->id }}" class="modal">
+                            <div class="modal-content">
+                                <span class="close" data-post-id="{{ $post->id }}" onclick="closeLikersModal({{ $post->id }})">&times;</span>
+                                <h4>People Who Liked This Post</h4>
+                                <div class="likers-list" id="likers-list-{{ $post->id }}">
+                                    @foreach ($post->likes as $like)
+                                        <div class="user-info-liker">
+                                            <div class="comment-avatar">
+                                                @if ($like->user->user_profile_picture)
+                                                    <img src="data:image/jpeg;base64,{{ base64_encode($like->user->user_profile_picture) }}" alt="User Avatar">
+                                                @else
+                                                    <div class="profile-circle-comment">
+                                                        <span>{{ strtoupper(substr($like->user->user_fname, 0, 1)) }}</span>
+                                                    </div>
+                                                @endif 
+                                            </div>
+                                            <span>{{ $like->user->user_fname }} {{ $like->user->user_lname }}</span>
+                                        </div>
+
+                                        <div>
+                                            <i class="fa fa-heart fa-lg"></i>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        
         
                         <!-- Modal Structure -->
                         <div id="commentModal-{{ $post->id }}" class="modal">
@@ -215,5 +250,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=4.0') }}"></script>
+    <script src="{{ asset('js/posts.js?v=4.1') }}"></script>
 @endsection

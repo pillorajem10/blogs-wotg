@@ -84,8 +84,8 @@ $(document).ready(function() {
     // Initialize Slick Carousel
     $('.carousel .card-container').slick({
         infinite: true,            // Enable infinite looping
-        slidesToShow: 3,           // Number of cards to show at once
-        slidesToScroll: 1,         // Number of cards to scroll at a time
+        slidesToShow: 4,           // Number of cards to show at once
+        slidesToScroll: 4,         // Number of cards to scroll at a time
         autoplay: true,            // Enable autoplay
         autoplaySpeed: 3000,       // Speed of autoplay (2 seconds)
         arrows: false,              // Show next/prev arrows
@@ -95,14 +95,14 @@ $(document).ready(function() {
                 breakpoint: 1024, // For medium screens (like tablets)
                 settings: {
                     slidesToShow: 2, // Show 2 cards
-                    slidesToScroll: 1
+                    slidesToScroll: 2
                 }
             },
             {
                 breakpoint: 768,  // For small screens (like phones)
                 settings: {
                     slidesToShow: 2, // Show 1 card
-                    slidesToScroll: 1
+                    slidesToScroll: 2
                 }
             }
         ]
@@ -129,7 +129,7 @@ function likePost(postId) {
                 icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
                 button.text(" Liked"); // Update the button text to "Liked"
             } else {
-                icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
+                icon.removeClass("fa-heart fa-lg").addClass("fa-heart-o");
                 button.text(" Like"); // Update the button text to "Like"
             }
 
@@ -138,12 +138,51 @@ function likePost(postId) {
 
             // Update the like count
             $("#likes-count-" + postId).text(response.likesCount);
+
+            // Fetch and update the likers list in the modal
+            updateLikersList(postId);
         },
         error: function(error) {
             console.log('Error:', error);
         }
     });
 }
+
+// Function to update the list of users who liked the post in real-time
+function updateLikersList(postId) {
+    $.ajax({
+        url: '/community/' + postId + '/likers', // Make sure to create this route
+        type: 'GET',
+        success: function(response) {
+            var likersList = $("#likers-list-" + postId);
+            likersList.empty(); // Clear existing list
+            
+            // Append the updated list of likers
+            response.likers.forEach(function(liker) {
+                var likerHtml = `
+                    <div class="user-info-liker">
+                        <div class="comment-avatar">
+                            ${liker.user_profile_picture ? 
+                                `<img src="data:image/jpeg;base64,${liker.user_profile_picture}" alt="User Avatar">` : 
+                                `<div class="profile-circle-comment">
+                                    <span>${liker.user_initial}</span>
+                                </div>`}
+                        </div>
+                        <span>${liker.user_fname} ${liker.user_lname}</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-heart fa-lg"></i>
+                    </div>
+                `;
+                likersList.append(likerHtml);
+            });
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
 
 function addComment(postId) {
     $.ajax({
@@ -190,6 +229,25 @@ function addComment(postId) {
     });
 }
 
+// Function to open the modal and show the likers
+function showLikersModal(postId) {
+    document.getElementById('modal-likers-' + postId).style.display = 'block';
+}
+
+// Function to close the modal
+function closeLikersModal(postId) {
+    document.getElementById('modal-likers-' + postId).style.display = 'none';
+}
+
+// Close the modal if the user clicks outside of it
+window.onclick = function(event) {
+    var modals = document.querySelectorAll('.modal');
+    modals.forEach(function(modal) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
 
 
 function toggleSeeMore(postId) {
