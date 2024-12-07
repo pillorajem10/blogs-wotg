@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=3.8') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -77,7 +77,7 @@
                         <div class="post-header">
                             <div class="post-user">
                                 <div class="user-avatar">
-                                    @if ($post->user->user_profile_picture) 
+                                    @if ($post->user->user_profile_picture)
                                         <img src="data:image/jpeg;base64,{{ base64_encode($post->user->user_profile_picture) }}" alt="User Avatar">
                                     @else
                                         <div class="members-profile-circle-feed" id="profile-circle">
@@ -85,7 +85,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                
+        
                                 <div class="user-info">
                                     <span class="user-name">{{ $post->user->user_fname }} {{ $post->user->user_lname }}</span>
                                     <span>-</span>
@@ -106,30 +106,69 @@
                                     <a href="javascript:void(0);" class="see-more" onclick="toggleSeeMore({{ $post->id }})">... See More</a>
                                 @endif
                             </h2>
-                        
+        
                             @if ($post->post_image)
                                 <div class="post-image">
                                     <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid">
                                 </div>
                             @endif
                         </div>
-                        
         
                         <div class="post-footer">
                             <div class="post-actions">
-                                <!-- Check if the user has liked the post -->
                                 <button class="like-btn" data-post-id="{{ $post->id }}">
-                                    <!-- Heart icon, toggles between filled and empty depending on if the post is liked -->
                                     <i class="fa fa-heart fa-lg"></i>
                                     <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
                                 </button>
                                 <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span>
+                                <button class="comment-btn" data-post-id="{{ $post->id }}">
+                                    <i class="fa fa-comment fa-lg"></i>
+                                    <span>Comments</span>
+                                </button>
+                                <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
                             </div>
-                            {{--<div class="post-stats">
-                                <span class="likes-count" id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }} Likes</span>
-                            </div>--}}
-                        </div> 
-                        <hr>                       
+                        </div>
+                        <hr>
+        
+                        <!-- Modal Structure -->
+                        <div id="commentModal-{{ $post->id }}" class="modal">
+                            <div class="modal-content">
+                                <span class="close" data-post-id="{{ $post->id }}">&times;</span>        
+                                <!-- Existing Comments -->
+                                <div class="comments-list">
+                                    @foreach ($post->comments as $comment)
+                                        <div class="comment">
+                                            <div class="comment-avatar">
+                                                @if ($comment->user->user_profile_picture)
+                                                    <img src="data:image/jpeg;base64,{{ base64_encode($comment->user->user_profile_picture) }}" alt="User Avatar">
+                                                @else
+                                                    <div class="profile-circle-comment" id="profile-circle">
+                                                        <span>{{ strtoupper(substr($comment->user->user_fname, 0, 1)) }}</span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="comment-body">
+                                                <div class="comment-author">
+                                                    <strong>{{ $comment->user->user_fname }} {{ $comment->user->user_lname }}</strong>
+                                                    <span class="comment-time">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
+                                                </div>
+                                                <p class="comment-text">{{ $comment->comment_text }}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>                                
+                                <hr>
+        
+                                <!-- Add Comment Form -->
+                                <form action="{{ route('post.comment.store', ['postId' => $post->id]) }}" method="POST">
+                                    @csrf
+                                    <textarea name="comment_text" class="form-control" placeholder="Add a comment..." required rows="5"></textarea>
+                                    <button type="submit" class="btn-submit-post mt-4">Comment</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- End Modal Structure -->
+        
                     </div>
                 @empty
                     <div class="no-posts">
@@ -137,9 +176,9 @@
                     </div>
                 @endforelse
             </div>
-        </div>
+        </div>        
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=3.7') }}"></script>
+    <script src="{{ asset('js/posts.js?v=3.8') }}"></script>
 @endsection

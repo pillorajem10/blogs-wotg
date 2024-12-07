@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostLike;
+use App\Models\PostComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -124,5 +125,20 @@ class PostController extends Controller
             'likesCount' => $post->post_likes,
             'likedByUser' => $likedByUser,
         ]);
-    }       
+    }  
+    
+    public function storeComment(Request $request, $postId)
+    {
+        $validated = $request->validate([
+            'comment_text' => 'required|string|max:500',
+        ]);
+
+        PostComment::create([
+            'post_id' => $postId,
+            'user_id' => Auth::id(),
+            'comment_text' => $validated['comment_text'],
+        ]);
+
+        return redirect()->back()->with('success', 'Comment added successfully!');
+    }
 }
