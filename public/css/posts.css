@@ -169,6 +169,15 @@
     align-items: center;
     justify-content: space-between;
     color: #c0392b;
+    flex-direction: column;
+}
+
+.liker {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .2rem;
 }
 
 .user-info-liker {

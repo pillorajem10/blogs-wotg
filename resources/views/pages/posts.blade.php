@@ -3,8 +3,8 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.1') }}">
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.2') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -180,21 +180,23 @@
                                 <h4>People Who Liked This Post</h4>
                                 <div class="likers-list" id="likers-list-{{ $post->id }}">
                                     @foreach ($post->likes as $like)
-                                        <div class="user-info-liker">
-                                            <div class="comment-avatar">
-                                                @if ($like->user->user_profile_picture)
-                                                    <img src="data:image/jpeg;base64,{{ base64_encode($like->user->user_profile_picture) }}" alt="User Avatar">
-                                                @else
-                                                    <div class="profile-circle-comment">
-                                                        <span>{{ strtoupper(substr($like->user->user_fname, 0, 1)) }}</span>
-                                                    </div>
-                                                @endif 
+                                        <div class="liker">
+                                            <div class="user-info-liker">
+                                                <div class="comment-avatar">
+                                                    @if ($like->user->user_profile_picture)
+                                                        <img src="data:image/jpeg;base64,{{ base64_encode($like->user->user_profile_picture) }}" alt="User Avatar">
+                                                    @else
+                                                        <div class="profile-circle-comment">
+                                                            <span>{{ strtoupper(substr($like->user->user_fname, 0, 1)) }}</span>
+                                                        </div>
+                                                    @endif 
+                                                </div>
+                                                <span>{{ $like->user->user_fname }} {{ $like->user->user_lname }}</span>
                                             </div>
-                                            <span>{{ $like->user->user_fname }} {{ $like->user->user_lname }}</span>
-                                        </div>
-
-                                        <div>
-                                            <i class="fa fa-heart fa-lg"></i>
+    
+                                            <div>
+                                                <i class="fa fa-heart fa-lg"></i>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -250,5 +252,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=4.1') }}"></script>
+    <script src="{{ asset('js/posts.js?v=4.2') }}"></script>
 @endsection
