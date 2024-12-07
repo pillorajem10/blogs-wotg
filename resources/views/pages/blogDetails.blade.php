@@ -40,7 +40,7 @@
             @endif
         
             <!-- Back to Blogs Button -->
-            <a href="{{ route('posts.index') }}" class="action-btn">Back to Blogs</a>
+            <a href="{{ route('posts.index') }}" class="action-btn">Back to Home</a>
         
             <!-- Next Button -->
             @if($nextBlog)
