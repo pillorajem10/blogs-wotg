@@ -84,8 +84,8 @@ $(document).ready(function() {
     // Initialize Slick Carousel
     $('.carousel .card-container').slick({
         infinite: true,            // Enable infinite looping
-        slidesToShow: 4,           // Number of cards to show at once
-        slidesToScroll: 4,         // Number of cards to scroll at a time
+        slidesToShow: 2,           // Number of cards to show at once
+        slidesToScroll: 2,         // Number of cards to scroll at a time
         autoplay: true,            // Enable autoplay
         autoplaySpeed: 3000,       // Speed of autoplay (2 seconds)
         arrows: false,              // Show next/prev arrows
