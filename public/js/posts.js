@@ -307,7 +307,9 @@ function addReply(commentId) {
                 replyCountSpan.text(`Replies: ${currentCount + 1}`);
 
                 // Show replies section
-                // toggleReplies(commentId);
+                if (repliesList.css('display') === 'none') {
+                    toggleReplies(commentId);
+                }
             } else {
                 alert('Failed to submit the reply');
             }
