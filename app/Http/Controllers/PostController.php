@@ -32,6 +32,7 @@ class PostController extends Controller
         // Retrieve all posts from the database, eager load the likes relationship, and order by created_at
         $posts = Post::with('likes.user') // Eager load the likes and the user who liked it
                      ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
+                     ->limit(1) // Limit the results to 8
                      ->get(); // Get all posts
     
         $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
