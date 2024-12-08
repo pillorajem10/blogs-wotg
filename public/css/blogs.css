@@ -93,13 +93,14 @@
     transition: background-color 0.3s, transform 0.2s;
 }
 
+/*
 .btn-view:hover {
-    background-color: #c0392b; /* Background color on hover */
-    color: #fff; /* Font color on hover */
+    background-color: #c0392b; /* Background color on hover 
+    color: #fff; /* Font color on hover 
     transform: scale(1.05);
     text-decoration: none;
 }
-
+*/
 .blog-thumbnail {
     max-width: 100%;
     height: auto;

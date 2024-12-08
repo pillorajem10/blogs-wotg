@@ -3,8 +3,8 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.4') }}">
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.5') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -78,18 +78,21 @@
                     <div class="blog-card">
                         <div class="blog-card-body">
                             @if($blog->blog_thumbnail)
-                                <img src="data:image/jpeg;base64,{{ base64_encode($blog->blog_thumbnail) }}" alt="{{ $blog->blog_title }}" class="blog-thumbnail">
+                                <a href="{{ route('blogs.show', $blog->id) }}">
+                                    <img src="data:image/jpeg;base64,{{ base64_encode($blog->blog_thumbnail) }}" alt="{{ $blog->blog_title }}" class="blog-thumbnail">
+                                </a>
                             @endif
-                        </div>
-                        <div class="blog-card-footer">
-                            <a href="{{ route('blogs.show', $blog->id) }}" class="btn-view">See More</a>
                         </div>
                     </div>
                 @empty
                     <div class="text-center">No blogs found.</div>
                 @endforelse
             </div>
-        </div>        
+        </div>  
+        
+        <div class="pagination-controls">
+            <button id="loadMore" style="display: none;">Load More</button>
+        </div>
 
         <!-- Posts Feed -->
         <div class="posts-feed">
@@ -252,5 +255,8 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=4.4') }}"></script>
+    <script src="{{ asset('js/posts.js?v=4.5') }}"></script>
+    <script>
+        window.postsUrl = "{{ route('posts.index') }}";
+    </script>    
 @endsection
