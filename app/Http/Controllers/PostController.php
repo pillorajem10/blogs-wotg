@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\PostLike;
 use App\Models\PostComment;
+use App\Models\PostCommentReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -191,6 +192,39 @@ class PostController extends Controller
             ],
         ]);
     } 
+
+    public function storeReply(Request $request, $commentId)
+    {
+        // Validate input
+        $validated = $request->validate([
+            'reply_text' => 'required|string|max:5000',
+        ]);
+
+        // Find the comment that is being replied to
+        $comment = PostComment::findOrFail($commentId);
+
+        // Create a reply to the comment
+        $reply = PostCommentReply::create([
+            'comment_id' => $commentId,
+            'user_id' => Auth::id(),
+            'reply_text' => $validated['reply_text'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'reply' => [
+                'user_profile_picture' => $reply->user->user_profile_picture 
+                    ? base64_encode($reply->user->user_profile_picture)
+                    : null,
+                'user_fname' => $reply->user->user_fname,
+                'user_lname' => $reply->user->user_lname,
+                'user_initial' => strtoupper(substr($reply->user->user_fname, 0, 1)),
+                'reply_text' => $reply->reply_text,
+                'created_at' => $reply->created_at,
+            ],
+        ]);
+    }
+
     
     public function getLikers($postId)
     {

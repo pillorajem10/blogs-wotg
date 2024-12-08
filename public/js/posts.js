@@ -198,6 +198,15 @@ function getLikerHtml(liker) {
     `;
 }
 
+function toggleReplyBox(commentId) {
+    const replySection = $(`#reply-section-${commentId}`);
+    
+    if (replySection.is(':visible')) {
+        replySection.hide();
+    } else {
+        replySection.show();
+    }
+}
 
 
 function addComment(postId) {
@@ -244,6 +253,72 @@ function addComment(postId) {
         }
     });
 }
+
+function toggleReplies(commentId) {
+    const repliesList = $(`#replies-list-${commentId}`);
+    
+    if (repliesList.css('display') === 'none') {
+        repliesList.css('display', 'block');
+    } else {
+        repliesList.css('display', 'none');
+    }
+}
+
+function addReply(commentId) {
+    $.ajax({
+        url: `/community/${commentId}/replies`, // Ensure this route exists
+        type: 'POST',
+        data: {
+            _token: window.Laravel.csrfToken, // CSRF token
+            reply_text: $(`#reply-text-${commentId}`).val(),
+        },
+        success: function(response) {
+            if (response.success) {
+                const replyHTML = `
+                    <div class="reply">
+                        <div class="reply-avatar">
+                            ${
+                                response.reply.user_profile_picture
+                                    ? `<img src="data:image/jpeg;base64,${response.reply.user_profile_picture}" alt="User Avatar">`
+                                    : `<div class="profile-circle-reply">
+                                        <span>${response.reply.user_initial}</span>
+                                      </div>`
+                            }
+                        </div>
+                        <div class="reply-body">
+                            <div class="reply-author">
+                                <strong>${response.reply.user_fname} ${response.reply.user_lname}</strong>
+                                <span class="reply-time">Just now</span>
+                            </div>
+                            <p class="reply-text">${response.reply.reply_text}</p>
+                        </div>
+                    </div>
+                `;
+
+                const repliesList = $(`#replies-list-${commentId}`);
+                repliesList.append(replyHTML);
+
+                // Clear the reply input field
+                $(`#reply-text-${commentId}`).val('');
+
+                // Increment the reply count directly in the DOM
+                const replyCountSpan = $(`#reply-count-${commentId}`);
+                let currentCount = parseInt(replyCountSpan.text().replace('Replies: ', ''), 10) || 0;
+                replyCountSpan.text(`Replies: ${currentCount + 1}`);
+
+                // Show replies section
+                // toggleReplies(commentId);
+            } else {
+                alert('Failed to submit the reply');
+            }
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
+
 
 // Function to open the modal and show the likers
 function showLikersModal(postId) {

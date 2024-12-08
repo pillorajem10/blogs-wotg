@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     protected $primaryKey = 'id';
     public $timestamps = false;
@@ -30,7 +30,7 @@ class User extends Authenticatable
         'user_ministry',
         'user_already_a_dgroup_leader',
         'user_already_a_dgroup_member',
-        'approval_token', 
+        'approval_token',
         'user_profile_picture',
     ];
 
@@ -38,16 +38,33 @@ class User extends Authenticatable
         'password',
     ];
 
+    /**
+     * Relationship with Seekers
+     */
     public function seekers()
     {
         return $this->hasMany(Seeker::class, 'seeker_missionary', 'id');
     }
 
+    /**
+     * Relationship with Comments
+     */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'comment_userid');
+        return $this->hasMany(PostComment::class, 'user_id');
     }
 
+    /**
+     * Relationship with Replies
+     */
+    public function replies()
+    {
+        return $this->hasMany(PostCommentReply::class, 'user_id');
+    }
+
+    /**
+     * Function to check if a user liked a specific post
+     */
     public function hasLiked($postId)
     {
         return PostLike::where('user_id', $this->id)

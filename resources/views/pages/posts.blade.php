@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=5.0') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -226,18 +226,61 @@
                                                     <span class="comment-time">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
                                                 </div>
                                                 <p class="comment-text">{{ $comment->comment_text }}</p>
+                                                
+                                                <!-- Reply Count & View Replies Button -->
+                                                <div class="comment-reply-section">
+                                                    <span class="reply-count" id="reply-count-{{ $comment->id }}">Replies: {{ $comment->replies->count() }}</span>
+                                                    <button class="btn-view-replies mt-2" onclick="toggleReplies({{ $comment->id }})">
+                                                        View Replies
+                                                    </button>
+                                                </div>                                                
+                                                
+                                                <button class="btn-reply mt-2" onclick="toggleReplyBox({{ $comment->id }})">
+                                                    <i class="fa fa-comment fa-lg"></i>
+                                                    <span>Reply</span>
+                                                </button>
+
+                                                <!-- Display Existing Replies -->
+                                                <div class="replies-list" id="replies-list-{{ $comment->id }}">
+                                                    @foreach ($comment->replies as $reply)
+                                                        <div class="reply">
+                                                            <div class="reply-avatar">
+                                                                @if ($reply->user->user_profile_picture)
+                                                                    <img src="data:image/jpeg;base64,{{ base64_encode($reply->user->user_profile_picture) }}" alt="User Avatar">
+                                                                @else
+                                                                    <div class="profile-circle-reply">
+                                                                        <span>{{ strtoupper(substr($reply->user->user_fname, 0, 1)) }}</span>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="reply-body">
+                                                                <div class="reply-author">
+                                                                    <strong>{{ $reply->user->user_fname }} {{ $reply->user->user_lname }}</strong>
+                                                                    <span class="reply-time">{{ \Carbon\Carbon::parse($reply->created_at)->diffForHumans() }}</span>
+                                                                </div>
+                                                                <p class="reply-text">{{ $reply->reply_text }}</p>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                                <div class="reply-section" id="reply-section-{{ $comment->id }}" style="display: none;">
+                                                    <textarea id="reply-text-{{ $comment->id }}" class="form-control" placeholder="Write a reply..." rows="2"></textarea>
+                                                    <button class="btn-submit-reply mt-1" onclick="addReply({{ $comment->id }})">Submit Reply</button>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
-                                
+                        
                                 <hr>
-                                
+                        
                                 <!-- Comment Input -->
                                 <textarea id="comment-text-{{ $post->id }}" class="form-control" placeholder="Write a comment..." rows="3"></textarea>
                                 <button class="btn-submit-post mt-2" onclick="addComment({{ $post->id }})">Submit</button>
                             </div>
-                        </div>                                                        
+                        </div>
+                                                                                                     
                         <!-- End Modal Structure -->
                     </div>
                 @empty
@@ -250,5 +293,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=4.9') }}"></script>
+    <script src="{{ asset('js/posts.js?v=5.0') }}"></script>
 @endsection
