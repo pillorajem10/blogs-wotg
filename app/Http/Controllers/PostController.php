@@ -35,9 +35,11 @@ class PostController extends Controller
                      ->get(); // Get all posts
     
         $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
-                    ->where('blog_approved', true)
-                    ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
-                    ->get(); // Get all results as a collection
+                     ->where('blog_approved', true)
+                     ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
+                     ->limit(8) // Limit the results to 8
+                     ->get();
+        
     
         // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
         $posts->map(function ($post) {
