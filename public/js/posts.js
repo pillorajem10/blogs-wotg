@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+/*
 $(document).ready(function() {
     // Initialize Slick Carousel
     $('.carousel .card-container').slick({
@@ -110,7 +111,7 @@ $(document).ready(function() {
 
     // Any other custom JavaScript code related to posts can go here.
 });
-
+*/
 
 // AJAX function to handle Like/Unlike
 function likePost(postId) {

@@ -34,11 +34,13 @@ class PostController extends Controller
                      ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
                      ->get(); // Get all posts
     
-        $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
-                    ->where('blog_approved', true)
-                    ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
-                    ->limit(4) // Limit the results to 8
-                    ->get();
+        /*
+            $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
+                        ->where('blog_approved', true)
+                        ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
+                        ->limit(8) // Limit the results to 8
+                        ->get();
+        */
         
     
         // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
@@ -51,7 +53,7 @@ class PostController extends Controller
         $user = auth()->user();
         
         // Pass the posts, user details, and the likers to the Blade view
-        return view('pages.posts', compact('posts', 'user', 'blogs'));
+        return view('pages.posts', compact('posts', 'user'/*, 'blogs'*/));
     }    
     
     
