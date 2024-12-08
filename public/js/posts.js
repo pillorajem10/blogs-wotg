@@ -112,79 +112,41 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-    // Access the route from the data attribute
-    var postsUrl = $('#carouselContainer').data('posts-url');
+// AJAX function to handle Like/Unlike
+function likePost(postId) {
+    $.ajax({    
+        url: '/community/' + postId + '/like',
+        type: 'POST',
+        data: {
+            _token: window.Laravel.csrfToken // Use the csrfToken from the window object
+        },
+        success: function(response) {
+            // Update the like button text and icon based on whether the user liked the post
+            var button = $("#post-" + postId).find(".like-btn");
+            var icon = button.find("i");
 
-    // Initialize Slick Carousel
-    function initSlick() {
-        $('.carousel .card-container').slick({
-            infinite: true,
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            autoplay: true,
-            autoplaySpeed: 3000,
-            arrows: false,
-            dots: true,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }
-            ]
-        });
-    }
-
-    // Function to load blogs with AJAX
-    function loadBlogs(page = 1) {
-        $.ajax({
-            url: postsUrl,  // Use the postsUrl here
-            method: 'GET',
-            data: { page: page },
-            success: function(response) {
-                if (response.blogs.length > 0) {
-                    var html = '';
-                    response.blogs.forEach(function(blog) {
-                        html += `
-                            <div class="card">
-                                <img src="${blog.blog_thumbnail}" alt="Blog Thumbnail">
-                            </div>
-                        `;
-                    });
-
-                    $('.carousel .card-container').slick('slickAdd', html);
-
-                    if (response.hasMorePages) {
-                        $('#loadMore').show();
-                        $('#loadMore').data('next-page', response.nextPage);
-                    } else {
-                        $('#loadMore').hide();
-                    }
-                }
+            if (response.likedByUser) {
+                icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
+                button.text(" Liked"); // Update the button text to "Liked"
+            } else {
+                icon.removeClass("fa-heart fa-lg").addClass("fa-heart fa-lg");
+                button.text(" Like"); // Update the button text to "Like"
             }
-        });
-    }
 
-    // Initially load the first page of blogs
-    loadBlogs(1);
+            // Prepend the updated icon to the button text
+            button.prepend(icon);
 
-    // Load more blogs when the 'Load More' button is clicked
-    $('#loadMore').click(function() {
-        var nextPage = $('#loadMore').data('next-page');
-        loadBlogs(nextPage);
+            // Update the like count
+            $("#likes-count-" + postId).text(response.likesCount);
+
+            // Fetch and update the likers list in the modal
+            updateLikersList(postId);
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
     });
-});
-
+}
 
 // Function to update the list of users who liked the post in real-time
 function updateLikersList(postId) {

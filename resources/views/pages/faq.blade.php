@@ -4,7 +4,7 @@
 @section('title', 'FAQ')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/faq.css?v=4.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/faq.css?v=4.6') }}">
 @endsection
 
 @section('content')

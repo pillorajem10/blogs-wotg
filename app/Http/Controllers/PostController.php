@@ -25,7 +25,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index()
     {
         $today = Carbon::now('Asia/Manila');
         
@@ -34,31 +34,10 @@ class PostController extends Controller
                      ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
                      ->get(); // Get all posts
     
-        // If it's an AJAX request, paginate the blogs and return a response
-        if ($request->ajax()) {
-            $page = $request->get('page', 1); // Get current page from AJAX request
-    
-            // Fetch blogs with pagination
-            $blogs = Blog::select('id', 'blog_thumbnail') // Only select the 'id' and 'blog_thumbnail'
-                        ->where('blog_release_date_and_time', '<=', $today)
-                        ->where('blog_approved', true)
-                        ->orderBy('blog_release_date_and_time', 'desc')
-                        ->paginate(4); // Paginate 4 blogs per page
-    
-            // Return the paginated data for AJAX response
-            return response()->json([
-                'blogs' => $blogs->items(),
-                'nextPage' => $blogs->currentPage() + 1,
-                'hasMorePages' => $blogs->hasMorePages()
-            ]);
-        }
-    
-        // Regular request (non-AJAX) - fetch blogs normally
-        $blogs = Blog::select('id', 'blog_thumbnail') // Only select the 'id' and 'blog_thumbnail'
-                    ->where('blog_release_date_and_time', '<=', $today)
+        $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
                     ->where('blog_approved', true)
-                    ->orderBy('blog_release_date_and_time', 'desc')
-                    ->get();
+                    ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
+                    ->get(); // Get all results as a collection
     
         // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
         $posts->map(function ($post) {
@@ -69,14 +48,14 @@ class PostController extends Controller
         // Retrieve the authenticated user's details
         $user = auth()->user();
         
-        // Pass the posts, user details, and blogs to the Blade view
+        // Pass the posts, user details, and the likers to the Blade view
         return view('pages.posts', compact('posts', 'user', 'blogs'));
-    }
-      
+    }    
     
     
     
     
+
     /**
      * Store a newly created post in the database.
      *

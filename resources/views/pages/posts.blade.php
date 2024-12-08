@@ -3,8 +3,8 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.5') }}">
-    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=4.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogs.css?v=4.6') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -88,11 +88,7 @@
                     <div class="text-center">No blogs found.</div>
                 @endforelse
             </div>
-        </div>  
-        
-        <div class="pagination-controls">
-            <button id="loadMore" style="display: none;">Load More</button>
-        </div>
+        </div>        
 
         <!-- Posts Feed -->
         <div class="posts-feed">
@@ -255,8 +251,5 @@
             
     </div>
 
-    <script src="{{ asset('js/posts.js?v=4.5') }}"></script>
-    <script>
-        window.postsUrl = "{{ route('posts.index') }}";
-    </script>    
+    <script src="{{ asset('js/posts.js?v=4.6') }}"></script>
 @endsection
