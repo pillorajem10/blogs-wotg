@@ -271,6 +271,7 @@
     
     <aside id="sidebar" class="sidebar">
         <ul>
+            <li><a href="/blogs">Blogs</a></li>
             @if(auth()->check()) <!-- If user is authenticated -->
                 <li><a href="#">Watch Messages (Coming soon)</a></li>
                 {{--<li><a href="/community">Community</a></li>--}}

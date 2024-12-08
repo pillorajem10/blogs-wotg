@@ -47,6 +47,7 @@
     width: 300px; /* Fixed width for consistent sizing */
     transition: transform 0.2s; /* Smooth transition for hover effect */
     margin-right: .5rem;
+    padding: 15px;
 }
 
 
@@ -80,10 +81,8 @@
 
 .btn-view {
     display: inline-block;
-    margin-top: 15px;
-    margin-left: 5px;
-    margin-bottom: 5px;
     padding: 4px 5px;
+    margin-top: 1rem;
     border: 2px solid #c0392b; /* Added border color */
     border-radius: 4px;
     font-size: .6rem;
@@ -93,14 +92,13 @@
     transition: background-color 0.3s, transform 0.2s;
 }
 
-/*
 .btn-view:hover {
-    background-color: #c0392b; /* Background color on hover 
-    color: #fff; /* Font color on hover 
+    background-color: #c0392b; /* Background color on hover */
+    color: #fff; /* Font color on hover */
     transform: scale(1.05);
     text-decoration: none;
 }
-*/
+
 .blog-thumbnail {
     max-width: 100%;
     height: auto;

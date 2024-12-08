@@ -23,7 +23,7 @@ use App\Http\Controllers\PostController;
 |
 */
 
-// Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}', [BlogController::class, 'show'])->name('blogs.show');
 Route::post('/blogs/{blogId}/comment', [BlogController::class, 'writeComment'])->name('blogs.writeComment');
 
