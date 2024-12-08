@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div class="carousel">
+        {{--<div class="carousel">
             <div class="card-container">
                 @forelse ($blogs as $blog)
                     <div class="blog-card">
@@ -88,7 +88,7 @@
                     <div class="text-center">No blogs found.</div>
                 @endforelse
             </div>
-        </div>        
+        </div>   --}}     
 
         <!-- Posts Feed -->
         <div class="posts-feed">
