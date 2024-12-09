@@ -18,6 +18,19 @@
     margin-bottom: 20px;
 }
 
+.embedded-content iframe {
+    max-width: 800px; /* Set the maximum width */
+    width: 100%; /* Allow it to scale down responsively */
+    height: auto; /* Maintain height dynamically */
+    aspect-ratio: 16 / 9; /* Keep a common 16:9 aspect ratio */
+    border: none; /* Optional: remove iframe borders */
+    margin: 10px 0; /* Optional: space above and below */
+    overflow: hidden;
+    display: block;
+    height: 500px;
+}
+
+
 /* Post Feed */
 .posts-feed {
     display: flex;
@@ -48,8 +61,8 @@
 
 /* User Info */
 .user-avatar img {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -176,8 +189,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: #c0392b;
     color: white;

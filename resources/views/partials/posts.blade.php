@@ -22,6 +22,7 @@
         </div>
 
         <div class="post-content">
+            <!-- Caption Section -->
             <h2 class="post-caption" id="caption-{{ $post->id }}">
                 <span class="caption-short">
                     {{ \Str::limit($post->post_caption, 500) }}
@@ -33,13 +34,22 @@
                     <a href="javascript:void(0);" class="see-more" onclick="toggleSeeMore({{ $post->id }})">... See More</a>
                 @endif
             </h2>
-
+        
+            <!-- Image Section -->
             @if ($post->post_image)
                 <div class="post-image">
                     <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid">
                 </div>
             @endif
+        
+            <!-- Embedded Content Section -->
+            @if ($post->embeddedHtml)
+                <div class="embedded-content">
+                    {!! $post->embeddedHtml !!}
+                </div>
+            @endif
         </div>
+        
 
         @auth
             <div class="post-footer">

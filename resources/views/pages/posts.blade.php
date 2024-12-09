@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=5.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=5.8') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -44,18 +44,24 @@
             <div class="modal-content">
                 <span id="closeModalBtn" class="close">&times;</span>
                 <h3>Create Post</h3>
-
+        
                 <!-- Form with error messages -->
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                
+                    
                     <!-- Error messages for the form -->
-                
+                    
                     <div class="form-group">
                         <label for="post_caption">Caption</label>
                         <textarea id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" rows="5" required></textarea>
                     </div>                    
-                
+        
+                    <!-- Input for URL -->
+                    <div class="form-group">
+                        <label for="post_link">Paste Youtube Link</label>
+                        <input type="url" id="post_link" name="post_link" class="form-control" placeholder="Paste the URL here">
+                    </div>
+                    
                     <div class="form-group">
                         <label for="post_image">Image (optional)</label>
                         <input type="file" id="post_image" name="post_image" class="form-control" onchange="previewImage()">
@@ -69,7 +75,8 @@
                     <button type="submit" class="btn-submit-post">Post</button>
                 </form>
             </div>
-        </div>   
+        </div>
+          
 
         <!-- Posts Feed -->
         <div class="posts-feed" id="posts-container" data-next-page-url="{{ $posts->nextPageUrl() }}">
@@ -83,5 +90,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=5.7') }}"></script>
+    <script src="{{ asset('js/posts.js?v=5.8') }}"></script>
 @endsection

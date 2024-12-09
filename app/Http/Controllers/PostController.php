@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log; 
 
+
+use Embed\Embed;
 use Carbon\Carbon;
 use App\Models\Blog;
 
@@ -32,42 +34,41 @@ class PostController extends Controller
     {
         $today = Carbon::now('Asia/Manila');
         
-        // Retrieve all posts from the database, eager load the likes relationship, and order by created_at
-        $posts = Post::with('likes.user') // Eager load the likes and the user who liked it
-                    ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
-                    ->paginate(3); // Paginate with a limit of 5 posts per page
-
+        $posts = Post::with('likes.user')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(3);
     
-        /*
-            $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
-                        ->where('blog_approved', true)
-                        ->orderBy('blog_release_date_and_time', 'desc') // Order by release date descending
-                        ->limit(8) // Limit the results to 8
-                        ->get();
-        */
-        
-    
-        // Add 'likedByUser' attribute to each post to check if the authenticated user has liked it
+        // Map to include the embed data
         $posts->map(function ($post) {
+            if ($post->post_link) {
+                $embed = new Embed();
+                try {
+                    $info = $embed->get($post->post_link);
+                    $post->embeddedHtml = $info->code;
+                } catch (\Exception $e) {
+                    $post->embeddedHtml = null;
+                }
+            } else {
+                $post->embeddedHtml = null;
+            }
+    
             $post->likedByUser = $post->likes()->where('user_id', auth()->id())->exists();
             return $post;
         });
-        
-        // Retrieve the authenticated user's details
+    
         $user = auth()->user();
-        
+    
         if ($request->ajax()) {
             $view = view('partials.posts', compact('posts'))->render();
-            
-            // Return the response with the view and next page URL
             return Response::json([
                 'view' => $view,
                 'nextPageUrl' => $posts->nextPageUrl()
             ]);
         }
-
-        return view('pages.posts', compact('posts', 'user'/*, 'blogs'*/));
-    }    
+    
+        return view('pages.posts', compact('posts', 'user'));
+    }
+      
     
     
     
@@ -88,13 +89,15 @@ class PostController extends Controller
             'post_image.image' => 'Please upload a valid image file (jpeg, png, jpg, gif, svg).',
             'post_image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic.',
             'post_image.max' => 'The image size cannot exceed 12MB.',
+            'post_link.url' => 'The link must be a valid URL.',
         ];
     
         // Validate the input with custom error messages
         $validated = $request->validate([
             'post_caption' => 'required|string',
-            'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288', 
-        ], $messages);                      
+            'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288',
+            'post_link' => 'nullable|url',
+        ], $messages);
     
         // Store the post
         $post = new Post();
@@ -112,11 +115,17 @@ class PostController extends Controller
             $post->post_image = file_get_contents($image);
         }
     
+        // Save the post link if provided
+        if (!empty($validated['post_link'])) {
+            $post->post_link = $validated['post_link'];
+        }
+    
         $post->save();
     
         // Redirect back with success message
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
-    }   
+    }
+      
 
     public function deletePost($postId)
     {

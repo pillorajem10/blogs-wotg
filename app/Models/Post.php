@@ -28,6 +28,7 @@ class Post extends Model
         'post_likes',
         'post_comments',
         'post_status',
+        'post_link', // Add post_link here
     ];
 
     /**
