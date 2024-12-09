@@ -7,8 +7,10 @@ use App\Models\PostLike;
 use App\Models\PostComment;
 use App\Models\PostCommentReply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log; 
 
 use Carbon\Carbon;
 use App\Models\Blog;
@@ -26,14 +28,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $today = Carbon::now('Asia/Manila');
         
         // Retrieve all posts from the database, eager load the likes relationship, and order by created_at
         $posts = Post::with('likes.user') // Eager load the likes and the user who liked it
-                     ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
-                     ->get(); // Get all posts
+                    ->orderBy('created_at', 'desc') // Sort posts by the most recent ones
+                    ->paginate(3); // Paginate with a limit of 5 posts per page
+
     
         /*
             $blogs = Blog::where('blog_release_date_and_time', '<=', $today)
@@ -53,7 +56,16 @@ class PostController extends Controller
         // Retrieve the authenticated user's details
         $user = auth()->user();
         
-        // Pass the posts, user details, and the likers to the Blade view
+        if ($request->ajax()) {
+            $view = view('partials.posts', compact('posts'))->render();
+            
+            // Return the response with the view and next page URL
+            return Response::json([
+                'view' => $view,
+                'nextPageUrl' => $posts->nextPageUrl()
+            ]);
+        }
+
         return view('pages.posts', compact('posts', 'user'/*, 'blogs'*/));
     }    
     

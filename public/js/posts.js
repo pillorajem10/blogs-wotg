@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingOverlay.style.opacity = 0;
     }, 300);
 
-    // Get all comment buttons and modals
+    /*
     const commentButtons = document.querySelectorAll(".comment-btn");
     const modals = document.querySelectorAll(".modal");
     const closeButtons = document.querySelectorAll(".close");
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Open modal on comment button click
     commentButtons.forEach((btn) => {
         btn.addEventListener("click", function () {
+            console.log('TRIGGERED');
             const postId = this.getAttribute("data-post-id");
             const modal = document.getElementById(`commentModal-${postId}`);
             if (modal) {
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     };
+    */
 
 
     // Get the modal
@@ -80,74 +82,127 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-/*
-$(document).ready(function() {
-    // Initialize Slick Carousel
-    $('.carousel .card-container').slick({
-        infinite: true,            // Enable infinite looping
-        slidesToShow: 2,           // Number of cards to show at once
-        slidesToScroll: 2,         // Number of cards to scroll at a time
-        autoplay: true,            // Enable autoplay
-        autoplaySpeed: 3000,       // Speed of autoplay (2 seconds)
-        arrows: false,              // Show next/prev arrows
-        dots: true,                // Show pagination dots
-        responsive: [
-            {
-                breakpoint: 1024, // For medium screens (like tablets)
-                settings: {
-                    slidesToShow: 2, // Show 2 cards
-                    slidesToScroll: 2
-                }
-            },
-            {
-                breakpoint: 768,  // For small screens (like phones)
-                settings: {
-                    slidesToShow: 2, // Show 1 card
-                    slidesToScroll: 2
-                }
+$(document).ready(function () {
+    let nextPageUrl = $('#posts-container').data('next-page-url');
+
+    // Infinite Scroll
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            if (nextPageUrl) {
+                loadMorePosts();
             }
-        ]
-    });
-
-    // Any other custom JavaScript code related to posts can go here.
-});
-*/
-
-// AJAX function to handle Like/Unlike
-function likePost(postId) {
-    $.ajax({    
-        url: '/community/' + postId + '/like',
-        type: 'POST',
-        data: {
-            _token: window.Laravel.csrfToken // Use the csrfToken from the window object
-        },
-        success: function(response) {
-            // Update the like button text and icon based on whether the user liked the post
-            var button = $("#post-" + postId).find(".like-btn");
-            var icon = button.find("i");
-
-            if (response.likedByUser) {
-                icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
-                button.text(" Liked"); // Update the button text to "Liked"
-            } else {
-                icon.removeClass("fa-heart fa-lg").addClass("fa-heart fa-lg");
-                button.text(" Like"); // Update the button text to "Like"
-            }
-
-            // Prepend the updated icon to the button text
-            button.prepend(icon);
-
-            // Update the like count
-            $("#likes-count-" + postId).text(response.likesCount);
-
-            // Fetch and update the likers list in the modal
-            updateLikersList(postId);
-        },
-        error: function(error) {
-            console.log('Error:', error);
         }
     });
+
+    function loadMorePosts() {
+        $.ajax({
+            url: nextPageUrl,
+            type: 'get',
+            beforeSend: function () {
+                nextPageUrl = '';
+            },
+            success: function (data) {
+                nextPageUrl = data.nextPageUrl; // Update the URL for the next page
+                $('#posts-container').append(data.view); // Append new posts
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading more posts:", error);
+            }
+        });
+    }
+
+    // Like button click handler with delegation
+    $(document).on('click', '.like-btn', function () {
+        const postId = $(this).data('post-id');
+        likePost(postId);
+    });
+
+    $(document).on('click', '.comment-btn', function () {
+        const postId = $(this).data('post-id');
+        showCommentModal(postId);
+    });
+    
+    // Function to show the comment modal
+    function showCommentModal(postId) {
+        const modal = $(`#commentModal-${postId}`);
+        if (modal.length) {
+            modal.css('display', 'block'); // Show the modal
+        } else {
+            console.error(`Modal for post ID ${postId} not found.`);
+        }
+    }
+
+    function likePost(postId) {
+        $.ajax({
+            url: '/community/' + postId + '/like',
+            type: 'POST',
+            data: {
+                _token: window.Laravel.csrfToken, // Use the csrfToken from the window object
+            },
+            success: function (response) {
+                const button = $("#post-" + postId).find(".like-btn");
+                const icon = button.find("i");
+
+                if (response.likedByUser) {
+                    icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
+                    button.text(" Liked"); // Update the button text to "Liked"
+                } else {
+                    icon.removeClass("fa-heart fa-lg").addClass("fa-heart-o");
+                    button.text(" Like"); // Update the button text to "Like"
+                }
+
+                button.prepend(icon);
+
+                // Update the like count
+                $("#likes-count-" + postId).text(response.likesCount);
+
+                // Fetch and update the likers list in the modal
+                updateLikersList(postId);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+});
+
+$(document).ready(function () {
+    // Close any modal when clicking the close buttons
+    $(document).on('click', '.close-modal', function () {
+        const modalType = $(this).data('modal-type');
+        const postId = $(this).data('post-id');
+        closeModal(modalType, postId);
+    });
+});
+
+/**
+ * Generalized function to close modals
+ */
+function closeModal(modalType, postId) {
+    let modalId;
+
+    // Determine the modal ID based on modal type and postId
+    switch (modalType) {
+        case 'likers':
+            modalId = `#modal-likers-${postId}`;
+            break;
+        case 'comment':
+            modalId = `#commentModal-${postId}`;
+            break;
+        default:
+            console.error('Unknown modal type');
+            return;
+    }
+
+    const modal = $(modalId);
+    if (modal.length) {
+        modal.css('display', 'none');
+    } else {
+        console.error(`Modal with ID ${modalId} not found.`);
+    }
 }
+
+
 
 // Function to update the list of users who liked the post in real-time
 function updateLikersList(postId) {

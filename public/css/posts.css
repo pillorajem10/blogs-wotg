@@ -24,8 +24,8 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    align-items: center;
-    justify-content: stretch;
+    align-items: stretch;
+    justify-content: flex-start;
 }
 
 /* Post Card */
