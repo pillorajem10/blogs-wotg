@@ -245,12 +245,6 @@
         </a>
     
         <div class="right-side-nav">
-            <button id="hamburger" class="hamburger-menu" onclick="toggleDrawer()">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            
             <div class="user-profile">
                 @auth
                     <!-- Profile Picture or Circle (Wrapped in a div for easy JS navigation) -->
@@ -267,6 +261,12 @@
                     </div>
                 @endauth
             </div>
+            
+            <button id="hamburger" class="hamburger-menu" onclick="toggleDrawer()">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>              
     </nav>
     
