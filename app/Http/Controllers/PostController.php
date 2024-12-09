@@ -62,7 +62,7 @@ class PostController extends Controller
             // Return the response with the view and next page URL
             return Response::json([
                 'view' => $view,
-                'nextPageUrl' => $posts->hasMorePages() ? $posts->nextPageUrl() : null,
+                'nextPageUrl' => $posts->nextPageUrl()
             ]);
         }
 
