@@ -121,7 +121,7 @@ $(document).ready(function () {
                     icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
                     button.text(" Liked"); // Update the button text to "Liked"
                 } else {
-                    icon.removeClass("fa-heart fa-lg").addClass("fa-heart-o");
+                    icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
                     button.text(" Like"); // Update the button text to "Like"
                 }
 
