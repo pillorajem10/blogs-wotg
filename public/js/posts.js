@@ -67,6 +67,7 @@ $(document).ready(function () {
             beforeSend: function () {
                 nextPageUrl = ''; // Temporarily disable to prevent multiple triggers
             },
+            /*
             success: function (data) {
                 if (data.nextPageUrl) {
                     nextPageUrl = data.nextPageUrl; // Update URL for next page
@@ -75,6 +76,11 @@ $(document).ready(function () {
                     // No more pages to load
                     nextPageUrl = null;
                 }
+            },
+            */
+            success: function (data) {
+                nextPageUrl = data.nextPageUrl; // Update the URL for the next page
+                $('#posts-container').append(data.view); // Append new posts
             },
             error: function (xhr, status, error) {
                 console.error("Error loading posts:", error);
