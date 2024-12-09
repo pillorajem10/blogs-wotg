@@ -10,45 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingOverlay.style.opacity = 0;
     }, 300);
 
-    /*
-    const commentButtons = document.querySelectorAll(".comment-btn");
-    const modals = document.querySelectorAll(".modal");
-    const closeButtons = document.querySelectorAll(".close");
-
-    // Open modal on comment button click
-    commentButtons.forEach((btn) => {
-        btn.addEventListener("click", function () {
-            console.log('TRIGGERED');
-            const postId = this.getAttribute("data-post-id");
-            const modal = document.getElementById(`commentModal-${postId}`);
-            if (modal) {
-                modal.style.display = "block";
-            }
-        });
-    });
-
-    // Close modal on close button click
-    closeButtons.forEach((close) => {
-        close.addEventListener("click", function () {
-            const postId = this.getAttribute("data-post-id");
-            const modal = document.getElementById(`commentModal-${postId}`);
-            if (modal) {
-                modal.style.display = "none";
-            }
-        });
-    });
-
-    // Close modal on clicking outside of it
-    window.onclick = function (event) {
-        modals.forEach((modal) => {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        });
-    };
-    */
-
-
     // Get the modal
     var modal = document.getElementById("addPostModal");
 
@@ -84,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 $(document).ready(function () {
     let nextPageUrl = $('#posts-container').data('next-page-url');
-
+    const $loadingSpinner = $('#loading-spinner');
+    
     // Infinite Scroll
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -93,20 +55,32 @@ $(document).ready(function () {
             }
         }
     });
-
+    
     function loadMorePosts() {
+        if (!$loadingSpinner.is(':visible')) {
+            $loadingSpinner.show(); // Show spinner before loading
+        }
+    
         $.ajax({
             url: nextPageUrl,
             type: 'get',
             beforeSend: function () {
-                nextPageUrl = '';
+                nextPageUrl = ''; // Temporarily disable to prevent multiple triggers
             },
             success: function (data) {
-                nextPageUrl = data.nextPageUrl; // Update the URL for the next page
-                $('#posts-container').append(data.view); // Append new posts
+                if (data.nextPageUrl) {
+                    nextPageUrl = data.nextPageUrl; // Update URL for next page
+                    $('#posts-container').append(data.view); // Render fetched posts
+                } else {
+                    // No more pages to load
+                    nextPageUrl = null;
+                }
             },
             error: function (xhr, status, error) {
-                console.error("Error loading more posts:", error);
+                console.error("Error loading posts:", error);
+            },
+            complete: function () {
+                $loadingSpinner.hide(); // Hide spinner after AJAX completes
             }
         });
     }
