@@ -29,7 +29,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <script>
         window.Laravel = {
-            csrfToken: '{{ csrf_token() }}'
+            csrfToken: '{{ csrf_token() }}',
+            authUserId: {{ auth()->id() ?? 'null' }} // Include the authenticated user's ID, or `null` if not logged in
         };
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

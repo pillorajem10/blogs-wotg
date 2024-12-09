@@ -67,17 +67,6 @@ $(document).ready(function () {
             beforeSend: function () {
                 nextPageUrl = ''; // Temporarily disable to prevent multiple triggers
             },
-            /*
-            success: function (data) {
-                if (data.nextPageUrl) {
-                    nextPageUrl = data.nextPageUrl; // Update URL for next page
-                    $('#posts-container').append(data.view); // Render fetched posts
-                } else {
-                    // No more pages to load
-                    nextPageUrl = null;
-                }
-            },
-            */
             success: function (data) {
                 nextPageUrl = data.nextPageUrl; // Update the URL for the next page
                 $('#posts-container').append(data.view); // Append new posts
@@ -246,22 +235,24 @@ function toggleReplyBox(commentId) {
 
 function addComment(postId) {
     $.ajax({
-        url: `/community/${postId}/comment`, // Use the route defined in your `web.php`
+        url: `/community/${postId}/comment`, 
         type: 'POST',
         data: {
-            _token: window.Laravel.csrfToken, // CSRF token for security
-            comment_text: $(`#comment-text-${postId}`).val(), // Capture the comment text
+            _token: window.Laravel.csrfToken,
+            comment_text: $(`#comment-text-${postId}`).val(),
         },
         success: function(response) {
             if (response.success) {
+                console.log('COMMENT ID!!!', response.comment);
+                console.log('AUTH ID!!!', window.Laravel.authUserId);
                 const commentHTML = `
-                    <div class="comment">
+                    <div class="comment" data-comment-id="${response.comment.id}">
                         <div class="comment-avatar">
                             ${response.comment.user_profile_picture
                                 ? `<img src="data:image/jpeg;base64,${response.comment.user_profile_picture}" alt="User Avatar">`
                                 : `<div class="profile-circle-comment">
                                     <span>${response.comment.user_initial}</span>
-                                  </div>`
+                                </div>`
                             }
                         </div>
                         <div class="comment-body">
@@ -270,15 +261,47 @@ function addComment(postId) {
                                 <span class="comment-time">Just now</span>
                             </div>
                             <p class="comment-text">${response.comment.comment_text}</p>
+                            
+                            <!-- Reply Count & View Replies Button -->
+                            <div class="comment-reply-section">
+                                <span class="reply-count" id="reply-count-${response.comment.id}">Replies: 0</span>
+                                <button class="btn-view-replies mt-2" onclick="toggleReplies(${response.comment.id})">
+                                    View Replies
+                                </button>
+                            </div>                                                
+                
+                            <!-- Reply Button -->
+                            <button class="btn-reply mt-2" onclick="toggleReplyBox(${response.comment.id})">
+                                <i class="fa fa-comment fa-lg"></i>
+                                <span>Reply</span>
+                            </button>
+                
+                            <!-- Delete Button (Optional: Only for comment owner) -->
+                            ${window.Laravel.authUserId === response.comment.user_id
+                                ? `<button onclick="deleteComment(${response.comment.id}, ${response.comment.post_id})" class="delete-btn mt-2">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                        <span>Delete</span>
+                                   </button>`
+                                : ''
+                            }                            
+                
+                            <!-- Reply Input Section -->
+                            <div class="reply-section" id="reply-section-${response.comment.id}" style="display: none;">
+                                <textarea id="reply-text-${response.comment.id}" class="form-control" placeholder="Write a reply..." rows="2"></textarea>
+                                <button class="btn-submit-reply mt-1" data-comment-id="${response.comment.id}">Submit Reply</button>
+                            </div>
+                
+                            <!-- Display Existing Replies -->
+                            <div class="replies-list" id="replies-list-${response.comment.id}"></div>
                         </div>
                     </div>
-                `;
-
-                const commentsList = $(`#comments-list-${postId}`);
+                `;            
+            
+                const commentsList = $(`#comments-list-${response.post_id}`);
                 commentsList.append(commentHTML);
 
-                // Clear the input field after submission
-                $(`#comment-text-${postId}`).val('');
+                // Clear the comment text box after submission
+                $(`#comment-text-${response.post_id}`).val('');
             } else {
                 alert('Failed to submit the comment');
             }
@@ -288,6 +311,42 @@ function addComment(postId) {
         }
     });
 }
+
+
+function deleteComment(commentId, postId) {
+    if (!confirm('Are you sure you want to delete this comment?')) {
+        return;
+    }
+
+    $.ajax({
+        url: `/community/${commentId}/comment`, // The URL of your delete route
+        type: 'DELETE',
+        data: {
+            _token: window.Laravel.csrfToken, // Include the CSRF token
+        },
+        success: function(response) {
+            if (response.success) {
+                // Remove the comment from the DOM
+                $(`.comment[data-comment-id="${commentId}"]`).remove();
+
+                // Update the comment count (subtract 1)
+                const commentsCountElement = $(`#comments-count-${postId}`);
+                let currentCount = parseInt(commentsCountElement.text());
+                commentsCountElement.text(currentCount - 1);
+            } else {
+                alert('Failed to delete the comment');
+            }
+        },
+        error: function(error) {
+            console.error('Error:', error);
+            alert('An error occurred while trying to delete the comment');
+        }
+    });
+}
+
+
+
+
 
 function toggleReplies(commentId) {
     const repliesList = $(`#replies-list-${commentId}`);
@@ -299,13 +358,21 @@ function toggleReplies(commentId) {
     }
 }
 
-function addReply(commentId) {
+$(document).on('click', '.btn-submit-reply', function() {
+    const commentId = $(this).data('comment-id'); // Dynamically fetch the commentId
+    const replyText = $(`#reply-text-${commentId}`).val();
+
+    if (!replyText) {
+        alert('Reply text cannot be empty');
+        return;
+    }
+
     $.ajax({
-        url: `/community/${commentId}/replies`, // Ensure this route exists
+        url: `/community/${commentId}/replies`, 
         type: 'POST',
         data: {
-            _token: window.Laravel.csrfToken, // CSRF token
-            reply_text: $(`#reply-text-${commentId}`).val(),
+            _token: window.Laravel.csrfToken,
+            reply_text: replyText,
         },
         success: function(response) {
             if (response.success) {
@@ -353,9 +420,7 @@ function addReply(commentId) {
             console.log('Error:', error);
         }
     });
-}
-
-
+});
 
 // Function to open the modal and show the likers
 function showLikersModal(postId) {

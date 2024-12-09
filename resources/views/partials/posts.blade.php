@@ -116,7 +116,7 @@
                 <!-- Existing Comments Section -->
                 <div class="comments-list" id="comments-list-{{ $post->id }}">
                     @foreach ($post->comments as $comment)
-                        <div class="comment">
+                        <div class="comment" data-comment-id="{{ $comment->id }}">
                             <div class="comment-avatar">
                                 @if ($comment->user->user_profile_picture)
                                     <img src="data:image/jpeg;base64,{{ base64_encode($comment->user->user_profile_picture) }}" alt="User Avatar">
@@ -146,6 +146,13 @@
                                     <span>Reply</span>
                                 </button>
 
+                                @if (auth()->id() === $comment->user->id)
+                                    <button onclick="deleteComment({{ $comment->id }}, {{ $post->id }})" class="delete-btn mt-2">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                        <span>Delete</span>
+                                    </button>
+                                @endif
+                                
                                 <!-- Display Existing Replies -->
                                 <div class="replies-list" id="replies-list-{{ $comment->id }}">
                                     @foreach ($comment->replies as $reply)
@@ -172,7 +179,7 @@
 
                                 <div class="reply-section" id="reply-section-{{ $comment->id }}" style="display: none;">
                                     <textarea id="reply-text-{{ $comment->id }}" class="form-control" placeholder="Write a reply..." rows="2"></textarea>
-                                    <button class="btn-submit-reply mt-1" onclick="addReply({{ $comment->id }})">Submit Reply</button>
+                                    <button class="btn-submit-reply mt-1" data-comment-id="{{ $comment->id }}">Submit Reply</button>
                                 </div>
                             </div>
                         </div>

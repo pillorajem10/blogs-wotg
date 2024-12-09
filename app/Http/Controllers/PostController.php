@@ -193,17 +193,44 @@ class PostController extends Controller
     
         return response()->json([
             'success' => true,
+            'post_id' => $postId, // Send the postId for reference
             'comment' => [
-                'user_profile_picture' => $comment->user->user_profile_picture 
+                'id' => $comment->id, // Include the comment ID
+                'user_profile_picture' => $comment->user->user_profile_picture
                     ? base64_encode($comment->user->user_profile_picture)
                     : null,
                 'user_fname' => $comment->user->user_fname,
                 'user_lname' => $comment->user->user_lname,
                 'user_initial' => strtoupper(substr($comment->user->user_fname, 0, 1)),
                 'comment_text' => $comment->comment_text,
+                'user_id' => Auth::id(),
             ],
         ]);
-    } 
+    }
+    
+
+    public function deleteComment(Request $request, $commentId)
+    {
+        // Find the comment by ID
+        $comment = PostComment::findOrFail($commentId);
+
+        // Ensure only the comment's owner can delete it or check for user permissions
+        if ($comment->user_id !== Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to delete this comment.',
+            ], 403);
+        }
+
+        // Delete the comment
+        $comment->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment deleted successfully.',
+        ]);
+    }
+
 
     public function storeReply(Request $request, $commentId)
     {

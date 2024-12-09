@@ -68,29 +68,9 @@ Route::get('/', [PostController::class, 'index'])->name('posts.index'); // Displ
 Route::post('/community', [PostController::class, 'store'])->name('posts.store'); // Store a new post
 Route::post('/community/{postId}/like', [PostController::class, 'likePost'])->name('posts.like');
 Route::post('/community/{postId}/comment', [PostController::class, 'storeComment'])->name('post.comment.store');
+Route::delete('/community/{commentId}/comment', [PostController::class, 'deleteComment'])->name('post.comment.delete');
 Route::delete('/community/{postId}', [PostController::class, 'deletePost'])->name('post.delete');
 Route::get('/community/{postId}/likers', [PostController::class, 'getLikers'])->name('post.likers');
 Route::post('/community/{commentId}/replies', [PostController::class, 'storeReply'])->name('comments.replies.store');
 
-
-
-
-// USER CONTROLLERS
-// Route::get('/users', [UserController::class, 'index'])->name('users.index');
-
-// BLOG CONTROLLER
-/*
-Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-Route::get('/blogs/{id}', [BlogController::class, 'show'])->name('blogs.show');
-*/
-
-/*
-Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create'); // Route for creating a new blog
-Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store'); // Route for storing the new blog
- // Route for showing a specific blog
-Route::get('/blogs/{id}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
-Route::post('/blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
-Route::delete('/blogs/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy'); // Route for deleting a blog
-Route::patch('/blogs/{id}/approve', [BlogController::class, 'approve'])->name('blogs.approve');
-*/
 
