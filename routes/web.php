@@ -63,6 +63,12 @@ Route::post('/dgroup/approve', [DgroupController::class, 'approve'])->name('dgro
 // FAQ
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
+// USER ROUTES
+Route::get('/password/forgot', [AuthController::class, 'showForgotPasswordForm'])->name('password.forgot');
+Route::post('/password/forgot', [AuthController::class, 'sendPasswordResetLink'])->name('password.send');
+Route::get('/password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset.form');
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
+
 // POSTS
 Route::get('/', [PostController::class, 'index'])->name('posts.index'); // Display posts
 Route::post('/community', [PostController::class, 'store'])->name('posts.store'); // Store a new post
