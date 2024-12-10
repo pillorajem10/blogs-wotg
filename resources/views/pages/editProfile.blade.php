@@ -102,10 +102,7 @@
                             <span class="error">{{ $errors->first('user_birthday') }}</span>
                         @endif
                     </div>
-                </div>
-            
-                <div>
-                    <!-- Second Column -->
+
                     <div class="form-group">
                         <label for="user_country">Country</label>
                         <input type="text" name="user_country" id="user_country" class="form-input" value="{{ old('user_country', $user->user_country) }}" required>
@@ -113,7 +110,10 @@
                             <span class="error">{{ $errors->first('user_country') }}</span>
                         @endif
                     </div>
+                </div>
             
+                <div>
+                    <!-- Second Column -->
                     <div class="form-group">
                         <label for="user_city">City/Province</label>
                         <input type="text" name="user_city" id="user_city" class="form-input" value="{{ old('user_city', $user->user_city) }}" required>
@@ -154,10 +154,33 @@
             
                     <div class="form-group">
                         <label for="user_dgroup_leader">D-Group Leader's Email</label>
-                        <input type="email" name="user_dgroup_leader" id="user_dgroup_leader" class="form-input" 
-                               value="{{ old('user_dgroup_leader', $dgroup_leader_email ?? '') }}">
+                        <input type="email" name="user_dgroup_leader" id="user_dgroup_leader" class="form-input" value="{{ old('user_dgroup_leader', $dgroup_leader_email ?? '') }}">
                         @if ($errors->has('user_dgroup_leader'))
                             <span class="error">{{ $errors->first('user_dgroup_leader') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_meeting_day">Meeting Day</label>
+                        <select name="user_meeting_day" id="user_meeting_day" class="form-input">
+                            <option value="Sunday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Sunday' ? 'selected' : '' }}>Sunday</option>
+                            <option value="Monday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Monday' ? 'selected' : '' }}>Monday</option>
+                            <option value="Tuesday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Tuesday' ? 'selected' : '' }}>Tuesday</option>
+                            <option value="Wednesday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Wednesday' ? 'selected' : '' }}>Wednesday</option>
+                            <option value="Thursday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Thursday' ? 'selected' : '' }}>Thursday</option>
+                            <option value="Friday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Friday' ? 'selected' : '' }}>Friday</option>
+                            <option value="Saturday" {{ old('user_meeting_day', $user->user_meeting_day) == 'Saturday' ? 'selected' : '' }}>Saturday</option>
+                        </select>
+                        @if ($errors->has('user_meeting_day'))
+                            <span class="error">{{ $errors->first('user_meeting_day') }}</span>
+                        @endif
+                    </div>                    
+            
+                    <div class="form-group">
+                        <label for="user_meeting_time">Meeting Time</label>
+                        <input type="time" name="user_meeting_time" id="user_meeting_time" class="form-input" value="{{ old('user_meeting_time', $user->user_meeting_time) }}">
+                        @if ($errors->has('user_meeting_time'))
+                            <span class="error">{{ $errors->first('user_meeting_time') }}</span>
                         @endif
                     </div>
             
@@ -178,7 +201,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </div>            
             
             <div class="form-group">
                 <button type="submit" class="auth-button">Save Changes</button>

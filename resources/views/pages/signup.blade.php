@@ -158,13 +158,37 @@
                             <p>To verify your account, give your email address to your dgroup members and ask them to register on our WOTG app. They should enter your email in the dgroup leader’s email field. Once they register, check your email for their request and approve it to complete the verification process.</p>
                         </div>
                     </div>
-                    
             
                     <div class="form-group">
                         <label for="user_dgroup_leader">D-Group Leader's Email</label>
                         <input type="text" name="user_dgroup_leader" id="user_dgroup_leader" class="form-input" value="{{ old('user_dgroup_leader') }}">
                         @if ($errors->has('user_dgroup_leader'))
                             <span class="error">{{ $errors->first('user_dgroup_leader') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_meeting_day">Meeting Day</label>
+                        <select name="user_meeting_day" id="user_meeting_day" class="form-input" required>
+                            <option value="" disabled selected>Select a Day</option>
+                            <option value="Sunday" {{ old('user_meeting_day') == 'Sunday' ? 'selected' : '' }}>Sunday</option>
+                            <option value="Monday" {{ old('user_meeting_day') == 'Monday' ? 'selected' : '' }}>Monday</option>
+                            <option value="Tuesday" {{ old('user_meeting_day') == 'Tuesday' ? 'selected' : '' }}>Tuesday</option>
+                            <option value="Wednesday" {{ old('user_meeting_day') == 'Wednesday' ? 'selected' : '' }}>Wednesday</option>
+                            <option value="Thursday" {{ old('user_meeting_day') == 'Thursday' ? 'selected' : '' }}>Thursday</option>
+                            <option value="Friday" {{ old('user_meeting_day') == 'Friday' ? 'selected' : '' }}>Friday</option>
+                            <option value="Saturday" {{ old('user_meeting_day') == 'Saturday' ? 'selected' : '' }}>Saturday</option>
+                        </select>
+                        @if ($errors->has('user_meeting_day'))
+                            <span class="error">{{ $errors->first('user_meeting_day') }}</span>
+                        @endif
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="user_meeting_time">Meeting Time</label>
+                        <input type="time" name="user_meeting_time" id="user_meeting_time" class="form-input" value="{{ old('user_meeting_time') }}" required>
+                        @if ($errors->has('user_meeting_time'))
+                            <span class="error">{{ $errors->first('user_meeting_time') }}</span>
                         @endif
                     </div>
             
@@ -201,6 +225,6 @@
             <p><a href="{{ route('posts.index') }}">Go back to home</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=5.9') }}"></script>
+        <script src="{{ asset('js/auth.js?v=5.8') }}"></script>
     </div>
 @endsection

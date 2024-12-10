@@ -58,8 +58,9 @@ class UserController extends Controller
             'user_church_name' => 'required|string|max:255',
             'user_country' => 'required|string|max:255',
             'user_city' => 'required|string|max:255',
-            // 'user_dgroup_leader' => 'nullable|string',  // D-Group leader email to update
-        ]);
+            'user_meeting_day' => 'required|string|in:Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday',
+            'user_meeting_time' => 'required|date_format:H:i',
+        ]);        
     
         // Check if the D-Group Leader email has changed
         $dgroup_leader_email_changed = false;

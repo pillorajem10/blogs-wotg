@@ -45,6 +45,8 @@ class AuthController extends Controller
             'user_ministry' => 'nullable|string|max:255',
             'user_already_a_dgroup_leader' => 'required|in:0,1',
             'user_already_a_dgroup_member' => 'required|in:0,1',
+            'user_meeting_day' => 'required|string|in:Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday',
+            'user_meeting_time' => 'required|date_format:H:i',
         ]);
     
         // If validation fails, return with errors
@@ -93,6 +95,8 @@ class AuthController extends Controller
             'user_ministry' => $request->user_ministry,
             'user_already_a_dgroup_leader' => $request->user_already_a_dgroup_leader == '1',
             'user_already_a_dgroup_member' => $request->user_already_a_dgroup_member == '1',
+            'user_meeting_day' => $request->user_meeting_day,
+            'user_meeting_time' => $request->user_meeting_time,
             'approval_token' => $approvalToken, // Save the approval token if it was generated
         ]);
     
@@ -114,6 +118,7 @@ class AuthController extends Controller
         // Redirect to the dashboard with a success message
         return redirect()->route('posts.index')->with('success', 'Registration successful! You are now logged in.');
     }
+    
     
       
     
