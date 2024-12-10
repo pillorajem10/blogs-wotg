@@ -3,7 +3,7 @@
 @section('title', 'Edit Post')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/editPost.css?v=6.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/editPost.css?v=6.1') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -47,15 +47,17 @@
             </div>
 
             <div class="form-group">
-                <label for="post_link">Post Link</label>
+                <label for="post_link">Shared Link</label>
                 <input type="text" name="post_link" class="form-control" value="{{ old('post_link', $post->post_link) }}">
                 @error('post_link')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary mb-4">Save Changes</button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary mb-4">Cancel</a>
+            <div class="actions">
+                <button type="submit" class="btn-custom-edit-post">Save Changes</button>
+                <a href="{{ route('posts.index') }}" class="btn btn-secondary">Cancel</a>
+            </div>
         </form>
     </div>
 @endsection

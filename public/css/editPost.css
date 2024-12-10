@@ -11,3 +11,34 @@
     max-width: 100%;
     height: auto;
 }
+
+/* General Button Style */
+.btn-custom-edit-post {
+    background: #c0392b; /* Gradient background */
+    color: #fff; /* White text */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add some internal spacing */
+    font-size: 14px; /* Adjust font size */
+    text-transform: uppercase; /* All caps for style */
+    border-radius: 5px; /* Rounded button edges */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    cursor: pointer; /* Indicate clickable */
+    transition: all 0.3s ease; /* Smooth transition effect */
+}
+
+/* Hover Effect */
+.btn-custom-edit-post:hover {
+    background: darkred; /* Gradient background */
+}
+
+.actions {
+    margin-bottom: 10px;
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+    .btn-custom-edit-post {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}

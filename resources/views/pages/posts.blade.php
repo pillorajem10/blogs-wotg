@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.1') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -58,7 +58,7 @@
         
                     <!-- Input for URL -->
                     <div class="form-group">
-                        <label for="post_link">Paste Youtube Link</label>
+                        <label for="post_link">Shared Link</label>
                         <input type="url" id="post_link" name="post_link" class="form-control" placeholder="Paste the URL here">
                     </div>
                     
@@ -90,5 +90,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=6.0') }}"></script>
+    <script src="{{ asset('js/posts.js?v=6.1') }}"></script>
 @endsection
