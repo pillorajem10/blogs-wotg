@@ -78,5 +78,6 @@ Route::delete('/community/{commentId}/comment', [PostController::class, 'deleteC
 Route::delete('/community/{postId}', [PostController::class, 'deletePost'])->name('post.delete');
 Route::get('/community/{postId}/likers', [PostController::class, 'getLikers'])->name('post.likers');
 Route::post('/community/{commentId}/replies', [PostController::class, 'storeReply'])->name('comments.replies.store');
-
+Route::get('/community/edit/{postId}', [PostController::class, 'editPost'])->name('post.edit');
+Route::post('/community/update/{postId}', [PostController::class, 'updatePost'])->name('post.update');
 

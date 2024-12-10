@@ -59,19 +59,19 @@
                         <i class="fa fa-heart fa-lg"></i>
                         <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
                     </button>
-
+                
                     <!-- Likes Count -->
                     <span class="likes-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }})">
                         {{ $post->likes->count() }}
                     </span>
-
+                
                     <button class="comment-btn" data-post-id="{{ $post->id }}">
                         <i class="fa fa-comment fa-lg"></i>
                         <span>Comments</span>
                     </button>                    
                     <!-- Comments count -->
                     <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
-
+                
                     <!-- Delete Post -->
                     @if ($post->post_user_id == auth()->id())
                         <form action="{{ route('post.delete', $post->id) }}" method="POST" style="display:inline;">
@@ -82,8 +82,14 @@
                                 <span>Delete</span>
                             </button>
                         </form>
+                        
+                        <!-- Edit Post -->
+                        <a href="{{ route('post.edit', ['postId' => $post->id]) }}" class="edit-btn ml-3">
+                            <i class="fa fa-edit fa-lg"></i>
+                            <span>Edit</span>
+                        </a>
                     @endif
-                </div>
+                </div>                
             </div>
         @endauth
         <hr>

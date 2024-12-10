@@ -217,6 +217,43 @@ class PostController extends Controller
         ]);
     }
     
+    public function editPost($postId)
+    {
+        $post = Post::findOrFail($postId);
+
+        return view('pages.editPost', compact('post'));
+    }
+
+    /**
+     * Handle the update of the post.
+     */
+    public function updatePost(Request $request, $postId)
+    {
+        $post = Post::findOrFail($postId);
+    
+        // Validate request
+        $validatedData = $request->validate([
+            'post_caption' => 'required|string|max:255',
+            'post_link' => 'nullable|url',
+            'post_image' => 'nullable|image|max:2048', // Ensure it's an image and limit size to 2MB
+        ]);
+    
+        // Update the caption and link
+        $post->update([
+            'post_caption' => $validatedData['post_caption'],
+            'post_link' => $validatedData['post_link'],
+        ]);
+    
+        // Handle the image upload if provided
+        if ($request->hasFile('post_image')) {
+            $imageFile = $request->file('post_image');
+            $post->post_image = file_get_contents($imageFile->getRealPath());
+            $post->save();
+        }
+    
+        return redirect()->route('post.edit', ['postId' => $post->id])->with('success', 'Post updated successfully');
+    }
+    
 
     public function deleteComment(Request $request, $commentId)
     {

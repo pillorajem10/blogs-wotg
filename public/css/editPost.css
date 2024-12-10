@@ -1,0 +1,13 @@
+.container {
+    margin-top: 5rem;
+}
+
+.image-preview {
+    margin: 10px 0;
+    max-width: 100%;
+}
+
+.img-thumbnail {
+    max-width: 100%;
+    height: auto;
+}
