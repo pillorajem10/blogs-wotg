@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=6.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=6.3') }}">
 @endsection
 
 @section('content')
