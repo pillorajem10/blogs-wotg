@@ -49,7 +49,7 @@ $(document).ready(function () {
     
     // Infinite Scroll
     $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 70) {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 60) {
             if (nextPageUrl) {
                 loadMorePosts();
             }
