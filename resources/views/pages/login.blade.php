@@ -47,6 +47,6 @@
             <p><a href="{{ route('posts.index') }}">Go back to home</a></p>
         </div>
 
-        <script src="{{ asset('js/auth.js?v=6.5') }}"></script>
+        <script src="{{ asset('js/auth.js?v=6.6') }}"></script>
     </div>
 @endsection
