@@ -270,19 +270,26 @@ class PostController extends Controller
     public function updatePost(Request $request, $postId)
     {
         $post = Post::findOrFail($postId);
-    
+        
         // Validate request
         $validatedData = $request->validate([
-            'post_caption' => 'required|string|max:255',
+            'post_caption' => 'required|string',
             'post_link' => 'nullable|url',
             'post_image' => 'nullable|image|max:2048', // Ensure it's an image and limit size to 2MB
         ]);
     
-        // Update the caption and link
-        $post->update([
+        // Prepare data for update
+        $updateData = [
             'post_caption' => $validatedData['post_caption'],
-            'post_link' => $validatedData['post_link'],
-        ]);
+        ];
+    
+        // Only add 'post_link' if it's not null
+        if (!is_null($validatedData['post_link'])) {
+            $updateData['post_link'] = $validatedData['post_link'];
+        }
+    
+        // Update the post with validated data
+        $post->update($updateData);
     
         // Handle the image upload if provided
         if ($request->hasFile('post_image')) {
@@ -292,7 +299,7 @@ class PostController extends Controller
         }
     
         return redirect()->route('post.edit', ['postId' => $post->id])->with('success', 'Post updated successfully');
-    }
+    }    
     
 
     public function deleteComment(Request $request, $commentId)
