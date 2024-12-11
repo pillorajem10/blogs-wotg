@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Once the content is loaded, hide the loading overlay
     const loadingOverlay = document.getElementById('loading-overlay');
+    const fileInput = document.getElementById('posts_file_path');
+    const previewContainer = document.getElementById('file_preview');
     
     // Add a slight delay to make the overlay visible during the loading phase
     setTimeout(function () {
@@ -41,6 +43,29 @@ document.addEventListener('DOMContentLoaded', function () {
         var postId = $(this).data("post-id");
         likePost(postId);
     });
+
+
+
+    if (fileInput) {
+        fileInput.addEventListener('change', () => {
+            previewContainer.innerHTML = ''; // Clear previous previews
+
+            if (fileInput.files) {
+                Array.from(fileInput.files).forEach((file) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxWidth = '100%';
+                        img.style.height = 'auto';
+                        img.style.marginTop = '10px';
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+    }
 });
 
 $(document).ready(function () {

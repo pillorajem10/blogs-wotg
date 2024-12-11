@@ -28,7 +28,8 @@ class Post extends Model
         'post_likes',
         'post_comments',
         'post_status',
-        'post_link', // Add post_link here
+        'post_link',
+        'post_file_path', // Added post_file_path here
     ];
 
     /**
@@ -38,6 +39,7 @@ class Post extends Model
      */
     protected $casts = [
         'post_comments' => 'array',
+        'post_file_path' => 'array', // Casting post_file_path to an array
     ];
 
     /**
@@ -50,7 +52,6 @@ class Post extends Model
         return $this->belongsTo(User::class, 'post_user_id');
     }
 
-    // In the Post model (App\Models\Post)
     public function likes()
     {
         return $this->hasMany(PostLike::class);

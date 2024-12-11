@@ -126,16 +126,15 @@ class PostController extends Controller
         $messages = [
             'post_caption.required' => 'Please provide a caption for your post.',
             'post_caption.string' => 'The caption must be a valid string.',
-            'post_image.image' => 'Please upload a valid image file (jpeg, png, jpg, gif, svg).',
-            'post_image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic.',
-            'post_image.max' => 'The image size cannot exceed 12MB.',
+            'posts_file_path.*.mimes' => 'Each file must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic.',
+            'posts_file_path.*.max' => 'Each file size cannot exceed 12MB.',
             'post_link.url' => 'The link must be a valid URL.',
         ];
     
         // Validate the input with custom error messages
         $validated = $request->validate([
             'post_caption' => 'required|string',
-            'post_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288',
+            'posts_file_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288', // Validate each file
             'post_link' => 'nullable|url',
         ], $messages);
     
@@ -147,13 +146,23 @@ class PostController extends Controller
         $post->post_comments = json_encode([]); // Empty comments by default
         $post->post_user_id = Auth::id(); // Set the user ID of the authenticated user
     
-        // Handle the image upload if there is one
-        if ($request->hasFile('post_image')) {
-            $image = $request->file('post_image');
+        // Handle file uploads
+        $filePaths = [];
+        if ($request->hasFile('posts_file_path')) {
+            foreach ($request->file('posts_file_path') as $file) {
+                // Generate a unique file name
+                $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
     
-            // Convert the image to binary
-            $post->post_image = file_get_contents($image);
+                // Save the file to the public/images/posts directory
+                $file->move(public_path('images/posts'), $fileName);
+    
+                // Add the file path to the array
+                $filePaths[] = 'images/posts/' . $fileName;
+            }
         }
+    
+        // Save the file paths as JSON in the database
+        $post->post_file_path = $filePaths;
     
         // Save the post link if provided
         if (!empty($validated['post_link'])) {
@@ -164,7 +173,7 @@ class PostController extends Controller
     
         // Redirect back with success message
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
-    }
+    }    
       
 
     public function deletePost($postId)

@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.7') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -49,26 +49,26 @@
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
-                    <!-- Error messages for the form -->
-                    
+                    <!-- Caption Input -->
                     <div class="form-group">
                         <label for="post_caption">Caption</label>
                         <textarea id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" rows="5" required></textarea>
                     </div>                    
         
-                    <!-- Input for URL -->
+                    <!-- URL Input -->
                     <div class="form-group">
                         <label for="post_link">Shared Link</label>
                         <input type="url" id="post_link" name="post_link" class="form-control" placeholder="Paste the URL here">
                     </div>
                     
+                    <!-- File Upload Input -->
                     <div class="form-group">
-                        <label for="post_image">Image (optional)</label>
-                        <input type="file" id="post_image" name="post_image" class="form-control" onchange="previewImage()">
+                        <label for="posts_file_path">Upload Files (optional)</label>
+                        <input type="file" id="posts_file_path" name="posts_file_path[]" class="form-control" multiple>
                         
-                        <!-- Image preview -->
-                        <div id="image_preview" style="margin-top: 10px;">
-                            <img id="preview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;">
+                        <!-- File Previews -->
+                        <div id="file_preview" style="margin-top: 10px;">
+                            <!-- Previews will be dynamically added here -->
                         </div>
                     </div>
                 
@@ -90,5 +90,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=6.6') }}"></script>
+    <script src="{{ asset('js/posts.js?v=6.7') }}"></script>
 @endsection
