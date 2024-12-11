@@ -248,7 +248,7 @@
             <div class="user-profile">
                 @auth
                     <!-- Profile Picture or Circle (Wrapped in a div for easy JS navigation) -->
-                    <div class="profile-clickable" onclick="navigateToDGroup()">
+                    <div class="profile-clickable" data-user-id="{{ auth()->id() }}" onclick="navigateToDGroup()">
                         @if (Auth::user()->user_profile_picture)
                             <!-- Display Profile Picture -->
                             <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
@@ -347,8 +347,9 @@
         // Adjust the sidebar and content on page load
         document.addEventListener('DOMContentLoaded', adjustSidebarAndContent);
 
-        function navigateToDGroup() {
-            window.location.href = '/d-group';  // Redirects the user to the "/d-group" page
+        function navigateToDGroup(element) {
+            const userId = event.currentTarget.getAttribute('data-user-id');  // Get the user ID from the data attribute
+            window.location.href = '/community/profile/' + userId;  // Redirects to the user's profile page
         }
     </script>    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

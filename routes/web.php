@@ -80,4 +80,7 @@ Route::get('/community/{postId}/likers', [PostController::class, 'getLikers'])->
 Route::post('/community/{commentId}/replies', [PostController::class, 'storeReply'])->name('comments.replies.store');
 Route::get('/community/edit/{postId}', [PostController::class, 'editPost'])->name('post.edit');
 Route::post('/community/update/{postId}', [PostController::class, 'updatePost'])->name('post.update');
+Route::get('/community/profile/{userId}', [PostController::class, 'viewProfile'])->name('profile.view');
+Route::post('/community/profile/update-banner', [UserController::class, 'updateBanner'])->name('profile.updateBanner');
+
 

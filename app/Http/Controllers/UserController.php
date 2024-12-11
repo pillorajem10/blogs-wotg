@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\MemberRequest;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -159,5 +160,32 @@ class UserController extends Controller
     
         // Redirect to the profile page with success message
         return redirect()->route('dashboard')->with('success', 'Profile picture updated successfully!');
-    }    
+    }   
+    
+    public function updateBanner(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'profile_banner' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Check if the user has uploaded a file
+        if ($request->hasFile('profile_banner')) {
+            // Store the image in the 'public/images/profile_banners' folder
+            $path = $request->file('profile_banner')->store('images/profile_banners', 'public');
+            
+            // Update the user's profile banner in the database
+            $user = Auth::user();
+            $user->user_profile_banner = $path;
+            $user->save();
+
+            // Redirect back with a success message
+            return redirect()->route('profile.view', ['userId' => auth()->id()])
+                ->with('success', 'Profile banner updated successfully!');
+
+        }
+
+        // If no file was selected, redirect back with an error message
+        return back()->with('error', 'No file selected.');
+    }
 }

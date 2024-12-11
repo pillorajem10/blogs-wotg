@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\PostLike;
 use App\Models\PostComment;
+use App\Models\User;
 use App\Models\PostCommentReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -71,7 +72,46 @@ class PostController extends Controller
       
     
     
+    public function viewProfile(Request $request, $userId)
+    {
+        $today = Carbon::now('Asia/Manila');
     
+        // Filter posts by the given user ID
+        $posts = Post::with('likes.user')
+                    ->where('post_user_id', $userId)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(3);
+    
+        // Map to include the embed data
+        $posts->map(function ($post) {
+            if ($post->post_link) {
+                $embed = new Embed();
+                try {
+                    $info = $embed->get($post->post_link);
+                    $post->embeddedHtml = $info->code;
+                } catch (\Exception $e) {
+                    $post->embeddedHtml = null;
+                }
+            } else {
+                $post->embeddedHtml = null;
+            }
+    
+            $post->likedByUser = $post->likes()->where('user_id', auth()->id())->exists();
+            return $post;
+        });
+    
+        $user = User::findOrFail($userId);
+    
+        if ($request->ajax()) {
+            $view = view('partials.posts', compact('posts'))->render();
+            return Response::json([
+                'view' => $view,
+                'nextPageUrl' => $posts->nextPageUrl()
+            ]);
+        }
+    
+        return view('pages.userProfile', compact('posts', 'user'));
+    }
     
 
     /**
