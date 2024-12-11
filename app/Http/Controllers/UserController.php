@@ -7,6 +7,7 @@ use App\Models\MemberRequest;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 
@@ -168,24 +169,24 @@ class UserController extends Controller
         $request->validate([
             'profile_banner' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Check if the user has uploaded a file
+    
+        // If the user uploads a new image
         if ($request->hasFile('profile_banner')) {
-            // Store the image in the 'public/images/profile_banners' folder
-            $path = $request->file('profile_banner')->store('images/profile_banners', 'public');
+            $file = $request->file('profile_banner');
             
-            // Update the user's profile banner in the database
-            $user = Auth::user();
-            $user->user_profile_banner = $path;
+            // Generate a unique name for the file to avoid overwriting
+            $fileName = uniqid('banner_') . '.' . $file->getClientOriginalExtension();
+    
+            // Move the file to 'public/images/banners' directory
+            $file->move(public_path('images/banners'), $fileName);
+    
+            // Update the user's profile banner path in the database
+            $user = auth()->user();
+            $user->user_profile_banner = 'images/banners/' . $fileName;
             $user->save();
-
-            // Redirect back with a success message
-            return redirect()->route('profile.view', ['userId' => auth()->id()])
-                ->with('success', 'Profile banner updated successfully!');
-
         }
-
-        // If no file was selected, redirect back with an error message
-        return back()->with('error', 'No file selected.');
+    
+        return redirect()->route('profile.view', ['userId' => auth()->id()])
+                         ->with('success', 'Profile banner updated successfully!');
     }
 }

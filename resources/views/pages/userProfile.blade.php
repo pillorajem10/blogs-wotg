@@ -11,7 +11,7 @@
 <div class="profile-banner-container">
     <div class="profile-banner" id="profileBanner">
         @if ($user->user_profile_banner)
-            <img src="{{ asset('storage/' . $user->user_profile_banner) }}" alt="User Banner" class="profile-banner-image" id="bannerImage">
+            <img src="{{ asset($user->user_profile_banner) }}" alt="User Banner" class="profile-banner-image" id="bannerImage">
         @else
             <div class="profile-banner-default">
                 <span>Cover Photo</span>
