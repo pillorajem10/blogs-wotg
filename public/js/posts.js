@@ -191,13 +191,11 @@ $(document).ready(function () {
             url: '/community/' + postId + '/likers', // Assuming you have an endpoint for this
             type: 'GET',
             success: function (response) {
-                console.log('response', response)
                 const likersListContainer = $("#likers-list-" + postId);
                 likersListContainer.empty(); // Clear existing list
     
                 // Loop through each liker and display in the modal
                 response.likers.forEach(liker => {
-                    console.log('liker', liker)
                     const userAvatar = liker.user_profile_picture
                         ? `<img src="data:image/jpeg;base64,${liker.user_profile_picture}" alt="User Avatar">`
                         : `<div class="profile-circle-comment">
@@ -288,8 +286,6 @@ function addComment(postId) {
         },
         success: function(response) {
             if (response.success) {
-                console.log('COMMENT ID!!!', response.comment);
-                console.log('AUTH ID!!!', window.Laravel.authUserId);
                 const commentHTML = `
                     <div class="comment" data-comment-id="${response.comment.id}">
                         <div class="comment-avatar">
