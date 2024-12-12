@@ -40,19 +40,20 @@
             <!-- Image Section -->
             @if ($post->post_image)
                 <div class="post-image">
-                    <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid">
+                    <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
                 </div>
             @endif
-
+            
             @if (!empty($post->post_file_path) && is_array($post->post_file_path))
                 <div class="post-images">
                     @foreach ($post->post_file_path as $filePath)
                         <div class="post-image">
-                            <img src="{{ asset($filePath) }}" alt="Post Image" class="img-fluid">
+                            <img src="{{ asset($filePath) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
                         </div>
                     @endforeach
                 </div>
             @endif
+        
         
             <!-- Embedded Content Section -->
             @if ($post->embeddedHtml)
