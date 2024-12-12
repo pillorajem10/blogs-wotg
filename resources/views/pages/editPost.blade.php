@@ -31,12 +31,12 @@
             @endif
 
             <div class="form-group">
-                <label for="post_image">Upload New Image (optional)</label>
-                <input type="file" name="post_image" class="form-control">
-                @error('post_image')
+                <label for="posts_file_path">Upload New Images (optional)</label>
+                <input type="file" name="posts_file_path[]" class="form-control" multiple>
+                @error('posts_file_path')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-            </div>
+            </div>            
 
             <div class="form-group">
                 <label for="post_caption">Caption</label>
