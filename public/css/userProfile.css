@@ -54,18 +54,19 @@
     padding: 1rem;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .avatar-image {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .user-avatar-profile-circle {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background-color: #c0392b;
     display: flex;

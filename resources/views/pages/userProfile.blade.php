@@ -3,8 +3,8 @@
 @section('title', 'Profile')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.8') }}">
-    <link rel="stylesheet" href="{{ asset('css/userProfile.css?v=6.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/userProfile.css?v=6.9') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -18,27 +18,30 @@
             </div>
         @endif
     </div>
-    
-    <!-- Hidden file input for uploading banner -->
-    <form id="bannerForm" action="{{ route('profile.updateBanner') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="file" name="profile_banner" id="profileBannerInput" style="display: none;" accept="image/*">
-    </form>
-    
-    <script>
-        document.getElementById('profileBanner').addEventListener('click', function () {
-            // Programmatically trigger the file input click event
-            document.getElementById('profileBannerInput').click();
-        });
-    
-        // Submit the form when a file is selected
-        document.getElementById('profileBannerInput').addEventListener('change', function () {
-            document.getElementById('bannerForm').submit();
-        });
-    </script>
-    
-    
-    
+
+    <!-- Show the file input only if the user is the owner of the profile -->
+    @if (Auth::id() === $user->id)
+        <!-- Hidden file input for uploading banner -->
+        <form id="bannerForm" action="{{ route('profile.updateBanner') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="profile_banner" id="profileBannerInput" style="display: none;" accept="image/*">
+        </form>
+    @endif
+
+    @if (Auth::id() === $user->id)
+        <script>
+            document.getElementById('profileBanner').addEventListener('click', function () {
+                // Programmatically trigger the file input click event
+                document.getElementById('profileBannerInput').click();
+            });
+
+            // Submit the form when a file is selected
+            document.getElementById('profileBannerInput').addEventListener('change', function () {
+                document.getElementById('bannerForm').submit();
+            });
+        </script>
+    @endif
+
     <div class="profile-info">
         <div class="user-avatar-profile">
             @if ($user->user_profile_picture) 
@@ -52,6 +55,7 @@
         <span class="profile-info-name">{{ $user->user_fname }} {{ $user->user_lname }}</span>
     </div>
 </div>
+
 
 @section('content')
     <div id="loading-overlay" class="loading-overlay">
@@ -138,5 +142,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=6.8') }}"></script>
+    <script src="{{ asset('js/posts.js?v=6.9') }}"></script>
 @endsection
