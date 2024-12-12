@@ -35,12 +35,16 @@ class PostController extends Controller
     {
         $today = Carbon::now('Asia/Manila');
         
-        $posts = Post::with('likes.user')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(3);
+        // Load posts with likes, reactions, and pagination
+        $posts = Post::with(['likes' => function ($query) {
+            $query->select('post_id', 'reaction', 'user_id');
+        }])
+        ->orderBy('created_at', 'desc')
+        ->paginate(3);
     
-        // Map to include the embed data
+        // Map the posts for additional processing
         $posts->map(function ($post) {
+            // Embed data processing
             if ($post->post_link) {
                 $embed = new Embed();
                 try {
@@ -53,37 +57,55 @@ class PostController extends Controller
                 $post->embeddedHtml = null;
             }
     
-            $post->likedByUser = $post->likes()->where('user_id', auth()->id())->exists();
+            // Count reactions for each type
+            $reactionCounts = [
+                'like' => $post->likes->where('reaction', 'like')->count(),
+                'heart' => $post->likes->where('reaction', 'heart')->count(),
+                'care' => $post->likes->where('reaction', 'care')->count(),
+            ];
+            $post->reactionCounts = $reactionCounts;
+    
+            // Check if the current user has reacted to this post
+            $post->likedByUser = $post->likes->where('user_id', auth()->id())->where('reaction', 'like')->isNotEmpty();
+            $post->reactedWithHeart = $post->likes->where('user_id', auth()->id())->where('reaction', 'heart')->isNotEmpty();
+            $post->reactedWithCare = $post->likes->where('user_id', auth()->id())->where('reaction', 'care')->isNotEmpty();
+    
             return $post;
         });
     
         $user = auth()->user();
     
+        // Handle AJAX requests for infinite scroll
         if ($request->ajax()) {
             $view = view('partials.posts', compact('posts'))->render();
-            return Response::json([
+            return response()->json([
                 'view' => $view,
-                'nextPageUrl' => $posts->nextPageUrl()
+                'nextPageUrl' => $posts->nextPageUrl(),
             ]);
         }
     
+        // Return the main view
         return view('pages.posts', compact('posts', 'user'));
-    }
+    }    
       
-    
     
     public function viewProfile(Request $request, $userId)
     {
+        // Get the user
+        $user = User::findOrFail($userId);
         $today = Carbon::now('Asia/Manila');
+        
+        // Load posts for the specific user with likes, reactions, and pagination
+        $posts = Post::with(['likes' => function ($query) {
+            $query->select('post_id', 'reaction', 'user_id');
+        }])
+        ->where('post_user_id', $userId) // Filter posts by the user ID
+        ->orderBy('created_at', 'desc')
+        ->paginate(3);
     
-        // Filter posts by the given user ID
-        $posts = Post::with('likes.user')
-                    ->where('post_user_id', $userId)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(3);
-    
-        // Map to include the embed data
+        // Map the posts for additional processing
         $posts->map(function ($post) {
+            // Embed data processing
             if ($post->post_link) {
                 $embed = new Embed();
                 try {
@@ -96,22 +118,35 @@ class PostController extends Controller
                 $post->embeddedHtml = null;
             }
     
-            $post->likedByUser = $post->likes()->where('user_id', auth()->id())->exists();
+            // Count reactions for each type
+            $reactionCounts = [
+                'like' => $post->likes->where('reaction', 'like')->count(),
+                'heart' => $post->likes->where('reaction', 'heart')->count(),
+                'care' => $post->likes->where('reaction', 'care')->count(),
+            ];
+            $post->reactionCounts = $reactionCounts;
+    
+            // Check if the current user has reacted to this post
+            $post->likedByUser = $post->likes->where('user_id', auth()->id())->where('reaction', 'like')->isNotEmpty();
+            $post->reactedWithHeart = $post->likes->where('user_id', auth()->id())->where('reaction', 'heart')->isNotEmpty();
+            $post->reactedWithCare = $post->likes->where('user_id', auth()->id())->where('reaction', 'care')->isNotEmpty();
+    
             return $post;
         });
     
-        $user = User::findOrFail($userId);
-    
+        // Handle AJAX requests for infinite scroll
         if ($request->ajax()) {
             $view = view('partials.posts', compact('posts'))->render();
-            return Response::json([
+            return response()->json([
                 'view' => $view,
-                'nextPageUrl' => $posts->nextPageUrl()
+                'nextPageUrl' => $posts->nextPageUrl(),
             ]);
         }
     
+        // Return the user profile view
         return view('pages.userProfile', compact('posts', 'user'));
     }
+    
     
 
     /**
@@ -199,43 +234,59 @@ class PostController extends Controller
     }
 
     
-    public function likePost(Request $request, $postId)
+    public function reactToPost(Request $request, $postId)
     {
         $userId = Auth::id();
         $post = Post::findOrFail($postId);
     
-        // Check if the user has already liked the post
-        $existingLike = PostLike::where('user_id', $userId)
-                                ->where('post_id', $postId)
-                                ->first();
+        $reaction = $request->input('reaction'); // The reaction type (e.g., like, heart, care)
     
-        if ($existingLike) {
-            // If the post is already liked, unlike it
-            $existingLike->delete();
-            $post->post_likes = $post->post_likes - 1; // Decrease the like count
-            $likedByUser = false; // User has unliked the post
-            $message = 'You unliked this post.';
+        // Check if the user already reacted to this post
+        $existingReaction = PostLike::where('user_id', $userId)
+                                    ->where('post_id', $postId)
+                                    ->first();
+    
+        if ($existingReaction) {
+            if ($existingReaction->reaction === $reaction) {
+                // If the same reaction is selected, remove it (unreact)
+                $existingReaction->delete();
+                $message = "You removed your reaction.";
+                $reactedByUser = false; // User has unreacted to the post
+            } else {
+                // If a different reaction is selected, update the existing reaction
+                $existingReaction->reaction = $reaction;
+                $existingReaction->save();
+                $reactedByUser = true; // User has reacted to the post
+                $message = "You updated your reaction to {$reaction}.";
+            }
         } else {
-            // If the post is not liked, like it
+            // Add a new reaction
             PostLike::create([
                 'user_id' => $userId,
                 'post_id' => $postId,
+                'reaction' => $reaction,
             ]);
-            $post->post_likes = $post->post_likes + 1; // Increase the like count
-            $likedByUser = true; // User has liked the post
-            $message = 'You liked this post.';
+            $message = "You reacted with {$reaction}.";
+            $reactedByUser = true; // User has reacted to the post
         }
     
-        // Save the updated like count on the Post model
-        $post->save();
+        // Recalculate reaction counts
+        $reactionCounts = [
+            'like' => $post->likes()->where('reaction', 'like')->count(),
+            'heart' => $post->likes()->where('reaction', 'heart')->count(),
+            'care' => $post->likes()->where('reaction', 'care')->count(),
+        ];
     
-        // Return the updated like count and likedByUser status in JSON format
         return response()->json([
             'message' => $message,
-            'likesCount' => $post->post_likes,
-            'likedByUser' => $likedByUser,
+            'reactionCounts' => $reactionCounts,
+            'userReaction' => $reaction, // The user's current reaction
+            'reactedByUser' => $reactedByUser,
         ]);
-    }  
+    }
+    
+    
+    
     
     public function storeComment(Request $request, $postId)
     {
@@ -367,23 +418,34 @@ class PostController extends Controller
     }
 
     
-    public function getLikers($postId)
+    public function getLikers($postId, $reactionType = null)
     {
         $post = Post::findOrFail($postId);
         
-        // Get the list of users who liked this post
-        $likers = $post->likes()->with('user')->get()->map(function($like) {
+        // Get the list of users who reacted to this post, including the reaction type
+        $likersQuery = $post->likes()->with('user')->get();
+    
+        // If a reaction type is provided, filter the reactions
+        if ($reactionType) {
+            $likersQuery = $likersQuery->filter(function($like) use ($reactionType) {
+                return $like->reaction === $reactionType;
+            });
+        }
+    
+        // Map the data to include user information and reaction type
+        $likers = $likersQuery->map(function($like) {
             return [
                 'user_id' => $like->user->id,
                 'user_fname' => $like->user->user_fname,
                 'user_lname' => $like->user->user_lname,
-                'user_profile_picture' => base64_encode($like->user->user_profile_picture) ?? null,
+                'user_profile_picture' => $like->user->user_profile_picture ? base64_encode($like->user->user_profile_picture) : null,
                 'user_initial' => strtoupper(substr($like->user->user_fname, 0, 1)), // Initials for profile picture
+                'reaction' => $like->reaction, // Include the reaction type
             ];
         });
-
+    
         return response()->json([
             'likers' => $likers,
         ]);
-    }
+    }    
 }

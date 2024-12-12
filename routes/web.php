@@ -72,7 +72,7 @@ Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('
 // POSTS
 Route::get('/', [PostController::class, 'index'])->name('posts.index'); // Display posts
 Route::post('/community', [PostController::class, 'store'])->name('posts.store'); // Store a new post
-Route::post('/community/{postId}/like', [PostController::class, 'likePost'])->name('posts.like');
+Route::post('/community/{postId}/react', [PostController::class, 'reactToPost'])->name('posts.react');
 Route::post('/community/{postId}/comment', [PostController::class, 'storeComment'])->name('post.comment.store');
 Route::delete('/community/{commentId}/comment', [PostController::class, 'deleteComment'])->name('post.comment.delete');
 Route::delete('/community/{postId}', [PostController::class, 'deletePost'])->name('post.delete');

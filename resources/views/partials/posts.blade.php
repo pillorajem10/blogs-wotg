@@ -67,22 +67,40 @@
         @auth
             <div class="post-footer">
                 <div class="post-actions">
-                    <!-- Like button -->
-                    <button class="like-btn" data-post-id="{{ $post->id }}">
-                        <i class="fa fa-heart fa-lg"></i>
-                        <span>{{ $post->likedByUser ? 'Liked' : 'Like' }}</span>
-                    </button>
+                    <!-- Like Button -->
+                    <div class="reactions">
+                        <!-- Like Button -->
+                        <button class="react-btn {{ $post->likedByUser ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="like">
+                            <i class="fa fa-thumbs-up"></i> 
+                        </button>
+                        <span class="react-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'like')">
+                            {{ $post->reactionCounts['like'] ?? 0 }}
+                        </span>
+                    
+                        <!-- Heart Button -->
+                        <button class="react-btn {{ $post->reactedWithHeart ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="heart">
+                            <i class="fa fa-heart"></i> 
+                        </button>
+                        <span class="react-count" id="hearts-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'heart')">
+                            {{ $post->reactionCounts['heart'] ?? 0 }}
+                        </span>
+                    
+                        <!-- Care Button -->
+                        <button class="react-btn {{ $post->reactedWithCare ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="care">
+                            <i class="fa fa-smile"></i> 
+                        </button>
+                        <span class="react-count" id="cares-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'care')">
+                            {{ $post->reactionCounts['care'] ?? 0 }}
+                        </span>
+                    </div>
+                    
+                    
                 
-                    <!-- Likes Count -->
-                    <span class="likes-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }})">
-                        {{ $post->likes->count() }}
-                    </span>
-                
+                    <!-- Comments Count -->
                     <button class="comment-btn" data-post-id="{{ $post->id }}">
                         <i class="fa fa-comment fa-lg"></i>
                         <span>Comments</span>
                     </button>                    
-                    <!-- Comments count -->
                     <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
                 
                     <!-- Delete Post -->
@@ -95,25 +113,25 @@
                                 <span>Delete</span>
                             </button>
                         </form>
-                        
+                
                         <!-- Edit Post -->
                         <a href="{{ route('post.edit', ['postId' => $post->id]) }}" class="edit-btn ml-3">
                             <i class="fa fa-edit fa-lg"></i>
                             <span>Edit</span>
                         </a>
                     @endif
-                </div>                
+                </div>                               
             </div>
         @endauth
         <hr>
 
-        <div id="modal-likers-{{ $post->id }}" class="modal">
+        <div id="modal-likers-{{ $post->id }}" class="modal" style="display: none;">
             <div class="modal-content">
-                <span class="close" data-post-id="{{ $post->id }}" onclick="closeModal('likers', {{ $post->id }})">&times;</span>
-                <h4>People Who Liked This Post</h4>
+                <span class="close" data-post-id="{{ $post->id }}" onclick="closeLikersModal({{ $post->id }})">&times;</span>
                 <div class="likers-list" id="likers-list-{{ $post->id }}">
+                    <!-- Users who reacted will be dynamically injected here -->
                     @foreach ($post->likes as $like)
-                        <div class="liker">
+                        <div class="liker" data-reaction="{{ $like->reaction }}">
                             <div class="user-info-liker">
                                 <div class="comment-avatar">
                                     @if ($like->user->user_profile_picture)
@@ -126,15 +144,22 @@
                                 </div>
                                 <span>{{ $like->user->user_fname }} {{ $like->user->user_lname }}</span>
                             </div>
-
                             <div>
-                                <i class="fa fa-heart fa-lg"></i>
+                                <!-- Display reaction icon -->
+                                @if ($like->reaction == 'like')
+                                    <i class="fa fa-thumbs-up fa-lg"></i>
+                                @elseif ($like->reaction == 'heart')
+                                    <i class="fa fa-heart fa-lg"></i>
+                                @elseif ($like->reaction == 'care')
+                                    <i class="fa fa-smile fa-lg"></i>
+                                @endif
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
         </div>
+        
         
 
         <!-- Modal Structure -->

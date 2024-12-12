@@ -13,7 +13,7 @@ class PostLike extends Model
     protected $table = 'post_likes';
 
     // The attributes that are mass assignable
-    protected $fillable = ['user_id', 'post_id'];
+    protected $fillable = ['user_id', 'post_id', 'reaction'];
 
     // The timestamps are automatically handled by Eloquent
     public $timestamps = true;

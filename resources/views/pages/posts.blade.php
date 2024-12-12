@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=7.0') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -90,5 +90,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=6.9') }}"></script>
+    <script src="{{ asset('js/posts.js?v=7.0') }}"></script>
 @endsection

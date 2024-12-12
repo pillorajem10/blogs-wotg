@@ -39,12 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attach likePost event to all like buttons
-    $(".like-btn").on("click", function () {
-        var postId = $(this).data("post-id");
-        likePost(postId);
-    });
-
-
 
     if (fileInput) {
         fileInput.addEventListener('change', () => {
@@ -105,12 +99,6 @@ $(document).ready(function () {
         });
     }
 
-    // Like button click handler with delegation
-    $(document).on('click', '.like-btn', function () {
-        const postId = $(this).data('post-id');
-        likePost(postId);
-    });
-
     $(document).on('click', '.comment-btn', function () {
         const postId = $(this).data('post-id');
         showCommentModal(postId);
@@ -126,32 +114,114 @@ $(document).ready(function () {
         }
     }
 
-    function likePost(postId) {
+    /*
+    $(".like-btn").on("click", function () {
+        var postId = $(this).data("post-id");
+        likePost(postId);
+    });
+    */
+
+    // Like button click handler with delegation
+    $(document).on('click', '.react-btn', function () {
+        const postId = $(this).data('post-id');
+        const reaction = $(this).data('reaction'); // e.g., 'like', 'heart', 'care'
+        
+        reactToPost(postId, reaction, $(this)); // Pass the button element as well
+    });
+    
+    function reactToPost(postId, reaction, button) {
         $.ajax({
-            url: '/community/' + postId + '/like',
+            url: '/community/' + postId + '/react',
             type: 'POST',
             data: {
-                _token: window.Laravel.csrfToken, // Use the csrfToken from the window object
+                _token: window.Laravel.csrfToken, // CSRF token
+                reaction: reaction,
             },
             success: function (response) {
-                const button = $("#post-" + postId).find(".like-btn");
-                const icon = button.find("i");
-
-                if (response.likedByUser) {
-                    icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
-                    button.text(" Liked"); // Update the button text to "Liked"
+                // Update the reaction counts
+                $("#likes-count-" + postId).text(response.reactionCounts.like);
+                $("#hearts-count-" + postId).text(response.reactionCounts.heart);
+                $("#cares-count-" + postId).text(response.reactionCounts.care);
+    
+                // Update the button state and text (icon)
+                const icon = button.find('i');
+                
+                // First, remove 'active' class from all buttons for this post
+                $(".react-btn[data-post-id='" + postId + "']").removeClass('active');
+    
+                // Check if the user has reacted and update the button style accordingly
+                if (response.reactedByUser) {
+                    // Mark the clicked button as active
+                    button.addClass('active');
+                        
+                    // Update the icon based on the selected reaction
+                    if (reaction === 'like') {
+                        icon.removeClass("fa-thumbs-up").addClass("fa-thumbs-up fa-lg");
+                    } else if (reaction === 'heart') {
+                        icon.removeClass("fa-heart").addClass("fa-heart fa-lg");
+                    } else if (reaction === 'care') {
+                        icon.removeClass("fa-smile").addClass("fa-smile fa-lg");
+                    }
                 } else {
-                    icon.removeClass("fa-heart-o").addClass("fa-heart fa-lg");
-                    button.text(" Like"); // Update the button text to "Like"
+                    // If the user unreacted, deactivate the button and reset the icon
+                    button.removeClass('active');
+                        
+                    // Reset the icon to the default
+                    if (reaction === 'like') {
+                        icon.removeClass("fa-thumbs-up").addClass("fa-thumbs-up fa-lg");
+                    } else if (reaction === 'heart') {
+                        icon.removeClass("fa-heart").addClass("fa-heart fa-lg");
+                    } else if (reaction === 'care') {
+                        icon.removeClass("fa-smile").addClass("fa-smile fa-lg");
+                    }
                 }
-
-                button.prepend(icon);
-
-                // Update the like count
-                $("#likes-count-" + postId).text(response.likesCount);
-
-                // Fetch and update the likers list in the modal
-                updateLikersList(postId);
+    
+                // Dynamically update the list of likers in real-time
+                updateLikersList(postId, response.userReaction); // Pass the user's current reaction
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    
+    // Function to update the likers list in the modal
+    function updateLikersList(postId, userReaction) {
+        $.ajax({
+            url: '/community/' + postId + '/likers', // Assuming you have an endpoint for this
+            type: 'GET',
+            success: function (response) {
+                console.log('response', response)
+                const likersListContainer = $("#likers-list-" + postId);
+                likersListContainer.empty(); // Clear existing list
+    
+                // Loop through each liker and display in the modal
+                response.likers.forEach(liker => {
+                    console.log('liker', liker)
+                    const userAvatar = liker.user_profile_picture
+                        ? `<img src="data:image/jpeg;base64,${liker.user_profile_picture}" alt="User Avatar">`
+                        : `<div class="profile-circle-comment">
+                                <span>${liker.user_initial}</span>
+                            </div>`;
+    
+                    const reactionIcon = liker.reaction === 'like'
+                        ? `<i class="fa fa-thumbs-up fa-lg"></i>`
+                        : liker.reaction === 'heart'
+                        ? `<i class="fa fa-heart fa-lg"></i>`
+                        : `<i class="fa fa-smile fa-lg"></i>`;
+    
+                    const likerElement = `
+                        <div class="liker" data-reaction="${liker.reaction}">
+                            <div class="user-info-liker">
+                                <div class="comment-avatar">${userAvatar}</div>
+                                <span>${liker.user_fname} ${liker.user_lname}</span>
+                            </div>
+                            <div>${reactionIcon}</div>
+                        </div>
+                    `;
+    
+                    likersListContainer.append(likerElement);
+                });
             },
             error: function (error) {
                 console.log('Error:', error);
@@ -196,56 +266,6 @@ function closeModal(modalType, postId) {
     }
 }
 
-
-
-// Function to update the list of users who liked the post in real-time
-function updateLikersList(postId) {
-    $.ajax({
-        url: '/community/' + postId + '/likers', // Ensure this route exists
-        type: 'GET',
-        success: function(response) {
-            var likersList = $("#likers-list-" + postId);
-            likersList.empty(); // Clear existing list
-            
-            // If there are no likers, show a message
-            if (response.likers.length === 0) {
-                likersList.append('<p>No one has liked this post yet.</p>');
-                return;
-            }
-
-            // Loop through each liker and append to the list
-            response.likers.forEach(function(liker) {
-                var likerHtml = getLikerHtml(liker);
-                likersList.append(likerHtml);
-            });
-        },
-        error: function(error) {
-            console.log('Error:', error);
-        }
-    });
-}
-
-// Helper function to generate HTML for each liker
-function getLikerHtml(liker) {
-    return `
-        <div class="liker">
-            <div class="user-info-liker">
-                <div class="comment-avatar">
-                    ${liker.user_profile_picture ? 
-                        `<img src="data:image/jpeg;base64,${liker.user_profile_picture}" alt="User Avatar">` : 
-                        `<div class="profile-circle-comment">
-                            <span>${liker.user_initial}</span>
-                        </div>`
-                    }
-                </div>
-                <span>${liker.user_fname} ${liker.user_lname}</span>
-            </div>
-            <div class="liker-icon">
-                <i class="fa fa-heart fa-lg"></i>
-            </div>
-        </div>
-    `;
-}
 
 function toggleReplyBox(commentId) {
     const replySection = $(`#reply-section-${commentId}`);
@@ -448,11 +468,26 @@ $(document).on('click', '.btn-submit-reply', function() {
 });
 
 // Function to open the modal and show the likers
-function showLikersModal(postId) {
+function showLikersModal(postId, reactionType) {
     document.getElementById('modal-likers-' + postId).style.display = 'block';
+
+    // Filter the likers based on the reaction type
+    const likersList = document.getElementById('likers-list-' + postId);
+    const likers = likersList.getElementsByClassName('liker');
+
+    for (let i = 0; i < likers.length; i++) {
+        const liker = likers[i];
+        const reaction = liker.getAttribute('data-reaction');
+
+        // If the reaction does not match, hide the liker
+        if (reaction !== reactionType) {
+            liker.style.display = 'none';
+        } else {
+            liker.style.display = 'flex'; // Show the user if they match the selected reaction
+        }
+    }
 }
 
-// Function to close the modal
 function closeLikersModal(postId) {
     document.getElementById('modal-likers-' + postId).style.display = 'none';
 }

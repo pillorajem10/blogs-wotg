@@ -276,6 +276,84 @@
     font-size: 0.6em;
 }
 
+/* Reaction button container */
+.reactions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+/* General button styling */
+.reactions .react-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000; /* Default font color */
+    background-color: #fff; /* White background */
+    border: 2px solid transparent; /* Default border */
+    cursor: pointer;
+    transition: transform 0.2s, color 0.3s, border-color 0.3s;
+}
+
+/* Specific styles for reactions */
+.reactions .react-btn[data-reaction="like"] {
+    color: #007bff; /* Blue font */
+    border-color: #007bff; /* Blue border */
+}
+
+.reactions .react-btn[data-reaction="heart"] {
+    color: #dc3545; /* Red font */
+    border-color: #dc3545; /* Red border */
+}
+
+.reactions .react-btn[data-reaction="care"] {
+    color: #ffc107; /* Yellow font */
+    border-color: #ffc107; /* Yellow border */
+}
+
+/* Hover effect */
+.reactions .react-btn:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.05); /* Light background on hover */
+    opacity: 0.9;
+}
+
+/* Active state for the currently selected reaction */
+
+.reactions .react-btn.active[data-reaction="like"] {
+    color: #fff; /* White text when active */
+    background-color: #007bff; /* Set background color to the button's text color */
+    border-color: #007bff; /* Set border color to the button's text color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for active state */
+}
+
+.reactions .react-btn.active[data-reaction="heart"] {
+    color: #fff; /* White text when active */
+    background-color: #dc3545; /* Set background color to the button's text color */
+    border-color: #dc3545; /* Set border color to the button's text color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for active state */
+}
+
+.reactions .react-btn.active[data-reaction="care"] {
+    color: #fff; /* White text when active */
+    background-color: #ffc107; /* Set background color to the button's text color */
+    border-color: #ffc107; /* Set border color to the button's text color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for active state */
+}
+
+/* Icon alignment */
+.reactions .react-btn i {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+
+
 .comment-btn, .btn-reply {
     background-color: white; /* Set background color to white */
     color: #007997; /* Set font color to #c0392b */
@@ -331,6 +409,7 @@
     justify-content: space-between;
     color: #c0392b;
     flex-direction: column;
+    margin-top: 1rem;
 }
 
 .liker {
@@ -609,6 +688,9 @@
     text-decoration: none; /* Remove underline */
 }
 
+.react-count {
+    cursor: pointer;
+}
 
 /* Spin Animation */
 @keyframes spin {
