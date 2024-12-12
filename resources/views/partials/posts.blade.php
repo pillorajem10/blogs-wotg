@@ -4,13 +4,15 @@
         <div class="post-header">
             <div class="post-user">
                 <div class="user-avatar">
-                    @if ($post->user->user_profile_picture)
-                        <img src="data:image/jpeg;base64,{{ base64_encode($post->user->user_profile_picture) }}" alt="User Avatar">
-                    @else
-                        <div class="members-profile-circle-feed" id="profile-circle">
-                            <span>{{ strtoupper(substr($post->user->user_fname, 0, 1)) }}</span>
-                        </div>
-                    @endif
+                    <a href="{{ route('profile.view', ['userId' => $post->user->id]) }}">
+                        @if ($post->user->user_profile_picture)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($post->user->user_profile_picture) }}" alt="User Avatar">
+                        @else
+                            <div class="members-profile-circle-feed" id="profile-circle">
+                                <span>{{ strtoupper(substr($post->user->user_fname, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                    </a>
                 </div>
 
                 <div class="user-info">

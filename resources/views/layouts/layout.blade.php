@@ -120,7 +120,7 @@
         .sidebar {
             position: fixed;
             top: 1rem;
-            /*left: -100%;  Initially hidden */
+            left: -250px;  
             width: 250px;
             height: 100%;
             background-color: darkred;
@@ -153,7 +153,7 @@
 
         /* Hamburger menu styles */
         .hamburger-menu {
-            display: none;
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
             width: 30px;
@@ -204,6 +204,23 @@
             align-items: center
         }
 
+        .profile-dropdown {
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            right: 0;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+
+        .profile-dropdown a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .profile-dropdown a:hover {background-color: #f1f1f1}
+
 
         /* Mobile view adjustments */
         @media (max-width: 768px) {
@@ -247,17 +264,21 @@
         <div class="right-side-nav">
             <div class="user-profile">
                 @auth
-                    <!-- Profile Picture or Circle (Wrapped in a div for easy JS navigation) -->
-                    <div class="profile-clickable" data-user-id="{{ auth()->id() }}" onclick="navigateToDGroup()">
+                    <div class="profile-clickable" data-user-id="{{ auth()->id() }}">
                         @if (Auth::user()->user_profile_picture)
                             <!-- Display Profile Picture -->
-                            <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav">
+                            <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->user_profile_picture) }}" alt="Profile Picture" class="profile-img-nav" onclick="toggleProfileDropdown(event)">
                         @else
                             <!-- Display Circle with First Letter of First Name -->
-                            <div class="profile-circle-nav" onclick="navigateToDGroup()">
+                            <div class="profile-circle-nav" onclick="toggleProfileDropdown(event)">
                                 <span>{{ strtoupper(substr(Auth::user()->user_fname, 0, 1)) }}</span>
                             </div>
                         @endif
+                        <!-- Dropdown Menu -->
+                        <div class="profile-dropdown" id="profileDropdownMenu" style="display: none;">
+                            <a href="{{ route('profile.edit') }}" class="dropdown-item">Edit Profile</a>
+                            <a href="{{ route('profile.view', ['userId' => Auth::id()]) }}" class="dropdown-item">View Profile</a>
+                        </div>
                     </div>
                 @endauth
             </div>
@@ -272,7 +293,7 @@
     
     <aside id="sidebar" class="sidebar">
         <ul>
-            <li><a href="/blogs">Blogs</a></li>
+            <li><a href="/blogs">Devotion</a></li>
             @if(auth()->check()) <!-- If user is authenticated -->
                 <li><a href="#">Watch Messages (Coming soon)</a></li>
                 {{--<li><a href="/community">Community</a></li>--}}
@@ -304,40 +325,56 @@
     </footer>
 
     <script>
-        function adjustSidebarAndContent() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.querySelector('.main-content');
-            const screenWidth = window.innerWidth;
-    
-            if (screenWidth > 500) {
-                // Always keep the sidebar visible and content squeezed
-                sidebar.classList.add('active');
-                sidebar.style.left = '0';
-                mainContent.style.marginLeft = '250px'; // Squeeze content
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            var dropdown = document.getElementById('profileDropdownMenu');
+            if (dropdown.style.display === "none") {
+                dropdown.style.display = "block";
             } else {
-                // For smaller screens, hide the sidebar by default
-                sidebar.classList.remove('active');
-                sidebar.style.left = '-100%'; // Sidebar off-screen
-                mainContent.style.marginLeft = '0'; // Reset content margin
+                dropdown.style.display = "none";
             }
         }
-    
+
+        // Close dropdown when clicking outside of it
+        document.addEventListener('click', function(event) {
+            var dropdown = document.getElementById('profileDropdownMenu');
+            if (!event.target.closest('.profile-clickable')) {
+                dropdown.style.display = "none";
+            }
+        });
+
         function toggleDrawer() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.querySelector('.main-content');
-            const screenWidth = window.innerWidth;
-    
-            if (screenWidth > 500) {
-                // Do nothing since the sidebar is always active on larger screens
-                return;
-            }
-    
-            // Toggle the sidebar for smaller screens
+            // const screenWidth = window.innerWidth;
+
             sidebar.classList.toggle('active');
             if (sidebar.classList.contains('active')) {
                 sidebar.style.left = '0'; // Sidebar visible
             } else {
                 sidebar.style.left = '-100%'; // Sidebar hidden
+                mainContent.style.marginLeft = '0'; // Reset content margin
+            }
+        }
+
+
+        /*
+        function adjustSidebarAndContent() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const screenWidth = window.innerWidth;
+
+            if (screenWidth > 500) {
+                // Sidebar is always visible on larger screens
+                sidebar.classList.add('active');
+                sidebar.style.left = '0';
+                mainContent.style.marginLeft = '250px'; // Squeeze content
+            } else {
+                // On smaller screens, hide sidebar by default
+                if (!sidebar.classList.contains('active')) {
+                    sidebar.style.left = '-100%'; // Sidebar off-screen
+                    mainContent.style.marginLeft = '0'; // Reset content margin
+                }
             }
         }
     
@@ -346,11 +383,7 @@
     
         // Adjust the sidebar and content on page load
         document.addEventListener('DOMContentLoaded', adjustSidebarAndContent);
-
-        function navigateToDGroup(element) {
-            const userId = event.currentTarget.getAttribute('data-user-id');  // Get the user ID from the data attribute
-            window.location.href = '/community/profile/' + userId;  // Redirects to the user's profile page
-        }
+        */
     </script>    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

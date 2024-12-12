@@ -45,6 +45,7 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
+    max-width: 900px;
     align-items: stretch;
     justify-content: flex-start;
 }
@@ -232,6 +233,15 @@
     width: 100%;
     height: 100%;
     max-width: 40rem;
+}
+
+.post-images {
+    width: 100%;
+    height: 100%;
+    max-width: 40rem;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; 
 }
 
 .post-image img {

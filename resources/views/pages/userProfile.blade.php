@@ -3,8 +3,8 @@
 @section('title', 'Profile')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.7') }}">
-    <link rel="stylesheet" href="{{ asset('css/userProfile.css?v=6.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=6.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/userProfile.css?v=6.8') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -44,11 +44,12 @@
             @if ($user->user_profile_picture) 
                 <img src="data:image/jpeg;base64,{{ base64_encode($user->user_profile_picture) }}" alt="User Avatar" class="avatar-image">
             @else
-                <div class="members-profile-circle-feed" id="profile-circle">
+                <div class="user-avatar-profile-circle" id="profile-circle">
                     <span>{{ strtoupper(substr($user->user_fname, 0, 1)) }}</span>
                 </div>
             @endif
         </div>
+        <span class="profile-info-name">{{ $user->user_fname }} {{ $user->user_lname }}</span>
     </div>
 </div>
 
@@ -58,7 +59,7 @@
     </div>
 
     <div class="container-user-profile">
-        @auth
+        {{--@auth
             @if (auth()->id() == $user->id) <!-- Check if the logged-in user is viewing their own profile -->
                 <hr>
                 <div class="add-post-container">
@@ -74,7 +75,7 @@
                     <button id="addPostBtn" class="add-post-btn">What's on your mind?</button>
                 </div>
             @endif
-        @endauth
+        @endauth--}}
     
         @if ($errors->any())
             <div class="alert alert-danger mt-4">
@@ -137,5 +138,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=6.7') }}"></script>
+    <script src="{{ asset('js/posts.js?v=6.8') }}"></script>
 @endsection

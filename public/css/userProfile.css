@@ -46,26 +46,36 @@
 }
 
 .profile-info {
+    /*
     position: absolute;
-    top: 28.5rem;
+    top: 32rem;
     left: 20rem;
+    */
+    padding: 1rem;
+    display: flex;
+    align-items: center;
 }
 
 .avatar-image {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.members-profile-circle-feed {
-    width: 100px;
-    height: 100px;
+.user-avatar-profile-circle {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background-color: #ccc;
+    background-color: #c0392b;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 36px;
     color: white;
+}
+
+.profile-info-name {
+    font-size: 2rem;
+    margin-left: 1rem;
 }
