@@ -903,3 +903,22 @@ textarea {
     display: flex;
     align-items: center;
 }
+
+@media (max-width: 760px) {
+    .embedded-content iframe { /* Set the maximum width */
+        width: 100%; /* Allow it to scale down responsively */
+        height: auto; /* Maintain height dynamically */
+        aspect-ratio: 16 / 9; /* Keep a common 16:9 aspect ratio */
+        border: none; /* Optional: remove iframe borders */
+        overflow: hidden;
+        display: block;
+        height: 500px;
+        background-color: transparent !important;
+        border: none; /* Remove any default border if applicable */
+    }
+    
+    .embedded-content {
+        width: 100%;
+        background-color: transparent
+    }
+}
