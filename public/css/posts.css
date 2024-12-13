@@ -20,7 +20,6 @@
 
 .embedded-content iframe { /* Set the maximum width */
     width: 100%; /* Allow it to scale down responsively */
-    max-width: 40rem;
     height: auto; /* Maintain height dynamically */
     aspect-ratio: 16 / 9; /* Keep a common 16:9 aspect ratio */
     border: none; /* Optional: remove iframe borders */
@@ -33,7 +32,6 @@
 
 .embedded-content {
     width: 100%;
-    max-width: 40rem;
 }
 
 
