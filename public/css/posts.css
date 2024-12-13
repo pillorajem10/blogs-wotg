@@ -26,12 +26,13 @@
     overflow: hidden;
     display: block;
     height: 500px;
-    background-color: transparent !important;
+    background-color: black !important;
     border: none; /* Remove any default border if applicable */
 }
 
 .embedded-content {
     width: 100%;
+    background-color: black
 }
 
 
