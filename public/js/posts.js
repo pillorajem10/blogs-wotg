@@ -210,7 +210,7 @@ $(document).ready(function () {
                         ? `<i class="fa fa-thumbs-up fa-2x"></i>`
                         : liker.reaction === 'heart'
                         ? `<i class="fa fa-heart fa-2x"></i>`
-                        : `<i class="fa fa-laugh fa-2x"></i>`;
+                        : `<i class="fa fa-laugh-squint fa-2x"></i>`;
     
                     const likerElement = `
                         <div class="liker" data-reaction="${liker.reaction}">
