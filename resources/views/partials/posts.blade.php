@@ -26,10 +26,10 @@
             <!-- Caption Section -->
             <h2 class="post-caption" id="caption-{{ $post->id }}">
                 <span class="caption-short">
-                    {{ \Str::limit($post->post_caption, 500) }}
+                    {!! nl2br(e(Str::limit($post->post_caption, 500))) !!}
                 </span>
                 <span class="caption-full" style="display: none;">
-                    {{ $post->post_caption }}
+                    {!! nl2br(e($post->post_caption)) !!}
                 </span>
                 @if (strlen($post->post_caption) > 500)
                     <a href="javascript:void(0);" class="see-more" onclick="toggleSeeMore({{ $post->id }})">... See More</a>

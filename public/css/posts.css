@@ -572,6 +572,12 @@
     font-size: 0.6em;
 }
 
+textarea {
+    white-space: pre-wrap; /* Ensures spaces and line breaks are preserved */
+    word-wrap: break-word; /* Breaks long words to avoid overflow */
+}
+
+
 /*
 .liked-btn {
     background-color: white; 
