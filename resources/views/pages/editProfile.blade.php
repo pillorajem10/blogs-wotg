@@ -212,6 +212,6 @@
             <p><a href="{{ route('profile.show') }}">Cancel</a></p>
         </div>--}}
 
-        <script src="{{ asset('js/auth.js?v=7.1') }}"></script>
+        <script src="{{ asset('js/auth.js?v=7.2') }}"></script>
     </div>
 @endsection

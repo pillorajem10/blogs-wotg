@@ -142,6 +142,9 @@ $(document).ready(function () {
                 $("#likes-count-" + postId).text(response.reactionCounts.like);
                 $("#hearts-count-" + postId).text(response.reactionCounts.heart);
                 $("#cares-count-" + postId).text(response.reactionCounts.care);
+                $("#all-reactions-count-" + postId).text(response.reactionCounts.all); // Update the total count
+
+                console.log('response.reactionCounts.all', response.reactionCounts.all)
     
                 // Update the button state and text (icon)
                 const icon = button.find('i');
@@ -160,7 +163,7 @@ $(document).ready(function () {
                     } else if (reaction === 'heart') {
                         icon.removeClass("fa-heart").addClass("fa-heart fa-lg");
                     } else if (reaction === 'care') {
-                        icon.removeClass("fa-smile").addClass("fa-smile fa-lg");
+                        icon.removeClass("fa-laugh").addClass("fa-laugh fa-lg");
                     }
                 } else {
                     // If the user unreacted, deactivate the button and reset the icon
@@ -172,7 +175,7 @@ $(document).ready(function () {
                     } else if (reaction === 'heart') {
                         icon.removeClass("fa-heart").addClass("fa-heart fa-lg");
                     } else if (reaction === 'care') {
-                        icon.removeClass("fa-smile").addClass("fa-smile fa-lg");
+                        icon.removeClass("fa-laugh").addClass("fa-laugh fa-lg");
                     }
                 }
     
@@ -184,6 +187,7 @@ $(document).ready(function () {
             }
         });
     }
+    
     
     // Function to update the likers list in the modal
     function updateLikersList(postId, userReaction) {
@@ -206,7 +210,7 @@ $(document).ready(function () {
                         ? `<i class="fa fa-thumbs-up fa-lg"></i>`
                         : liker.reaction === 'heart'
                         ? `<i class="fa fa-heart fa-lg"></i>`
-                        : `<i class="fa fa-smile fa-lg"></i>`;
+                        : `<i class="fa fa-laugh fa-lg"></i>`;
     
                     const likerElement = `
                         <div class="liker" data-reaction="${liker.reaction}">
@@ -464,10 +468,11 @@ $(document).on('click', '.btn-submit-reply', function() {
 });
 
 // Function to open the modal and show the likers
-function showLikersModal(postId, reactionType) {
+function showLikersModal(postId) {
     document.getElementById('modal-likers-' + postId).style.display = 'block';
+}
 
-    // Filter the likers based on the reaction type
+function filterReactions(postId, reactionType) {
     const likersList = document.getElementById('likers-list-' + postId);
     const likers = likersList.getElementsByClassName('liker');
 
@@ -475,11 +480,11 @@ function showLikersModal(postId, reactionType) {
         const liker = likers[i];
         const reaction = liker.getAttribute('data-reaction');
 
-        // If the reaction does not match, hide the liker
-        if (reaction !== reactionType) {
-            liker.style.display = 'none';
+        // Show all reactions if 'all' is selected, otherwise filter by specific reaction type
+        if (reactionType === 'all' || reaction === reactionType) {
+            liker.style.display = 'flex'; // Show the liker
         } else {
-            liker.style.display = 'flex'; // Show the user if they match the selected reaction
+            liker.style.display = 'none'; // Hide the liker
         }
     }
 }

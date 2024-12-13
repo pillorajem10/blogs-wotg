@@ -1,6 +1,5 @@
 @foreach ($posts as $post)
     <div class="post-card" id="post-{{ $post->id }}">
-        <hr>
         <div class="post-header">
             <div class="post-user">
                 <div class="user-avatar">
@@ -67,43 +66,41 @@
         @auth
             <div class="post-footer">
                 <div class="post-actions">
+                    <button class="comment-btn" data-post-id="{{ $post->id }}">
+                        <i class="fa fa-comment fa-lg"></i>
+                        <span>Comments</span>
+                    </button>                    
+                    <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
                     <!-- Like Button -->
                     <div class="reactions">
                         <!-- Like Button -->
                         <button class="react-btn {{ $post->likedByUser ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="like">
                             <i class="fa fa-thumbs-up"></i> 
                         </button>
-                        <span class="react-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'like')">
+                        {{--<span class="react-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'like')">
                             {{ $post->reactionCounts['like'] ?? 0 }}
-                        </span>
+                        </span>--}}
                     
                         <!-- Heart Button -->
                         <button class="react-btn {{ $post->reactedWithHeart ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="heart">
                             <i class="fa fa-heart"></i> 
                         </button>
-                        <span class="react-count" id="hearts-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'heart')">
+                        {{--<span class="react-count" id="hearts-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'heart')">
                             {{ $post->reactionCounts['heart'] ?? 0 }}
-                        </span>
+                        </span>--}}
                     
                         <!-- Care Button -->
                         <button class="react-btn {{ $post->reactedWithCare ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="care">
-                            <i class="fa fa-smile"></i> 
+                            <i class="fa fa-laugh"></i> 
                         </button>
-                        <span class="react-count" id="cares-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'care')">
+                        {{--<span class="react-count" id="cares-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'care')">
                             {{ $post->reactionCounts['care'] ?? 0 }}
-                        </span>
+                        </span>--}}
+
+                        <span class="react-count" id="all-reactions-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }})">
+                            {{ $post->reactionCounts['all'] ?? 0 }}
+                        </span>                        
                     </div>
-                    
-                    
-                
-                    <!-- Comments Count -->
-                    <button class="comment-btn" data-post-id="{{ $post->id }}">
-                        <i class="fa fa-comment fa-lg"></i>
-                        <span>Comments</span>
-                    </button>                    
-                    <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
-                
-                    <!-- Delete Post -->
                     @if ($post->post_user_id == auth()->id())
                         <form action="{{ route('post.delete', $post->id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -123,11 +120,19 @@
                 </div>                               
             </div>
         @endauth
-        <hr>
 
         <div id="modal-likers-{{ $post->id }}" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close" data-post-id="{{ $post->id }}" onclick="closeLikersModal({{ $post->id }})">&times;</span>
+                
+                <!-- Reaction Tabs -->
+                <div class="reaction-tabs">
+                    <button data-reaction="all" onclick="filterReactions('{{ $post->id }}', 'all')">All</button>
+                    <button data-reaction="like" onclick="filterReactions('{{ $post->id }}', 'like')"><i class="fa fa-thumbs-up"></i></button>
+                    <button data-reaction="heart" onclick="filterReactions('{{ $post->id }}', 'heart')"><i class="fa fa-heart"></i></button>
+                    <button data-reaction="care" onclick="filterReactions('{{ $post->id }}', 'care')"><i class="fa fa-laugh"></i></button>
+                </div>                
+        
                 <div class="likers-list" id="likers-list-{{ $post->id }}">
                     <!-- Users who reacted will be dynamically injected here -->
                     @foreach ($post->likes as $like)
@@ -151,7 +156,7 @@
                                 @elseif ($like->reaction == 'heart')
                                     <i class="fa fa-heart fa-lg"></i>
                                 @elseif ($like->reaction == 'care')
-                                    <i class="fa fa-smile fa-lg"></i>
+                                    <i class="fa fa-laugh fa-lg"></i>
                                 @endif
                             </div>
                         </div>
@@ -159,6 +164,7 @@
                 </div>
             </div>
         </div>
+        
         
         
 

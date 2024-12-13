@@ -62,8 +62,11 @@ class PostController extends Controller
                 'like' => $post->likes->where('reaction', 'like')->count(),
                 'heart' => $post->likes->where('reaction', 'heart')->count(),
                 'care' => $post->likes->where('reaction', 'care')->count(),
+                'all' => $post->likes->count(), // Total sum of all reactions
             ];
             $post->reactionCounts = $reactionCounts;
+
+            Log::info("Reaction counts for post ID {$post->id}:", $reactionCounts);
     
             // Check if the current user has reacted to this post
             $post->likedByUser = $post->likes->where('user_id', auth()->id())->where('reaction', 'like')->isNotEmpty();
@@ -276,6 +279,7 @@ class PostController extends Controller
             'heart' => $post->likes()->where('reaction', 'heart')->count(),
             'care' => $post->likes()->where('reaction', 'care')->count(),
         ];
+        $reactionCounts['all'] = $reactionCounts['like'] + $reactionCounts['heart'] + $reactionCounts['care'];
     
         return response()->json([
             'message' => $message,
@@ -284,6 +288,7 @@ class PostController extends Controller
             'reactedByUser' => $reactedByUser,
         ]);
     }
+    
     
     
     
