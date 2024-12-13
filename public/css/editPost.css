@@ -35,6 +35,130 @@
     margin-bottom: 10px;
 }
 
+/* Styling for the existing post image */
+.post-image {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.post-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Styling for the additional images */
+.post-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.post-images .post-image {
+    width: calc(33.333% - 10px); /* 3 images per row, with some spacing */
+    box-sizing: border-box;
+}
+
+.post-images .post-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.post-images .post-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Styling for the image preview notice */
+.image-preview-notice {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Optional: Styling for the upload icon */
+.upload-icon-container {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    color: #6b6b6b;
+    font-weight: bold;
+}
+
+.upload-icon-container i {
+    margin-right: 8px;
+}
+
+/* Style for the upload icon container when file is selected */
+.upload-icon-container:hover {
+    color: #6b6b6b;
+}
+
+
+.file-input {
+    display: none; /* Hide the actual file input */
+}
+
+/* Style for the image preview container */
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between the images */
+    margin-top: 15px;
+}
+
+/* Style for individual image preview */
+.image-preview-container img {
+    width: 120px; /* Set a fixed width for the images */
+    height: 120px; /* Set a fixed height for the images */
+    object-fit: cover; /* Ensure the image maintains aspect ratio while filling the box */
+    border-radius: 8px; /* Rounded corners for the images */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow to give depth */
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+/* Hover effect to zoom in on the image */
+.image-preview-container img:hover {
+    transform: scale(1.05);
+}
+
+/* Optional: Add a close button if you'd like to remove images */
+.image-preview-container img {
+    position: relative;
+}
+
+.image-preview-container img::after {
+    content: '×';
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+/* Show the "close" icon on hover */
+.image-preview-container img:hover::after {
+    display: block;
+}
+
+
+
 /* Responsive Behavior */
 @media (max-width: 768px) {
     .btn-custom-edit-post {

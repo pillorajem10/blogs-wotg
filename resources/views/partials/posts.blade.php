@@ -36,24 +36,35 @@
                 @endif
             </h2>
         
-            <!-- Image Section -->
             @if ($post->post_image)
                 <div class="post-image">
-                    <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
+                    <img src="data:image/jpeg;base64,{{ base64_encode($post->post_image) }}" alt="Post Image" class="img-fluid lazy modal-post-photo" loading="lazy" onclick="openModal('{{ base64_encode($post->post_image) }}')">
                 </div>
             @endif
             
             @if (!empty($post->post_file_path) && is_array($post->post_file_path))
                 <div class="post-images">
-                    @foreach ($post->post_file_path as $filePath)
-                        <div class="post-image">
-                            <img src="{{ asset($filePath) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
-                        </div>
+                    @foreach ($post->post_file_path as $index => $filePath)
+                        @if ($index < 2) <!-- Show only the first 2 images -->
+                            <div class="post-image">
+                                <img 
+                                    src="{{ asset($filePath) }}" 
+                                    alt="Post Image" 
+                                    class="img-fluid lazy modal-post-photo" 
+                                    loading="lazy" 
+                                    data-src="{{ asset($filePath) }}" 
+                                    onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
+                                @if ($index === 1 && count($post->post_file_path) > 2)
+                                    <div class="image-overlay" onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
+                                        +{{ count($post->post_file_path) - 2 }}
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
                     @endforeach
                 </div>
-            @endif
-        
-        
+            @endif        
+            
             <!-- Embedded Content Section -->
             @if ($post->embeddedHtml)
                 <div class="embedded-content">
@@ -62,12 +73,23 @@
             @endif
         </div>
         
+        <div id="photoModal" class="modal-content-post-photo" style="display: none;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            
+            <!-- Wrapper for the image and buttons -->
+            <div class="modal-photo-wrapper">
+                <button class="prev" onclick="changeImage(-1)">&lt;</button>
+                <img id="modalImage" src="" alt="Modal Photo" class="modal-photo">
+                <button class="next" onclick="changeImage(1)">&gt;</button>
+            </div>
+        </div>
+        
 
         @auth
             <div class="post-footer">
                 <div class="post-actions">
                     <button class="comment-btn" data-post-id="{{ $post->id }}">
-                        <i class="fa fa-comment fa-lg"></i>
+                        <i class="fa fa-comment"></i>
                         <span>Comments</span>
                     </button>                    
                     <span class="comments-count" id="comments-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
@@ -75,7 +97,7 @@
                     <div class="reactions">
                         <!-- Like Button -->
                         <button class="react-btn {{ $post->likedByUser ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="like">
-                            <i class="fa fa-thumbs-up"></i> 
+                            <i class="fa fa-thumbs-up fa-2x"></i> 
                         </button>
                         {{--<span class="react-count" id="likes-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'like')">
                             {{ $post->reactionCounts['like'] ?? 0 }}
@@ -83,7 +105,7 @@
                     
                         <!-- Heart Button -->
                         <button class="react-btn {{ $post->reactedWithHeart ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="heart">
-                            <i class="fa fa-heart"></i> 
+                            <i class="fa fa-heart fa-2x"></i> 
                         </button>
                         {{--<span class="react-count" id="hearts-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'heart')">
                             {{ $post->reactionCounts['heart'] ?? 0 }}
@@ -91,7 +113,7 @@
                     
                         <!-- Care Button -->
                         <button class="react-btn {{ $post->reactedWithCare ? 'active' : '' }}" data-post-id="{{ $post->id }}" data-reaction="care">
-                            <i class="fa fa-laugh"></i> 
+                            <i class="fa fa-laugh-squint fa-2x"></i>
                         </button>
                         {{--<span class="react-count" id="cares-count-{{ $post->id }}" onclick="showLikersModal({{ $post->id }}, 'care')">
                             {{ $post->reactionCounts['care'] ?? 0 }}
@@ -130,8 +152,9 @@
                     <button data-reaction="all" onclick="filterReactions('{{ $post->id }}', 'all')">All</button>
                     <button data-reaction="like" onclick="filterReactions('{{ $post->id }}', 'like')"><i class="fa fa-thumbs-up"></i></button>
                     <button data-reaction="heart" onclick="filterReactions('{{ $post->id }}', 'heart')"><i class="fa fa-heart"></i></button>
-                    <button data-reaction="care" onclick="filterReactions('{{ $post->id }}', 'care')"><i class="fa fa-laugh"></i></button>
-                </div>                
+                    <button data-reaction="care" onclick="filterReactions('{{ $post->id }}', 'care')"><i class="far fa-laugh-squint"></i></button>
+                </div>
+                
         
                 <div class="likers-list" id="likers-list-{{ $post->id }}">
                     <!-- Users who reacted will be dynamically injected here -->
@@ -152,11 +175,11 @@
                             <div>
                                 <!-- Display reaction icon -->
                                 @if ($like->reaction == 'like')
-                                    <i class="fa fa-thumbs-up fa-lg"></i>
+                                    <i class="fa fa-thumbs-up fa-xl"></i>
                                 @elseif ($like->reaction == 'heart')
-                                    <i class="fa fa-heart fa-lg"></i>
+                                    <i class="fa fa-heart fa-xl"></i>
                                 @elseif ($like->reaction == 'care')
-                                    <i class="fa fa-laugh fa-lg"></i>
+                                    <i class="fa fa-laugh-squint fa-xl"></i>
                                 @endif
                             </div>
                         </div>
@@ -202,7 +225,7 @@
                                 </div>                                                
                                 
                                 <button class="btn-reply mt-2" onclick="toggleReplyBox({{ $comment->id }})">
-                                    <i class="fa fa-comment fa-lg"></i>
+                                    <i class="fa fa-comment fa-xl"></i>
                                     <span>Reply</span>
                                 </button>
 

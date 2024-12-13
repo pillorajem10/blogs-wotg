@@ -159,11 +159,11 @@ $(document).ready(function () {
                         
                     // Update the icon based on the selected reaction
                     if (reaction === 'like') {
-                        icon.removeClass("fa-thumbs-up").addClass("fa-thumbs-up fa-lg");
+                        icon.removeClass("fa-thumbs-up fa-2x").addClass("fa-thumbs-up fa-2x");
                     } else if (reaction === 'heart') {
-                        icon.removeClass("fa-heart").addClass("fa-heart fa-lg");
+                        icon.removeClass("fa-heart fa-2x").addClass("fa-heart fa-2x");
                     } else if (reaction === 'care') {
-                        icon.removeClass("fa-laugh").addClass("fa-laugh fa-lg");
+                        icon.removeClass("fa-laugh-squint fa-2x").addClass("fa-laugh-squint fa-2x");
                     }
                 } else {
                     // If the user unreacted, deactivate the button and reset the icon
@@ -171,11 +171,11 @@ $(document).ready(function () {
                         
                     // Reset the icon to the default
                     if (reaction === 'like') {
-                        icon.removeClass("fa-thumbs-up").addClass("fa-thumbs-up fa-lg");
+                        icon.removeClass("fa-thumbs-up fa-2x").addClass("fa-thumbs-up fa-2x");
                     } else if (reaction === 'heart') {
-                        icon.removeClass("fa-heart").addClass("fa-heart fa-lg");
+                        icon.removeClass("fa-heart fa-2x").addClass("fa-heart fa-2x");
                     } else if (reaction === 'care') {
-                        icon.removeClass("fa-laugh").addClass("fa-laugh fa-lg");
+                        icon.removeClass("fa-laugh-squint fa-2x").addClass("fa-laugh-squint fa-2x");
                     }
                 }
     
@@ -207,10 +207,10 @@ $(document).ready(function () {
                             </div>`;
     
                     const reactionIcon = liker.reaction === 'like'
-                        ? `<i class="fa fa-thumbs-up fa-lg"></i>`
+                        ? `<i class="fa fa-thumbs-up fa-2x"></i>`
                         : liker.reaction === 'heart'
-                        ? `<i class="fa fa-heart fa-lg"></i>`
-                        : `<i class="fa fa-laugh fa-lg"></i>`;
+                        ? `<i class="fa fa-heart fa-2x"></i>`
+                        : `<i class="fa fa-laugh fa-2x"></i>`;
     
                     const likerElement = `
                         <div class="liker" data-reaction="${liker.reaction}">
@@ -317,7 +317,7 @@ function addComment(postId) {
                 
                             <!-- Reply Button -->
                             <button class="btn-reply mt-2" onclick="toggleReplyBox(${response.comment.id})">
-                                <i class="fa fa-comment fa-lg"></i>
+                                <i class="fa fa-comment fa-2x"></i>
                                 <span>Reply</span>
                             </button>
                 

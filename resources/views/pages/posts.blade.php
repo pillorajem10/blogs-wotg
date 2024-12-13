@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=7.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=7.3') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -53,19 +53,21 @@
                     <div class="form-group">
                         <label for="post_caption">Caption</label>
                         <textarea id="post_caption" name="post_caption" class="form-control" placeholder="What's on your mind?" rows="5" required></textarea>
-                    </div>                    
+                    </div>
         
                     <!-- URL Input -->
                     <div class="form-group">
                         <label for="post_link">Shared Link</label>
                         <input type="url" id="post_link" name="post_link" class="form-control" placeholder="Paste the URL here">
                     </div>
-                    
-                    <!-- File Upload Input -->
+        
+                    <!-- File Upload Input with Icon -->
                     <div class="form-group">
-                        <label for="posts_file_path">Upload Files (optional)</label>
-                        <input type="file" id="posts_file_path" name="posts_file_path[]" class="form-control" multiple>
-                        
+                        <label for="posts_file_path" class="upload-icon-container">
+                            <i class="fa fa-upload"></i> Upload Photo Here
+                            <input type="file" id="posts_file_path" name="posts_file_path[]" class="form-control file-input" multiple style="display:none;">
+                        </label>
+        
                         <!-- File Previews -->
                         <div id="file_preview" style="margin-top: 10px;">
                             <!-- Previews will be dynamically added here -->
@@ -76,6 +78,7 @@
                 </form>
             </div>
         </div>
+        
           
 
         <!-- Posts Feed -->
@@ -90,5 +93,6 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=7.2') }}"></script>
+    <script src="{{ asset('js/posts.js?v=7.3') }}"></script>
+    <script src="{{ asset('js/modalPhoto.js?v=7.3') }}"></script>
 @endsection

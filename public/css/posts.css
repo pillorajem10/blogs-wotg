@@ -235,6 +235,26 @@
     width: 100%;
     height: 100%;
     max-width: 40rem;
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
 }
 
 .post-images {
@@ -354,23 +374,130 @@
     transition: color 0.3s; /* Smooth color transition */
 }
 
+.upload-icon-container {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    color: #6b6b6b; /* Color of the upload icon and text */
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.upload-icon-container:hover {
+    color: #6b6b6b; /* Darker shade on hover */
+}
+
+.upload-icon-container i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.file-input {
+    display: none; /* Hide the actual file input */
+}
+
+#file_preview img {
+    max-width: 100px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
 
 /* General button styling */
 .reactions .react-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #000; /* Default font color */
-    background-color: #fff; /* White background */
-    border: 2px solid transparent; /* Default border */
+    border-radius: 50%;
+    padding: 8px;
+    color: #000; 
+    background-color: #fff;
+    border: 2px solid transparent; 
     cursor: pointer;
     transition: transform 0.2s, color 0.3s, border-color 0.3s;
 }
 
+.react-btn i {
+    margin: 4px;
+}
+
+/* Modal background */
+.modal-content-post-photo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-photo-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Modal image styling */
+.modal-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px; /* Optional: adds rounded corners */
+}
+
+/* Previous and next buttons */
+.prev, .next {
+    position: absolute;
+    top: 40%;
+    color: #fff;
+    border: none;
+    font-size: 30px;
+    font-weight: bolder;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1020;
+    background-color: transparent;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* For responsiveness: Adjust button sizes and layout */
+@media (max-width: 768px) {
+    .modal-photo-wrapper {
+        max-width: 80%;
+    }
+
+    .prev, .next {
+        font-size: 24px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-photo-wrapper {
+        max-width: 90%;
+    }
+
+    .prev, .next {
+        font-size: 20px;
+        padding: 6px;
+    }
+}
+
+
+.react-btn.active i {
+    margin: 4px;
+}
 /* Specific styles for reactions */
 .reactions .react-btn[data-reaction="like"] {
     color: #007bff; /* Blue font */
