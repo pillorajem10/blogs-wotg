@@ -134,3 +134,29 @@ body.full-viewport {
         height: 100%;
     }
 }
+
+.opt-agreement {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.form-checkbox {
+    margin-right: 5px;
+}
+
+/* Style for the checkbox label */
+.checkbox-label {
+    font-size: 12px;
+    color: #333;
+    max-width: 30rem;
+}
+
+/* Optional: Style for the link to Terms and Conditions */
+.checkbox-label a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.checkbox-label a:hover {
+    text-decoration: underline;
+}

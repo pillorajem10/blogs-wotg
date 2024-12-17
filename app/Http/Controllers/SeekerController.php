@@ -7,9 +7,11 @@ use App\Mail\SeekerEmail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class SeekerController extends Controller
 {
+    /*
     public function __construct()
     {
         $this->middleware('auth'); // Ensure the user is authenticated
@@ -122,5 +124,46 @@ class SeekerController extends Controller
         }
     
         return redirect()->back()->with('success', 'Emails sent successfully!');
-    }    
+    }   
+    */
+    public function showSignupForm()
+    {
+        return view('pages.signupseeker');
+    }
+
+    // Handle the sign-up for seekers
+    public function signup(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'seeker_fname' => 'required|string|max:255',
+            'seeker_lname' => 'required|string|max:255',
+            'seeker_nickname' => 'nullable|string|max:255',
+            'seeker_gender' => 'nullable|string',
+            'seeker_email' => 'required|string|email|max:255|unique:seekers',
+            'seeker_country' => 'nullable|string|max:255',
+            'seeker_city' => 'nullable|string|max:255',
+            'seeker_catch_from' => 'nullable|string|max:255',
+            'seeker_already_member' => 'nullable|string|max:50', // Add validation for seeker_already_member
+            'seeker_dob' => 'nullable|date', // Validate that seeker_dob is a valid date
+        ]);
+    
+        // Calculate the age based on seeker_dob
+        if ($request->has('seeker_dob') && $request->seeker_dob) {
+            $dob = Carbon::parse($request->seeker_dob); // Parse the date of birth
+            $seeker_age = $dob->age; // Calculate the age
+        } else {
+            $seeker_age = null; // If dob is not provided, set age to null
+        }
+    
+        // Create a new seeker with default values and calculated age
+        Seeker::create(array_merge($request->all(), [
+            'seeker_age' => $seeker_age,          // Set the calculated age
+            'seeker_missionary' => null,          // Default to null
+            'seeker_status' => 'Infant',          // Default to 'Infant'
+        ]));
+    
+        // Redirect or return response
+        return redirect()->route('seekers.signup')->with('success', 'Thank you for registering and deciding to become part of our community.');
+    }  
 }

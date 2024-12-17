@@ -40,6 +40,9 @@ Route::post('/seekers/send-email', [SeekerController::class, 'sendSeekerEmail'])
 Route::post('/seekers/{id}/update-missionary', [SeekerController::class, 'updateMissionary'])->name('seekers.updateMissionary');
 */
 
+// SEEKERS
+Route::get('/seekers/signup', [SeekerController::class, 'showSignupForm'])->name('seekers.signup');
+Route::post('/seekers/signup', [SeekerController::class, 'signup'])->name('seekers.signup.submit');
 
 // AUTH CONTOLLER 
 
