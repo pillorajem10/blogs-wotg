@@ -246,7 +246,7 @@ $(document).ready(function () {
  */
 function closeModal(modalType, postId) {
     let modalId;
-
+    console.log('modalType', modalType)
     // Determine the modal ID based on modal type and postId
     switch (modalType) {
         case 'likers':
@@ -268,6 +268,9 @@ function closeModal(modalType, postId) {
     }
 }
 
+function closeCommentsModal(postId) {
+    document.getElementById('commentModal-' + postId).style.display = 'none';
+}
 
 function toggleReplyBox(commentId) {
     const replySection = $(`#reply-section-${commentId}`);
@@ -317,7 +320,7 @@ function addComment(postId) {
                 
                             <!-- Reply Button -->
                             <button class="btn-reply mt-2" onclick="toggleReplyBox(${response.comment.id})">
-                                <i class="fa fa-comment fa-2x"></i>
+                                <i class="fa fa-comment"></i>
                                 <span>Reply</span>
                             </button>
                 

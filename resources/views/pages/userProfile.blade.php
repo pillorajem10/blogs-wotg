@@ -3,8 +3,8 @@
 @section('title', 'Profile')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=8.0') }}">
-    <link rel="stylesheet" href="{{ asset('css/userProfile.css?v=8.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=8.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/userProfile.css?v=8.1') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -142,5 +142,5 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=8.0') }}"></script>
+    <script src="{{ asset('js/posts.js?v=8.1') }}"></script>
 @endsection

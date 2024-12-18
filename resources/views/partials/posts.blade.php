@@ -194,7 +194,7 @@
         <!-- Modal Structure -->
         <div id="commentModal-{{ $post->id }}" class="modal">
             <div class="modal-content">
-                <span class="close" data-post-id="{{ $post->id }}" onclick="closeModal('comment', {{ $post->id }})">&times;</span>
+                <span class="close" data-post-id="{{ $post->id }}" onclick="closeCommentsModal({{ $post->id }})">&times;</span>
                 
                 <!-- Existing Comments Section -->
                 <div class="comments-list" id="comments-list-{{ $post->id }}">
@@ -225,7 +225,7 @@
                                 </div>                                                
                                 
                                 <button class="btn-reply mt-2" onclick="toggleReplyBox({{ $comment->id }})">
-                                    <i class="fa fa-comment fa-xl"></i>
+                                    <i class="fa fa-comment"></i>
                                     <span>Reply</span>
                                 </button>
 
