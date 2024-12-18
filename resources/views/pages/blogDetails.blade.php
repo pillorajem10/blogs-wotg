@@ -11,7 +11,7 @@
     <meta property="og:url" content="{{ route('blogs.show', $blog->id) }}">
     <meta property="og:title" content="{{ $blog->blog_title }}">
     <meta property="og:description" content="{{ strip_tags($blog->blog_body) }}">
-    
+
     @if($blog->blog_thumbnail)
         <meta property="og:image" content="data:image/jpeg;base64,{{ base64_encode($blog->blog_thumbnail) }}">
     @else

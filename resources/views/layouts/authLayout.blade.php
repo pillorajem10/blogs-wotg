@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/auth.css?v=8.1') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <!-- Default Meta Tags (global site-level meta tags) -->
     <meta property="og:title" content="Word On The Go" />
     <meta property="og:image" content="{{ asset('images/wotg-logo-with-bg.jpeg') }}">
     <meta property="og:image:alt" content="Open Graph Image Description">
@@ -19,6 +20,10 @@
     <meta name="twitter:title" content="Word On The Go">
     <meta name="twitter:description" content="Welcome to Word On The Go, your online destination for uplifting church blogs.">
     <meta name="twitter:image" content="{{ asset('images/wotg-logo-with-bg.jpeg') }}">
+
+    <!-- Inject dynamic meta tags for specific pages here -->
+    @yield('head')
+
 </head>
 <body class="{{ Request::is('profile/edit') || Request::is('signup') ? 'full-height' : 'full-viewport' }}">
     <div class="auth-container">

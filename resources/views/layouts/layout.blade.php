@@ -7,6 +7,7 @@
     <meta name="keywords" content="church blogs, faith, spirituality, community stories, religious articles, inspiration, hope, love, god, jesus, motivation">
     <title>@yield('title') | Word On The Go</title>
     
+    <!-- Global Meta Tags for OG (Open Graph) and Twitter -->
     <meta property="og:title" content="Word On The Go" />
     <meta property="og:image" content="{{ asset('images/wotg-logo-with-bg.jpeg') }}">
     <meta property="og:image:alt" content="Open Graph Image Description">
@@ -18,7 +19,8 @@
     <meta name="twitter:title" content="Word On The Go">
     <meta name="twitter:description" content="Welcome to Word On The Go, your online destination for uplifting church blogs.">
     <meta name="twitter:image" content="{{ asset('images/wotg-logo-with-bg.jpeg') }}">
-    
+
+    <!-- Link Icons and External Stylesheets -->
     <link rel="icon" href="{{ asset('images/wotg-icon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -27,15 +29,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <!-- CSRF Token and Auth User Data -->
     <script>
         window.Laravel = {
             csrfToken: '{{ csrf_token() }}',
             authUserId: {{ auth()->id() ?? 'null' }} // Include the authenticated user's ID, or `null` if not logged in
         };
     </script>
+
+    <!-- jQuery and Slick Carousel JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    
+
     <style>
         * {
             box-sizing: border-box;
@@ -253,7 +262,12 @@
             }
         }
     </style>
+
+    <!-- Dynamic Styles for the Page -->
     @yield('styles')
+
+    <!-- Placeholder for Dynamic Meta Tags -->
+    @yield('head')
 </head>
 <body>
     <nav class="navbar">
