@@ -24,7 +24,7 @@
                         </div>
                     @endif
                 </div>
-                <button id="addPostBtn" class="add-post-btn">What's on your mind?</button>
+                <button id="addPostBtn" class="add-post-btn">What’s on your heart to share?</button>
             </div>
         @endauth
     
