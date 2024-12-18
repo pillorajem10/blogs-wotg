@@ -7,7 +7,13 @@
     <meta name="keywords" content="church blogs, faith, spirituality, community stories, religious articles, inspiration, hope, love, god, jesus, motivation">
     <title>@yield('title') | Word On The Go</title>
     
-   
+    <!-- Global Meta Tags for OG (Open Graph) and Twitter -->
+    <meta property="og:title" content="Word On The Go" />
+    <meta property="og:image" content="{{ asset('images/wotg-logo-with-bg.jpeg') }}">
+    <meta property="og:image:alt" content="Open Graph Image Description">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Welcome to Word On The Go, your online destination for uplifting church blogs. Discover inspiring articles, spiritual insights, and community stories that enrich your faith and connect you with our church family. Join us as we explore faith, hope, and love together!">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Word On The Go">
