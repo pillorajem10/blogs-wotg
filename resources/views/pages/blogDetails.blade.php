@@ -61,7 +61,22 @@
             @else
                 <span class="action-btn disabled">Next &gt;</span>
             @endif
-        </div>        
+        </div>     
+        
+        <div class="share-container">
+            <!-- Facebook Share Button -->
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blogs.show', $blog->id)) }}" target="_blank" class="share-btn facebook">
+                <i class="fab fa-facebook-f"></i> Share on Facebook
+            </a>
+
+            <!-- X Share Button (formerly Twitter) -->
+            <a href="https://www.x.com/intent/tweet?url={{ urlencode(route('blogs.show', $blog->id)) }}" target="_blank" class="share-btn x">
+                <i class="fab fa-twitter"></i> Share on Twitter
+            </a>
+
+        
+            <!-- Add additional share buttons here (Twitter, LinkedIn, etc.) if desired -->
+        </div>
 
         <!-- Comments Section -->
         <div class="comments-section">
@@ -78,8 +93,7 @@
             @else
                 <p class="login-prompt">Please <a href="{{ route('auth.login') }}" class="login-link">log in</a> to post a comment.</p>
             @endif
-        
-            <!-- Display Comments -->
+
             <div class="comment-list">
                 @foreach($blog->comments as $comment)
                     <div class="comment">
@@ -98,13 +112,6 @@
                     </div>
                 @endforeach
             </div>
-        </div>    
-
-        <!-- Facebook Share Button -->
-        <div class="share-btns">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blogs.show', $blog->id)) }}" target="_blank" class="share-btn facebook">
-                Share on Facebook
-            </a>
-        </div>       
+        </div>         
     </div>
 @endsection

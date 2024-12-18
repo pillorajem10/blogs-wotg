@@ -190,6 +190,66 @@
     line-height: 1.6;
 }
 
+/* Share Container */
+.share-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Add space between buttons */
+    margin-top: 20px;
+}
+
+/* Share Button Style */
+.share-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    background-color: #3b5998; /* Default Facebook Blue */
+    transition: background-color 0.3s ease;
+}
+
+.share-btn:hover {
+    background-color: #2d4373; /* Darker shade on hover */
+}
+
+/* Facebook Button */
+.share-btn.facebook {
+    background-color: #3b5998; /* Facebook Blue */
+}
+
+.share-btn.facebook:hover {
+    background-color: #2d4373;
+    text-decoration: none;
+    color: white;
+}
+
+/* Facebook Icon inside the button */
+.share-btn i {
+    margin-right: 10px; /* Add some space between icon and text */
+}
+
+/* Optional: Styling for additional share buttons (if you add them) */
+.share-btn.x {
+    background-color: #1DA1F2; /* Original Twitter Blue */
+}
+
+.share-btn.x:hover {
+    background-color: #0d95cc; /* Darker shade on hover */
+    text-decoration: none;
+    color: white;
+}
+
+/* X Icon inside the button */
+.share-btn.x i {
+    margin-right: 10px;
+}
+
+
 /* Responsive Styling */
 @media (max-width: 768px) {
     .comment-form {
