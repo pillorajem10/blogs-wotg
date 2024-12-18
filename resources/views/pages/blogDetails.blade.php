@@ -6,6 +6,19 @@
     <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.1') }}">
 @endsection
 
+@section('head')
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ route('blogs.show', $blog->id) }}">
+    <meta property="og:title" content="{{ $blog->blog_title }}">
+    <meta property="og:description" content="{{ strip_tags($blog->blog_body) }}">
+    
+    @if($blog->blog_thumbnail)
+        <meta property="og:image" content="data:image/jpeg;base64,{{ base64_encode($blog->blog_thumbnail) }}">
+    @else
+        <meta property="og:image" content="{{ asset('images/default-thumbnail.jpg') }}">
+    @endif
+@endsection
+
 @section('content')
     <div class="blog-details-container">
         <div class="blog-meta d-flex justify-content-between align-items-center flex-wrap">
@@ -14,7 +27,7 @@
                     Date Added: {{ \Carbon\Carbon::parse($blog->blog_release_date_and_time)->format('F j, Y') }}
                 </span>
             </div>
-        </div>     
+        </div>
 
         <div class="blog-content">
             <div class="blog-thumbnail">
@@ -85,6 +98,13 @@
                     </div>
                 @endforeach
             </div>
-        </div>               
+        </div>    
+
+        <!-- Facebook Share Button -->
+        <div class="share-btns">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blogs.show', $blog->id)) }}" target="_blank" class="share-btn facebook">
+                Share on Facebook
+            </a>
+        </div>       
     </div>
 @endsection
