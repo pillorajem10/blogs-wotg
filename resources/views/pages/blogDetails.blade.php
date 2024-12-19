@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.3') }}">
 @endsection
 
 @section('head')
@@ -37,8 +37,23 @@
                     <p class="no-thumbnail">No Thumbnail Available</p>
                 @endif
             </div>
-
             <div class="blog-body">
+                <div class="share-container-upper">
+                    <!-- Facebook Share Button -->
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blogs.show', $blog->id)) }}" target="_blank" class="share-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                
+                    <!-- X Share Button (formerly Twitter) -->
+                    <a href="https://www.x.com/intent/tweet?url={{ urlencode(route('blogs.show', $blog->id)) }}" target="_blank" class="share-btn x">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                
+                    <!-- Copy Link Button -->
+                    <button class="share-btn copy-link" data-url="{{ route('blogs.show', $blog->id) }}">
+                        <i class="fas fa-link"></i>
+                    </button>
+                </div>                
                 <div class="body-text">{!! $blog->blog_body !!}</div>
             </div>
         </div>
@@ -114,4 +129,6 @@
             </div>
         </div>         
     </div>
+
+    <script src="{{ asset('js/blogDetails.js?v=8.3') }}"></script>
 @endsection

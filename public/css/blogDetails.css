@@ -199,6 +199,18 @@
     margin-top: 20px;
 }
 
+.share-container-upper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px; /* Add space between buttons */
+    margin-bottom: 1rem;
+}
+
+.share-container-upper i {
+    margin-left: .65rem;
+}
+
 /* Share Button Style */
 .share-btn {
     display: inline-flex;
@@ -206,15 +218,16 @@
     align-items: center;
     padding: 10px 15px;
     border-radius: 5px;
+    border: none;
     font-size: 16px;
     text-decoration: none;
     color: white;
-    background-color: #3b5998; /* Default Facebook Blue */
+    background-color: #c0392b; /* Default Facebook Blue */
     transition: background-color 0.3s ease;
 }
 
 .share-btn:hover {
-    background-color: #2d4373; /* Darker shade on hover */
+    background-color: darkred; /* Darker shade on hover */
 }
 
 /* Facebook Button */
