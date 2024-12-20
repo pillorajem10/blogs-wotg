@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.7') }}">
 @endsection
 
 @section('head')
@@ -30,8 +30,8 @@
         </div>--}}
 
         <div class="release-date">
-            {{ \Carbon\Carbon::parse($blog->blog_release_date_and_time)->format('F j, Y') }}
-        </div>
+            {{ \Carbon\Carbon::parse($blog->blog_release_date_and_time)->format('F j, Y') }} WOTG Hope Refresh
+        </div>        
 
         <div class="blog-content">
             <div class="blog-thumbnail">
@@ -145,6 +145,6 @@
         </div>         
     </div>
 
-    <script src="{{ asset('js/blogDetails.js?v=8.6') }}"></script>
-    <script src="{{ asset('js/blogDetails1.js?v=8.6') }}"></script>
+    <script src="{{ asset('js/blogDetails.js?v=8.7') }}"></script>
+    <script src="{{ asset('js/blogDetails1.js?v=8.7') }}"></script>
 @endsection
