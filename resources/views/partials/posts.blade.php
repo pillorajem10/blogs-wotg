@@ -51,28 +51,29 @@
                                     // Get file extension to determine if it's an image or video
                                     $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
                                 @endphp
-            
+                    
                                 @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'])) 
                                     <!-- If it's an image -->
                                     <img 
-                                        src="{{ asset($filePath) }}" 
+                                        src="{{ asset($filePath) }}?v={{ time() }}" 
                                         alt="Post Image" 
                                         class="img-fluid lazy modal-post-photo" 
                                         loading="lazy" 
-                                        data-src="{{ asset($filePath) }}" 
+                                        data-src="{{ asset($filePath) }}?v={{ time() }}" 
                                         onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
                                 @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg'])) 
+                                    <!-- If it's a video -->
                                     <video 
                                         class="img-fluid lazy" 
                                         controls 
                                         loading="lazy" 
-                                        data-src="{{ asset($filePath) }}" 
+                                        data-src="{{ asset($filePath) }}?v={{ time() }}" 
                                         onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
-                                        <source src="{{ asset($filePath) }}" type="video/{{ $fileExtension }}">
+                                        <source src="{{ asset($filePath) }}?v={{ time() }}" type="video/{{ $fileExtension }}">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
-            
+                    
                                 @if ($index === 1 && count($post->post_file_path) > 2)
                                     <div class="media-overlay" onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
                                         +{{ count($post->post_file_path) - 2 }}
@@ -83,8 +84,7 @@
                     @endforeach
                 </div>
             @endif
-              
-            
+        
             <!-- Embedded Content Section -->
             @if ($post->embeddedHtml)
                 <div class="embedded-content">

@@ -43,14 +43,14 @@
                                 @php
                                     $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
                                 @endphp
-
+            
                                 @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']))
                                     <!-- If it's an image -->
-                                    <img src="{{ asset($filePath) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
+                                    <img src="{{ asset($filePath) }}?v={{ time() }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
                                 @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg', 'avi', 'mov', 'mkv']))
                                     <!-- If it's a video -->
                                     <video class="img-fluid lazy" controls loading="lazy">
-                                        <source src="{{ asset($filePath) }}" type="video/{{ $fileExtension }}">
+                                        <source src="{{ asset($filePath) }}?v={{ time() }}" type="video/{{ $fileExtension }}">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             @endif
-
+        
             <!-- Upload New Images/Videos (optional) -->
             <div class="form-group">
                 <label for="posts_file_path" class="upload-icon-container">
