@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.6') }}">
 @endsection
 
 @section('head')
@@ -21,12 +21,16 @@
 
 @section('content')
     <div class="blog-details-container">
-        <div class="blog-meta d-flex justify-content-between align-items-center flex-wrap">
+        {{--<div class="blog-meta d-flex justify-content-between align-items-center flex-wrap">
             <div>
                 <span class="blog-date">
                     Date Added: {{ \Carbon\Carbon::parse($blog->blog_release_date_and_time)->format('F j, Y') }}
                 </span>
             </div>
+        </div>--}}
+
+        <div class="release-date">
+            {{ \Carbon\Carbon::parse($blog->blog_release_date_and_time)->format('F j, Y') }}
         </div>
 
         <div class="blog-content">
@@ -37,6 +41,7 @@
                     <p class="no-thumbnail">No Thumbnail Available</p>
                 @endif
             </div>
+
             <div class="blog-body">
                 <div class="share-container-upper">
                     <!-- Facebook Share Button -->
@@ -72,11 +77,11 @@
                     </a>
                 
                     <!-- Copy Link Button -->
-                    <button class="share-btn copy-link" data-url="{{ route('blogs.show', $blog->id) }}">
+                    <button class="share-btn copy-link-1" data-url="{{ route('blogs.show', $blog->id) }}">
                         <i class="fas fa-link"></i>
                     </button>
 
-                    <button class="share-btn copy-all">
+                    <button class="share-btn copy-all-1">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div> 
@@ -94,7 +99,6 @@
         
             <!-- Back to Blogs Button -->
             <a href="{{ route('posts.index') }}" class="action-btn">Back to Home</a>
-            <a href="{{ route('blogs.index', ['page' => session('blog_current_page', 1)]) }}" class="action-btn">See More Blogs</a>
 
             <!-- Next Button -->
             @if($nextBlog)
@@ -141,5 +145,6 @@
         </div>         
     </div>
 
-    <script src="{{ asset('js/blogDetails.js?v=8.5') }}"></script>
+    <script src="{{ asset('js/blogDetails.js?v=8.6') }}"></script>
+    <script src="{{ asset('js/blogDetails1.js?v=8.6') }}"></script>
 @endsection

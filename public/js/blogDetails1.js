@@ -1,5 +1,5 @@
 // Add event listener for the copy link button
-document.querySelector('.copy-link-1').addEventListener('click', function() {
+document.querySelector('.copy-link').addEventListener('click', function() {
     var url = this.getAttribute('data-url');  // Get the URL from the data-url attribute
     copyLink(url);  // Call the copyLink function with the URL
 });
@@ -24,7 +24,7 @@ function copyLink(url) {
 
 // Add event listener for the copy all button
 // Add event listener for the copy all button
-document.querySelector('.copy-all-1').addEventListener('click', function() {
+document.querySelector('.copy-all').addEventListener('click', function() {
     var blogContent = document.querySelector('.body-text');  // Get the HTML content of the blog body
     var releaseDate = document.querySelector('.release-date'); // Get the release date element
     var seeMoreUrl = "https://blogs.wotgonline.com/blogs";  // URL for "See More Blogs"
