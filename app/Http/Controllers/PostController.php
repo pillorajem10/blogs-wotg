@@ -20,12 +20,11 @@ use App\Models\Blog;
 
 class PostController extends Controller
 {
-    /*
     public function __construct()
     {
         $this->middleware('auth'); // Ensure the user is authenticated
     }
-    */
+
     /**
      * Display a listing of the posts.
      *

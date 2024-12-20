@@ -29,7 +29,7 @@
 
         <form action="{{ route('register') }}" method="POST" id="profile-auth-form">
             @csrf
-            <div class="signup-form">
+            {{--<div class="signup-form">
                 <div>
                     <!-- First Column -->
                     <div class="form-group">
@@ -202,7 +202,7 @@
                             <option value="Digital Missionary" {{ old('user_ministry') == 'Digital Missionary' ? 'selected' : '' }}>Digital Missionary</option>
                             <option value="Creatives and Communication" {{ old('user_ministry') == 'Creatives and Communication' ? 'selected' : '' }}>Creatives and Communication</option>
                             <option value="Admin" {{ old('user_ministry') == 'Admin' ? 'selected' : '' }}>Admin</option>
-                            {{--<option value="D-Group Management" {{ old('user_ministry') == 'D-Group Management' ? 'selected' : '' }}>D-Group Management</option>--}}
+                            {{--<option value="D-Group Management" {{ old('user_ministry') == 'D-Group Management' ? 'selected' : '' }}>D-Group Management</option>
                             <option value="None" {{ old('user_ministry') == 'None' ? 'selected' : '' }}>None</option>
                         </select>
                         @if ($errors->has('user_ministry'))
@@ -210,20 +210,57 @@
                         @endif
                     </div>
                 </div>
+            </div>--}}
+
+            <div>
+                <div>
+                    <div class="form-group">
+                        <label for="user_fname">First Name</label>
+                        <input type="text" name="user_fname" id="user_fname" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="user_lname">Last Name</label>
+                        <input type="text" name="user_lname" id="user_lname" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="seeker_email">Email</label>
+                        <input type="email" name="email" id="email" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="user_gender">Gender</label>
+                        <select name="user_gender" id="user_gender" class="form-input" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-input" required>
+                        @if ($errors->has('password'))
+                            <span class="error">{{ $errors->first('password') }}</span>
+                        @endif
+                    </div>  
+                </div>
             </div>
             
-
             <div class="form-group">
-                <button type="submit" class="auth-button">Create Account</button>
+                <button type="submit" class="auth-button">
+                    By clicking submit, you agree to receive notifications for devotions, updates, and messages from our support team. You can opt out anytime.
+                </button>
             </div>
         </form>
 
         <div style="margin-top: 20px; text-align: center;">
             <p>Already got an account? <a href="{{ route('auth.login') }}">Login here</a>.</p>
         </div>
-        <div style="margin-top: 20px; text-align: center;">
+        {{--<div style="margin-top: 20px; text-align: center;">
             <p><a href="{{ route('posts.index') }}">Go back to home</a></p>
-        </div>
+        </div>--}}
 
         <script src="{{ asset('js/auth.js?v=5.8') }}"></script>
     </div>

@@ -111,6 +111,6 @@
             </div>            
         </form>
 
-        <script src="{{ asset('js/signupSeeker.js?v=8.4') }}"></script>
+        <script src="{{ asset('js/signupSeeker.js?v=8.5') }}"></script>
     </div>
 @endsection

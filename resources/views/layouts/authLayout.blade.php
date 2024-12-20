@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Word On The Go</title>
     <link rel="icon" href="{{ asset('images/wotg-icon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/auth.css?v=8.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth.css?v=8.5') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- Default Meta Tags (global site-level meta tags) -->
@@ -25,7 +25,7 @@
     @yield('head')
 
 </head>
-<body class="{{ Request::is('profile/edit') || Request::is('signup') ? 'full-height' : 'full-viewport' }}">
+<body class="{{ Request::is('profile/edit') ? 'full-height' : 'full-viewport' }}">
     <div class="auth-container">
         @yield('content')
     </div>

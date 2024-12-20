@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Log;
 
 class BlogController extends Controller
 {    
+    public function __construct()
+    {
+        $this->middleware('auth'); // Ensure the user is authenticated
+    }
+    
     public function index()
     {
         // Set the timezone to Manila

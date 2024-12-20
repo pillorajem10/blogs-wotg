@@ -43,10 +43,10 @@
             <p>Don't have an account? <a href="{{ route('signup') }}">Sign Up here</a>.</p>
             <p>Forgot password? <a href="{{ route('password.forgot') }}">Click here</a></p> 
         </div>
-        <div style="margin-top: 20px; text-align: center;">
+        {{--<div style="margin-top: 20px; text-align: center;">
             <p><a href="{{ route('posts.index') }}">Go back to home</a></p>
-        </div>
+        </div>--}}
 
-        <script src="{{ asset('js/auth.js?v=8.4') }}"></script>
+        <script src="{{ asset('js/auth.js?v=8.5') }}"></script>
     </div>
 @endsection

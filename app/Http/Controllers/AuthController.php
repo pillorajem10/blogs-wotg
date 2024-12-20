@@ -35,7 +35,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'user_fname' => 'required|string|max:255',
             'user_lname' => 'required|string|max:255',
-            'user_nickname' => 'required|string|max:255',
+            'user_nickname' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'user_mobile_number' => 'nullable|string|max:15',
@@ -45,10 +45,10 @@ class AuthController extends Controller
             'user_city' => 'nullable|string|max:100',
             'user_dgroup_leader' => 'nullable|string|max:255',
             'user_ministry' => 'nullable|string|max:255',
-            'user_already_a_dgroup_leader' => 'required|in:0,1',
-            'user_already_a_dgroup_member' => 'required|in:0,1',
-            'user_meeting_day' => 'required|string|in:Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday',
-            'user_meeting_time' => 'required|date_format:H:i',
+            'user_already_a_dgroup_leader' => 'nullable|in:0,1',
+            'user_already_a_dgroup_member' => 'nullable|in:0,1',
+            'user_meeting_day' => 'nullable|string|in:Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday',
+            'user_meeting_time' => 'nullable|date_format:H:i',
         ]);
     
         // If validation fails, return with errors
