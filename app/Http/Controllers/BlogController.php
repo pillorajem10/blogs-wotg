@@ -16,13 +16,19 @@ class BlogController extends Controller
         $this->middleware('auth'); // Ensure the user is authenticated
     }
     
-    public function index()
+    public function index(Request $request)
     {
         // Set the timezone to Manila
         $today = Carbon::now('Asia/Manila');
         
         // Log the current date
         Log::info('Fetching blogs on date: ' . $today->toDateTimeString());
+
+        // Get the current page from the request, default to 1 if not set
+        $currentPage = $request->input('page', 1);
+
+        // Store the current page in the session
+        session(['blog_current_page' => $currentPage]);
         
         // Fetch all approved blogs with a release date less than or equal to today, 
         // ordered in descending order of the release date, and paginate with 5 items per page

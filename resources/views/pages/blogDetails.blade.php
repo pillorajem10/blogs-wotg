@@ -94,7 +94,8 @@
         
             <!-- Back to Blogs Button -->
             <a href="{{ route('posts.index') }}" class="action-btn">Back to Home</a>
-        
+            <a href="{{ route('blogs.index', ['page' => session('blog_current_page', 1)]) }}" class="action-btn">See More Blogs</a>
+
             <!-- Next Button -->
             @if($nextBlog)
                 <a href="{{ route('blogs.show', $nextBlog->id) }}" class="action-btn">Next &gt;</a>
