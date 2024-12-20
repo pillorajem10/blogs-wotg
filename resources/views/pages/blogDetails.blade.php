@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.8') }}">
 @endsection
 
 @section('head')
@@ -145,6 +145,6 @@
         </div>         
     </div>
 
-    <script src="{{ asset('js/blogDetails.js?v=8.7') }}"></script>
-    <script src="{{ asset('js/blogDetails1.js?v=8.7') }}"></script>
+    <script src="{{ asset('js/blogDetails.js?v=8.8') }}"></script>
+    <script src="{{ asset('js/blogDetails1.js?v=8.8') }}"></script>
 @endsection

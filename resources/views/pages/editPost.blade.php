@@ -3,7 +3,7 @@
 @section('title', 'Edit Post')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/editPost.css?v=8.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/editPost.css?v=8.8') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -33,37 +33,50 @@
                 </div>
             @endif
 
-            <!-- Show additional uploaded images if they exist -->
+            <!-- Show additional uploaded images/videos if they exist -->
             @if (!empty($post->post_file_path) && is_array($post->post_file_path))
                 <div class="form-group">
-                    <label>Additional Images</label>
+                    <label>Additional Media</label>
                     <div class="post-images">
                         @foreach ($post->post_file_path as $filePath)
                             <div class="post-image">
-                                <img src="{{ asset($filePath) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
+                                @php
+                                    $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+                                @endphp
+
+                                @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']))
+                                    <!-- If it's an image -->
+                                    <img src="{{ asset($filePath) }}" alt="Post Image" class="img-fluid lazy" loading="lazy">
+                                @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg', 'avi', 'mov', 'mkv']))
+                                    <!-- If it's a video -->
+                                    <video class="img-fluid lazy" controls loading="lazy">
+                                        <source src="{{ asset($filePath) }}" type="video/{{ $fileExtension }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @endif
                             </div>
                         @endforeach
                     </div>
                     <div class="image-preview-notice">
-                        <small>If you want to change any of these images, upload new ones below.</small>
+                        <small>If you want to change any of these images or videos, upload new ones below.</small>
                     </div>
                 </div>
             @endif
 
-            <!-- Upload New Images (optional) -->
+            <!-- Upload New Images/Videos (optional) -->
             <div class="form-group">
                 <label for="posts_file_path" class="upload-icon-container">
-                    <i class="fa fa-upload"></i> Upload New Images
+                    <i class="fa fa-upload"></i> Upload New Media
                 </label>
-                <input type="file" name="posts_file_path[]" class="form-control file-input" multiple id="posts_file_path" style="display:none;" onchange="previewImages()">
+                <input type="file" name="posts_file_path[]" class="form-control file-input" multiple id="posts_file_path" style="display:none;" onchange="previewMedia()">
                 
                 @error('posts_file_path')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
 
-                <!-- Image Preview Area -->
+                <!-- Media Preview Area -->
                 <div id="image-preview-container" class="image-preview-container">
-                    <!-- Image previews will appear here -->
+                    <!-- Media previews will appear here -->
                 </div>
             </div>
 
@@ -89,6 +102,6 @@
             </div>
         </form>
 
-        <script src="{{ asset('js/editPost.js?v=8.7') }}"></script>
+        <script src="{{ asset('js/editPost.js?v=8.8') }}"></script>
     </div>
 @endsection

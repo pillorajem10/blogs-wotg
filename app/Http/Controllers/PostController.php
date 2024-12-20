@@ -163,15 +163,15 @@ class PostController extends Controller
         $messages = [
             'post_caption.required' => 'Please provide a caption for your post.',
             'post_caption.string' => 'The caption must be a valid string.',
-            'posts_file_path.*.mimes' => 'Each file must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic.',
-            'posts_file_path.*.max' => 'Each file size cannot exceed 12MB.',
+            'posts_file_path.*.mimes' => 'Each file must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic, mp4, mov, avi, mkv.',
+            'posts_file_path.*.max' => 'Each file size cannot exceed 30MB.',
             'post_link.url' => 'The link must be a valid URL.',
         ];
     
         // Validate the input with custom error messages
         $validated = $request->validate([
             'post_caption' => 'required|string',
-            'posts_file_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288', // Validate each file
+            'posts_file_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,heif,heic,mp4,mov,avi,mkv|max:30720', // Updated max size to 30MB (30 * 1024)
             'post_link' => 'nullable|url',
         ], $messages);
     
@@ -190,11 +190,11 @@ class PostController extends Controller
                 // Generate a unique file name
                 $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
     
-                // Save the file to the public/images/posts directory
-                $file->move(public_path('images/posts'), $fileName);
+                // Save the file to the public/uploads/posts directory
+                $file->move(public_path('uploads/posts'), $fileName);
     
                 // Add the file path to the array
-                $filePaths[] = 'images/posts/' . $fileName;
+                $filePaths[] = 'uploads/posts/' . $fileName;
             }
         }
     
@@ -210,9 +210,10 @@ class PostController extends Controller
     
         // Redirect back with success message
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
-    }    
-      
-
+    }
+    
+    
+        
     public function deletePost($postId)
     {
         // Retrieve the post by its ID
@@ -339,15 +340,15 @@ class PostController extends Controller
         $messages = [
             'post_caption.required' => 'Please provide a caption for your post.',
             'post_caption.string' => 'The caption must be a valid string.',
-            'posts_file_path.*.mimes' => 'Each file must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic.',
-            'posts_file_path.*.max' => 'Each file size cannot exceed 12MB.',
+            'posts_file_path.*.mimes' => 'Each file must be one of the following types: jpeg, png, jpg, gif, svg, heif, heic, mp4, mov, avi, mkv.',
+            'posts_file_path.*.max' => 'Each file size cannot exceed 30MB.',
             'post_link.url' => 'The link must be a valid URL.',
         ];
     
         // Validate the input with custom error messages
         $validatedData = $request->validate([
             'post_caption' => 'required|string',
-            'posts_file_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,heif,heic|max:12288', // Validate each file
+            'posts_file_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,heif,heic,mp4,mov,avi,mkv|max:30720', // Updated max size to 30MB
             'post_link' => 'nullable|url',
         ], $messages);
     
@@ -366,24 +367,24 @@ class PostController extends Controller
     
         // Handle file uploads
         $filePaths = [];
-
+    
         if ($request->hasFile('posts_file_path')) {
             $filePaths = [];
             foreach ($request->file('posts_file_path') as $file) {
                 // Generate a unique file name for each file
                 $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-
+    
                 // Save the file to the public/images/posts directory
-                $file->move(public_path('images/posts'), $fileName);
-
+                $file->move(public_path('uploads/posts'), $fileName);
+    
                 // Add the file path to the array
-                $filePaths[] = 'images/posts/' . $fileName;
+                $filePaths[] = 'uploads/posts/' . $fileName;
             }
-
+    
             // Save the file paths as JSON in the database
             $post->post_file_path = json_encode($filePaths);
         }
-
+    
         // Save the file paths as JSON in the database
         if (!empty($filePaths)) {
             $post->post_file_path = $filePaths;
@@ -394,7 +395,6 @@ class PostController extends Controller
         // Redirect back with success message
         return redirect()->route('post.edit', ['postId' => $post->id])->with('success', 'Post updated successfully');
     }
-     
     
 
     public function deleteComment(Request $request, $commentId)

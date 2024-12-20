@@ -40,7 +40,6 @@
     margin-bottom: 15px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .post-image img {
@@ -51,6 +50,15 @@
     transition: transform 0.3s ease-in-out;
 }
 
+.post-image video {
+    max-width: 200px;
+    height: auto;
+    object-fit: cover; /* Ensures the video fills the container proportionally */
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+
 .post-image img:hover {
     transform: scale(1.05);
 }
@@ -59,7 +67,7 @@
 .post-images {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
 }
 
 .post-images .post-image {

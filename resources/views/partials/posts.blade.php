@@ -45,17 +45,36 @@
             @if (!empty($post->post_file_path) && is_array($post->post_file_path))
                 <div class="post-images">
                     @foreach ($post->post_file_path as $index => $filePath)
-                        @if ($index < 2) <!-- Show only the first 2 images -->
+                        @if ($index < 2) <!-- Show only the first 2 media files -->
                             <div class="post-image">
-                                <img 
-                                    src="{{ asset($filePath) }}" 
-                                    alt="Post Image" 
-                                    class="img-fluid lazy modal-post-photo" 
-                                    loading="lazy" 
-                                    data-src="{{ asset($filePath) }}" 
-                                    onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
+                                @php
+                                    // Get file extension to determine if it's an image or video
+                                    $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+                                @endphp
+            
+                                @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'])) 
+                                    <!-- If it's an image -->
+                                    <img 
+                                        src="{{ asset($filePath) }}" 
+                                        alt="Post Image" 
+                                        class="img-fluid lazy modal-post-photo" 
+                                        loading="lazy" 
+                                        data-src="{{ asset($filePath) }}" 
+                                        onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
+                                @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg'])) 
+                                    <video 
+                                        class="img-fluid lazy" 
+                                        controls 
+                                        loading="lazy" 
+                                        data-src="{{ asset($filePath) }}" 
+                                        onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
+                                        <source src="{{ asset($filePath) }}" type="video/{{ $fileExtension }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @endif
+            
                                 @if ($index === 1 && count($post->post_file_path) > 2)
-                                    <div class="image-overlay" onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
+                                    <div class="media-overlay" onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
                                         +{{ count($post->post_file_path) - 2 }}
                                     </div>
                                 @endif
@@ -63,7 +82,8 @@
                         @endif
                     @endforeach
                 </div>
-            @endif        
+            @endif
+              
             
             <!-- Embedded Content Section -->
             @if ($post->embeddedHtml)

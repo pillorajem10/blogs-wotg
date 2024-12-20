@@ -3,7 +3,7 @@
 @section('title', 'Community')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/posts.css?v=8.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/posts.css?v=8.8') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection
 
@@ -64,7 +64,7 @@
                     <!-- File Upload Input with Icon -->
                     <div class="form-group">
                         <label for="posts_file_path" class="upload-icon-container">
-                            <i class="fa fa-upload"></i> Upload Photo Here
+                            <i class="fa fa-upload"></i> Upload Photo or Video Here
                             <input type="file" id="posts_file_path" name="posts_file_path[]" class="form-control file-input" multiple style="display:none;">
                         </label>
         
@@ -93,6 +93,6 @@
         </div>
         
     </div>
-    <script src="{{ asset('js/posts.js?v=8.7') }}"></script>
-    <script src="{{ asset('js/modalPhoto.js?v=8.7') }}"></script>
+    <script src="{{ asset('js/posts.js?v=8.8') }}"></script>
+    <script src="{{ asset('js/modalPhoto.js?v=8.8') }}"></script>
 @endsection

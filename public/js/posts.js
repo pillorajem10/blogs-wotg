@@ -46,16 +46,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (fileInput.files) {
                 Array.from(fileInput.files).forEach((file) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.style.maxWidth = '100%';
-                        img.style.height = 'auto';
-                        img.style.marginTop = '10px';
-                        previewContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
+                    const fileType = file.type.split('/')[0]; // 'image' or 'video'
+
+                    if (fileType === 'image') {
+                        // Image Preview
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.style.maxWidth = '100%';
+                            img.style.height = 'auto';
+                            img.style.marginTop = '10px';
+                            previewContainer.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    } else if (fileType === 'video') {
+                        // Video Preview
+                        const video = document.createElement('video');
+                        video.src = URL.createObjectURL(file);
+                        video.controls = true;
+                        video.style.maxWidth = '250px';
+                        video.style.marginTop = '10px';
+                        previewContainer.appendChild(video);
+                    }
                 });
             }
         });
