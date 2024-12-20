@@ -62,10 +62,10 @@
                                         data-src="{{ asset($filePath) }}" 
                                         onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
                                 @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg'])) 
+                                    <!-- If it's a video, remove lazy loading -->
                                     <video 
-                                        class="img-fluid lazy" 
+                                        class="img-fluid" 
                                         controls 
-                                        loading="lazy" 
                                         data-src="{{ asset($filePath) }}" 
                                         onclick="openModal({{ $post->id }}, {{ $index }}, {{ json_encode($post->post_file_path) }})">
                                         <source src="{{ asset($filePath) }}" type="video/{{ $fileExtension }}">
@@ -83,8 +83,7 @@
                     @endforeach
                 </div>
             @endif
-              
-            
+        
             <!-- Embedded Content Section -->
             @if ($post->embeddedHtml)
                 <div class="embedded-content">
