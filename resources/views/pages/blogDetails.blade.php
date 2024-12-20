@@ -3,7 +3,7 @@
 @section('title', $blog->blog_title)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/blogDetails.css?v=8.4') }}">
 @endsection
 
 @section('head')
@@ -52,6 +52,10 @@
                     <!-- Copy Link Button -->
                     <button class="share-btn copy-link" data-url="{{ route('blogs.show', $blog->id) }}">
                         <i class="fas fa-link"></i>
+                    </button>
+
+                    <button class="share-btn copy-all">
+                        <i class="fas fa-copy"></i>
                     </button>
                 </div>                
                 <div class="body-text">{!! $blog->blog_body !!}</div>
@@ -130,5 +134,5 @@
         </div>         
     </div>
 
-    <script src="{{ asset('js/blogDetails.js?v=8.3') }}"></script>
+    <script src="{{ asset('js/blogDetails.js?v=8.4') }}"></script>
 @endsection
